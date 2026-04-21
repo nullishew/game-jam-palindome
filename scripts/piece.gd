@@ -14,7 +14,7 @@ func _process(delta: float) -> void:
 
 
 func hold(pos: Vector2):
-	global_position = pos
+	position = pos
 	freeze = true
 
 func release():

@@ -3,11 +3,17 @@
 [ext_resource type="Texture2D" uid="uid://cet7ctj3s6hk2" path="res://assets/placeholder_grid_paper.png" id="1_gebih"]
 [ext_resource type="Script" uid="uid://btsm8qmr8f3pf" path="res://scripts/piece.gd" id="1_s58gp"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s58gp"]
+friction = 2.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uwrxv"]
 size = Vector2(32, 32)
 
-[node name="Piece" type="RigidBody2D" unique_id=786190789]
-mass = 7.0
+[node name="BlockPiece" type="RigidBody2D" unique_id=786190789]
+physics_material_override = SubResource("PhysicsMaterial_s58gp")
+continuous_cd = 2
+linear_damp = 1.5
+angular_damp = 6.0
 script = ExtResource("1_s58gp")
 metadata/_custom_type_script = "uid://btsm8qmr8f3pf"
 
