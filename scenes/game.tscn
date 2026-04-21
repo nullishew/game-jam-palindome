@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bxu4bfu82u3al"]
+
+[ext_resource type="Texture2D" uid="uid://cet7ctj3s6hk2" path="res://assets/placeholder_grid_paper.png" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://c0pg5bts2c01c" path="res://scripts/game.gd" id="1_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://7g6rkmeteclo" path="res://scenes/piece.tscn" id="3_lnu2h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8cj0n"]
+size = Vector2(32, 32)
+
+[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("piece_container")]
+script = ExtResource("1_yqjtg")
+piece_scene = ExtResource("3_lnu2h")
+piece_container = NodePath("World/Piece Container")
+
+[node name="World" type="Node2D" parent="." unique_id=1555225489]
+
+[node name="Camera2D" type="Camera2D" parent="World" unique_id=278744700]
+zoom = Vector2(2, 2)
+
+[node name="Platform" type="StaticBody2D" parent="World" unique_id=1905913185]
+position = Vector2(0, 229)
+scale = Vector2(20, 2)
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Platform" unique_id=2036783469]
+texture = ExtResource("1_uwrxv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform" unique_id=77607303]
+position = Vector2(0.050000574, 0)
+shape = SubResource("RectangleShape2D_8cj0n")
+
+[node name="Piece Container" type="Node2D" parent="World" unique_id=1338131520]
