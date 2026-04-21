@@ -5,10 +5,11 @@
 [ext_resource type="PackedScene" uid="uid://b4g4t2trs4wr7" path="res://scenes/platform.tscn" id="3_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://7g6rkmeteclo" path="res://scenes/block_piece.tscn" id="3_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://bdajgv04xnnoe" path="res://scenes/death_zone.tscn" id="4_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://c5u6qthot4jji" path="res://scenes/triangle_piece.tscn" id="4_p57ef"]
 
 [node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("cam", "world_container", "piece_container", "normal_spawnpoint", "inverted_spawnpoint", "top_platform", "bottom_platform")]
 script = ExtResource("1_yqjtg")
-piece_scenes = Array[PackedScene]([ExtResource("3_lnu2h"), ExtResource("3_iywne")])
+piece_scenes = Array[PackedScene]([ExtResource("3_lnu2h"), ExtResource("3_iywne"), ExtResource("4_p57ef")])
 cam = NodePath("Camera2D")
 world_container = NodePath("World")
 piece_container = NodePath("World/Piece Container")
@@ -23,6 +24,10 @@ zoom = Vector2(2, 2)
 [node name="World" type="Node2D" parent="." unique_id=1555225489]
 
 [node name="Piece Container" type="Node2D" parent="World" unique_id=1338131520]
+
+[node name="TrianglePiece" parent="World/Piece Container" unique_id=812756609 instance=ExtResource("4_p57ef")]
+position = Vector2(34, -1)
+rotation = -0.7853982
 
 [node name="Top Platform" parent="World" unique_id=1619606996 instance=ExtResource("3_lbhrr")]
 position = Vector2(0, -230)

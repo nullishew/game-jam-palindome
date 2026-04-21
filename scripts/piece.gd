@@ -1,11 +1,13 @@
 class_name Piece
 extends RigidBody2D
 
+var is_player_piece: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	hold()
-	GameManager.game.hold(self)
+	if is_player_piece:
+		hold()
+		GameManager.game.hold(self)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

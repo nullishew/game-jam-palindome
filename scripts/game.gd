@@ -43,6 +43,8 @@ func _ready() -> void:
 		PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR,
 		[Vector2.DOWN, Vector2.UP][int(_is_gravity_inverted)]
 	)
+	_top_platform_target_pos_y = top_platform.global_position.y
+	_bottom_platform_target_pos_y = bottom_platform.global_position.y
 	_set_state(GameState.HOLD)
 
 func _set_state(state: GameState):
@@ -56,8 +58,8 @@ func _enter_state(state: GameState):
 			if _turn_count >= turns_to_win:
 				_set_state(GameState.WIN)
 				return
-			_turn_count += 1
 			resize_platforms()
+			_turn_count += 1
 			if !_held_piece:
 				call_deferred("spawn_piece")
 		GameState.PLACE:
@@ -81,7 +83,9 @@ func _exit_state(state: GameState):
 		pass
 
 func _physics_process(delta: float) -> void:
+	update_platform_size(delta)
 	call_deferred("update_camera", delta)
+
 	match _state:
 		GameState.HOLD:
 			if _held_piece:
@@ -107,6 +111,7 @@ func spawn_piece():
 		_unused_pieces = piece_scenes.duplicate()
 	var piece_scene: PackedScene = _unused_pieces.pop_at(randi_range(0, _unused_pieces.size() - 1))
 	var piece: Piece = piece_scene.instantiate()
+	piece.is_player_piece = true
 	piece.freeze = true
 	var spawnpoint: Vector2 = [normal_spawnpoint.global_position, inverted_spawnpoint.global_position][int(_is_gravity_inverted)]
 	var offset: Vector2 = Vector2(randf_range(-0.5, 0.5), 0)
@@ -125,6 +130,13 @@ func release(piece: Piece):
 	piece.release()
 	_placed_pieces.append(piece)
 
+var _top_platform_target_pos_y: float
+var _bottom_platform_target_pos_y: float
+
+func update_platform_size(delta: float):
+	var t := 1.0 - exp(-delta * 4.0)
+	bottom_platform.global_position.y = lerp(bottom_platform.global_position.y, _bottom_platform_target_pos_y, t)
+	top_platform.global_position.y = lerp(top_platform.global_position.y, _top_platform_target_pos_y, t)
 
 func resize_platforms():
 	var top_p: Vector2 = Vector2(-INF, -INF)
@@ -132,15 +144,18 @@ func resize_platforms():
 	for piece in _placed_pieces:
 		top_p = top_p.max(piece.global_position)
 		bottom_p = bottom_p.min(piece.global_position)
-	var min_piece_distance_to_platform: float = 400
+	var min_piece_distance_to_platform: float = 300
 	if _is_gravity_inverted:
 		var dist = bottom_platform.global_position.y - top_p.y
 		if dist < min_piece_distance_to_platform:
-			bottom_platform.global_position.y = top_p.y + min_piece_distance_to_platform
+			_bottom_platform_target_pos_y = top_p.y + min_piece_distance_to_platform
 	else:
 		var dist = bottom_p.y - top_platform.global_position.y
 		if dist < min_piece_distance_to_platform:
-			top_platform.global_position.y = bottom_p.y - min_piece_distance_to_platform
+			_top_platform_target_pos_y = bottom_p.y - min_piece_distance_to_platform
+	
+	
+
 
 var _target_cam_zoom: Vector2
 var _target_cam_pos: Vector2
@@ -150,16 +165,13 @@ func update_camera(delta: float):
 	var bottom_y = bottom_platform.global_position.y
 
 	var center_y = (top_y + bottom_y) / 2.0
-	# cam.global_position.y = center_y
+	_target_cam_pos = Vector2(0, center_y)
 
 	var padding = 50.0
 	var height = abs(top_y - bottom_y) + padding
-	var viewport_height = get_viewport_rect().size.y
+	var viewport_height = cam.get_viewport_rect().size.y
 	var zoom = viewport_height / height 
-	# cam.zoom = Vector2(zoom, zoom)
-
 	_target_cam_zoom = Vector2(zoom, zoom)
-	_target_cam_pos = Vector2(0, center_y)
 
 	var t := 1.0 - exp(-delta * 4.0)
 	cam.zoom = cam.zoom.lerp(_target_cam_zoom, t)

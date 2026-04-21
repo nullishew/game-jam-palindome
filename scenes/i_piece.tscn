@@ -8,9 +8,9 @@
 size = Vector2(128, 32)
 
 [node name="IPiece" type="RigidBody2D" unique_id=496270264]
-mass = 10.0
+mass = 15.0
 physics_material_override = ExtResource("1_15ysq")
-linear_damp = 0.5
+linear_damp = 0.7
 script = ExtResource("1_yydgg")
 metadata/_custom_type_script = "uid://btsm8qmr8f3pf"
 
