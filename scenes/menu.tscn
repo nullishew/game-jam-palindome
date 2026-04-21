@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://ccl1hgonvibm7"]
+
+[ext_resource type="Script" uid="uid://cujpe7u8wmpkh" path="res://scripts/menu.gd" id="1_yqeox"]
+
+[node name="Menu" type="CanvasLayer" unique_id=558575991 node_paths=PackedStringArray("start_btn")]
+script = ExtResource("1_yqeox")
+start_btn = NodePath("Start Button")
+
+[node name="Title Label" type="Label" parent="." unique_id=685550178]
+offset_left = 90.0
+offset_top = 162.0
+offset_right = 1120.0
+offset_bottom = 435.0
+theme_override_font_sizes/font_size = 200
+text = "Palindome"
+
+[node name="Platform movement Label" type="Label" parent="." unique_id=339504273]
+offset_left = 126.0
+offset_top = 419.0
+offset_right = 456.0
+offset_bottom = 442.0
+theme_override_font_sizes/font_size = 40
+text = "Arrow keys to move platforms horizontally"
+
+[node name="Platform drop Label" type="Label" parent="." unique_id=840895616]
+offset_left = 134.0
+offset_top = 504.0
+offset_right = 446.0
+offset_bottom = 559.0
+theme_override_font_sizes/font_size = 40
+text = "space to release"
+
+[node name="Gravity Label" type="Label" parent="." unique_id=799579009]
+offset_left = 142.0
+offset_top = 597.0
+offset_right = 994.0
+offset_bottom = 652.0
+theme_override_font_sizes/font_size = 40
+text = "gravity does weird things every three moves"
+
+[node name="Start Button" type="Button" parent="." unique_id=1305181468]
+offset_left = 163.0
+offset_top = 774.0
+offset_right = 327.0
+offset_bottom = 891.0
+theme_override_font_sizes/font_size = 40
+text = "Start"

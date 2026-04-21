@@ -4,7 +4,7 @@ extends RigidBody2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	freeze = true
+	hold()
 	GameManager.game.hold(self)
 
 
@@ -13,8 +13,7 @@ func _process(delta: float) -> void:
 	pass
 
 
-func hold(pos: Vector2):
-	position = pos
+func hold():
 	freeze = true
 
 func release():

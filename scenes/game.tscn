@@ -1,24 +1,57 @@
 [gd_scene format=3 uid="uid://bxu4bfu82u3al"]
 
 [ext_resource type="Script" uid="uid://c0pg5bts2c01c" path="res://scripts/game.gd" id="1_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://cdw325613l8rk" path="res://scenes/i_piece.tscn" id="3_iywne"]
 [ext_resource type="PackedScene" uid="uid://b4g4t2trs4wr7" path="res://scenes/platform.tscn" id="3_lbhrr"]
-[ext_resource type="PackedScene" uid="uid://7g6rkmeteclo" path="res://scenes/piece.tscn" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://7g6rkmeteclo" path="res://scenes/block_piece.tscn" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://bdajgv04xnnoe" path="res://scenes/death_zone.tscn" id="4_lbhrr"]
 
-[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("piece_container", "world_container")]
+[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("cam", "world_container", "piece_container", "normal_spawnpoint", "inverted_spawnpoint", "top_platform", "bottom_platform")]
 script = ExtResource("1_yqjtg")
-piece_scene = ExtResource("3_lnu2h")
-piece_container = NodePath("World/Piece Container")
+piece_scenes = Array[PackedScene]([ExtResource("3_lnu2h"), ExtResource("3_iywne")])
+cam = NodePath("Camera2D")
 world_container = NodePath("World")
+piece_container = NodePath("World/Piece Container")
+normal_spawnpoint = NodePath("World/Top Platform/Top Spawn")
+inverted_spawnpoint = NodePath("World/Bottom Platform/Bottom Spawn")
+top_platform = NodePath("World/Top Platform")
+bottom_platform = NodePath("World/Bottom Platform")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1900951051]
+zoom = Vector2(2, 2)
 
 [node name="World" type="Node2D" parent="." unique_id=1555225489]
 
-[node name="Camera2D" type="Camera2D" parent="World" unique_id=278744700]
-zoom = Vector2(2, 2)
-
-[node name="Top Platform" parent="World" unique_id=859931154 instance=ExtResource("3_lbhrr")]
-position = Vector2(0, -229)
-
 [node name="Piece Container" type="Node2D" parent="World" unique_id=1338131520]
 
-[node name="Bottom Platform" parent="World" unique_id=1431451544 instance=ExtResource("3_lbhrr")]
-position = Vector2(0, 229)
+[node name="Top Platform" parent="World" unique_id=1619606996 instance=ExtResource("3_lbhrr")]
+position = Vector2(0, -230)
+
+[node name="Top Spawn" type="Node2D" parent="World/Top Platform" unique_id=947222863]
+position = Vector2(0, 100)
+
+[node name="DeathZone2" parent="World/Top Platform" unique_id=475342207 instance=ExtResource("4_lbhrr")]
+position = Vector2(10, -217)
+scale = Vector2(50, 1)
+
+[node name="Bottom Platform" parent="World" unique_id=868394617 instance=ExtResource("3_lbhrr")]
+position = Vector2(0, 230)
+
+[node name="Bottom Spawn" type="Node2D" parent="World/Bottom Platform" unique_id=476875877]
+position = Vector2(1, -100)
+
+[node name="DeathZone" parent="World/Bottom Platform" unique_id=1826319625 instance=ExtResource("4_lbhrr")]
+position = Vector2(-4, 324)
+scale = Vector2(50, 1)
+
+[node name="DeathZones" type="Node2D" parent="World" unique_id=378252427]
+
+[node name="DeathZone3" parent="World/DeathZones" unique_id=1126281281 instance=ExtResource("4_lbhrr")]
+position = Vector2(-558, 50)
+rotation = 1.5707964
+scale = Vector2(50, 1)
+
+[node name="DeathZone4" parent="World/DeathZones" unique_id=1252219371 instance=ExtResource("4_lbhrr")]
+position = Vector2(597, 62.999996)
+rotation = 1.5707964
+scale = Vector2(50, 1)

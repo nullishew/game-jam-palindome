@@ -2,15 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://cet7ctj3s6hk2" path="res://assets/placeholder_grid_paper.png" id="1_ba0x2"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8cj0n"]
-size = Vector2(32, 32)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nlgqw"]
+size = Vector2(320, 32)
 
-[node name="Platform" type="StaticBody2D" unique_id=1431451544]
-scale = Vector2(10, 2)
+[node name="Platform" type="AnimatableBody2D" unique_id=1619606996]
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=35711960]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=277007747]
+scale = Vector2(10, 1)
 texture = ExtResource("1_ba0x2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1879604543]
-position = Vector2(0.050000574, 0)
-shape = SubResource("RectangleShape2D_8cj0n")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1873009450]
+shape = SubResource("RectangleShape2D_nlgqw")

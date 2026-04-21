@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://c5u6qthot4jji"]
+
+[ext_resource type="Script" uid="uid://btsm8qmr8f3pf" path="res://scripts/piece.gd" id="1_bgbdb"]
+[ext_resource type="PhysicsMaterial" uid="uid://dh6cj6si5sd6o" path="res://assets/piece_physics_material.tres" id="1_c2mqm"]
+[ext_resource type="Texture2D" uid="uid://bq3ae8khmoe8a" path="res://assets/placeholder_triangle_grid_paper.png" id="3_tybd2"]
+
+[node name="TrianglePiece" type="RigidBody2D" unique_id=812756609]
+mass = 15.0
+physics_material_override = ExtResource("1_c2mqm")
+linear_damp = 0.1
+script = ExtResource("1_bgbdb")
+metadata/_custom_type_script = "uid://btsm8qmr8f3pf"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1463819697]
+scale = Vector2(1.75, 1.75)
+texture = ExtResource("3_tybd2")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2083518075]
+polygon = PackedVector2Array(-28, -28, -28, 28, 28, 28)

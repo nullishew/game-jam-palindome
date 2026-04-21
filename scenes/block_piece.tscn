@@ -2,15 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://cet7ctj3s6hk2" path="res://assets/placeholder_grid_paper.png" id="1_gebih"]
 [ext_resource type="Script" uid="uid://btsm8qmr8f3pf" path="res://scripts/piece.gd" id="1_s58gp"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s58gp"]
-friction = 2.0
+[ext_resource type="PhysicsMaterial" uid="uid://dh6cj6si5sd6o" path="res://assets/piece_physics_material.tres" id="1_smf6a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uwrxv"]
 size = Vector2(32, 32)
 
 [node name="BlockPiece" type="RigidBody2D" unique_id=786190789]
-physics_material_override = SubResource("PhysicsMaterial_s58gp")
+mass = 20.0
+physics_material_override = ExtResource("1_smf6a")
 continuous_cd = 2
 linear_damp = 1.5
 angular_damp = 6.0
@@ -18,7 +17,9 @@ script = ExtResource("1_s58gp")
 metadata/_custom_type_script = "uid://btsm8qmr8f3pf"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=321147764]
+scale = Vector2(2, 2)
 texture = ExtResource("1_gebih")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=780094259]
+scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_uwrxv")
