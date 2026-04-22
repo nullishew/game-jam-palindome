@@ -40,16 +40,10 @@ offset_bottom = 210.0
 grow_horizontal = 2
 alignment = 1
 
-[node name="Your" type="Label" parent="Panel/Turn Count/HBoxContainer" unique_id=1265249547]
+[node name="You" type="Label" parent="Panel/Turn Count/HBoxContainer" unique_id=1265249547]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
-text = "your"
-horizontal_alignment = 1
-
-[node name="Monstrosity" type="Label" parent="Panel/Turn Count/HBoxContainer" unique_id=1430901495]
-layout_mode = 2
-theme_override_font_sizes/font_size = 60
-text = " monstrosity"
+text = "You"
 horizontal_alignment = 1
 
 [node name="Lasted" type="Label" parent="Panel/Turn Count/HBoxContainer" unique_id=1136039942]
@@ -73,12 +67,6 @@ theme_override_font_sizes/font_size = 100
 text = "67"
 horizontal_alignment = 1
 
-[node name="Turns" type="Label" parent="Panel/Turn Count/HBoxContainer2" unique_id=393414209]
-layout_mode = 2
-theme_override_font_sizes/font_size = 100
-text = " turns"
-horizontal_alignment = 1
-
 [node name="Emote Label" type="Label" parent="Panel" unique_id=421588151]
 layout_mode = 1
 anchors_preset = 10
@@ -89,7 +77,7 @@ offset_right = 273.0
 offset_bottom = 629.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 150
-text = "/ (T_T) \\"
+text = "¯\\_(ツ)_/¯"
 horizontal_alignment = 1
 
 [node name="Replay Button" type="Button" parent="Panel" unique_id=713294060]
