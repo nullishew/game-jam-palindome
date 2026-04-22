@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://diklw5uaphjog"]
+
+[ext_resource type="Script" uid="uid://btsm8qmr8f3pf" path="res://scripts/piece.gd" id="1_14j71"]
+[ext_resource type="Texture2D" uid="uid://1pjgivsksw7t" path="res://assets/placeholder_circle_grid_paper.png" id="2_2c6lj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2c6lj"]
+friction = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2c6lj"]
+radius = 41.59327
+
+[node name="CirclePiece" type="RigidBody2D" unique_id=762002478]
+mass = 5.0
+physics_material_override = SubResource("PhysicsMaterial_2c6lj")
+linear_damp = 2.0
+angular_damp = 3.0
+script = ExtResource("1_14j71")
+metadata/_custom_type_script = "uid://btsm8qmr8f3pf"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2055733577]
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("2_2c6lj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1003085750]
+shape = SubResource("CircleShape2D_2c6lj")

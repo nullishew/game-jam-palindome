@@ -1,22 +1,22 @@
 [gd_scene format=3 uid="uid://cdw325613l8rk"]
 
-[ext_resource type="PhysicsMaterial" uid="uid://dh6cj6si5sd6o" path="res://assets/piece_physics_material.tres" id="1_15ysq"]
-[ext_resource type="Script" uid="uid://btsm8qmr8f3pf" path="res://scripts/piece.gd" id="1_yydgg"]
-[ext_resource type="Texture2D" uid="uid://cet7ctj3s6hk2" path="res://assets/placeholder_grid_paper.png" id="3_f436w"]
+[ext_resource type="PhysicsMaterial" uid="uid://dh6cj6si5sd6o" path="res://resources/piece_physics_material.tres" id="1_am0gy"]
+[ext_resource type="Script" uid="uid://btsm8qmr8f3pf" path="res://scripts/piece.gd" id="2_o67my"]
+[ext_resource type="Texture2D" uid="uid://cet7ctj3s6hk2" path="res://assets/placeholder_grid_paper.png" id="3_3guy0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f436w"]
 size = Vector2(128, 32)
 
 [node name="IPiece" type="RigidBody2D" unique_id=496270264]
 mass = 15.0
-physics_material_override = ExtResource("1_15ysq")
-linear_damp = 0.7
-script = ExtResource("1_yydgg")
+physics_material_override = ExtResource("1_am0gy")
+linear_damp = 2.0
+script = ExtResource("2_o67my")
 metadata/_custom_type_script = "uid://btsm8qmr8f3pf"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=30776167]
 scale = Vector2(4, 1)
-texture = ExtResource("3_f436w")
+texture = ExtResource("3_3guy0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1443196901]
 shape = SubResource("RectangleShape2D_f436w")

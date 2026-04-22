@@ -1,9 +1,9 @@
 class_name Game
 extends Node2D
 
-@export var turns_to_win: int = 15
+@export var turns_to_win: int = 12
 
-@export var piece_scenes: Array[PackedScene]
+@export var piece_configs: Array[PieceSpawnConfig]
 
 @export var cam: Camera2D
 @export var min_place_time: float = 1
@@ -14,8 +14,14 @@ extends Node2D
 @export var top_platform: Node2D
 @export var bottom_platform: Node2D
 
+@export var next_piece_uis: Array[TextureRect]
+@export var invert_count_label: Label
+@export var invert_count_container: Control
 
-var _unused_pieces: Array[PackedScene]
+
+var _unused_pieces: Array[PieceSpawnConfig]
+var _piece_sequence: Array[PieceSpawnConfig] = []
+var _curr_piece_index: int = 0
 var _placed_pieces: Array[Piece] = []
 var _held_piece: Piece
 
@@ -38,6 +44,8 @@ func _ready() -> void:
 	cam.make_current() # just to not break physics from the one frame delay breh
 	GameManager.game = self
 	_is_gravity_inverted = false
+	_piece_sequence.clear()
+	_curr_piece_index = 0
 	PhysicsServer2D.area_set_param(
 		get_viewport().get_world_2d().space,
 		PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR,
@@ -60,12 +68,14 @@ func _enter_state(state: GameState):
 				return
 			resize_platforms()
 			_turn_count += 1
+			invert_count_label.text = str(wrap(-_turn_count, 0, 3))
 			if !_held_piece:
 				call_deferred("spawn_piece")
 		GameState.PLACE:
 			_place_timer = min_place_time
 		GameState.INVERT:
 			_place_timer = min_place_time
+			invert_count_container.modulate = Color(1, 0, 0, 0.5)
 			invert()
 		GameState.WIN:
 			GameManager.is_win = true
@@ -80,7 +90,8 @@ func _enter_state(state: GameState):
 
 func _exit_state(state: GameState):
 	match state:
-		pass
+		GameState.INVERT:
+			invert_count_container.modulate = Color(1, 1, 1, 1)
 
 func _physics_process(delta: float) -> void:
 	update_platform_size(delta)
@@ -107,9 +118,11 @@ func _physics_process(delta: float) -> void:
 				_set_state(GameState.HOLD)
 
 func spawn_piece():
-	if !_unused_pieces or _unused_pieces.size() == 0:
-		_unused_pieces = piece_scenes.duplicate()
-	var piece_scene: PackedScene = _unused_pieces.pop_at(randi_range(0, _unused_pieces.size() - 1))
+	while _piece_sequence.size() < _curr_piece_index + 5:
+		var next_cycle: Array[PieceSpawnConfig] = piece_configs.duplicate()
+		next_cycle.shuffle()
+		_piece_sequence.append_array(next_cycle)
+	var piece_scene: PackedScene =_piece_sequence[_curr_piece_index].packed_scene
 	var piece: Piece = piece_scene.instantiate()
 	piece.is_player_piece = true
 	piece.freeze = true
@@ -119,6 +132,13 @@ func spawn_piece():
 	piece.global_rotation = randi_range(0, 3) * PI / 2
 	offset = Vector2.ZERO
 	piece_container.add_child(piece)
+
+	# ui stuff
+	for i in range(next_piece_uis.size()):
+		next_piece_uis[i].texture = _piece_sequence[_curr_piece_index + i + 1].ui_texture
+
+	_curr_piece_index += 1
+
 
 func hold(piece: Piece):
 	if _held_piece: return

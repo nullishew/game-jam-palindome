@@ -1,15 +1,46 @@
 [gd_scene format=3 uid="uid://bxu4bfu82u3al"]
 
 [ext_resource type="Script" uid="uid://c0pg5bts2c01c" path="res://scripts/game.gd" id="1_yqjtg"]
-[ext_resource type="PackedScene" uid="uid://cdw325613l8rk" path="res://scenes/i_piece.tscn" id="3_iywne"]
+[ext_resource type="Script" uid="uid://cpowjncfu48nu" path="res://scripts/piece_spawn_config.gd" id="2_gee14"]
+[ext_resource type="PackedScene" uid="uid://cdw325613l8rk" path="res://scenes/pieces/i_piece.tscn" id="3_iywne"]
 [ext_resource type="PackedScene" uid="uid://b4g4t2trs4wr7" path="res://scenes/platform.tscn" id="3_lbhrr"]
-[ext_resource type="PackedScene" uid="uid://7g6rkmeteclo" path="res://scenes/block_piece.tscn" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://7g6rkmeteclo" path="res://scenes/pieces/block_piece.tscn" id="3_lnu2h"]
+[ext_resource type="Texture2D" uid="uid://cet7ctj3s6hk2" path="res://assets/placeholder_grid_paper.png" id="4_0tnpc"]
 [ext_resource type="PackedScene" uid="uid://bdajgv04xnnoe" path="res://scenes/death_zone.tscn" id="4_lbhrr"]
-[ext_resource type="PackedScene" uid="uid://c5u6qthot4jji" path="res://scenes/triangle_piece.tscn" id="4_p57ef"]
+[ext_resource type="PackedScene" uid="uid://c5u6qthot4jji" path="res://scenes/pieces/triangle_piece.tscn" id="4_p57ef"]
+[ext_resource type="Texture2D" uid="uid://bq3ae8khmoe8a" path="res://assets/placeholder_triangle_grid_paper.png" id="6_vtaks"]
+[ext_resource type="PackedScene" uid="uid://diklw5uaphjog" path="res://scenes/pieces/circle_piece.tscn" id="8_kvpfn"]
+[ext_resource type="Texture2D" uid="uid://1pjgivsksw7t" path="res://assets/placeholder_circle_grid_paper.png" id="9_dinhu"]
+[ext_resource type="Texture2D" uid="uid://dkk1n20ej2r8v" path="res://assets/placeholder_reverse.png" id="12_dinhu"]
 
-[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("cam", "world_container", "piece_container", "normal_spawnpoint", "inverted_spawnpoint", "top_platform", "bottom_platform")]
+[sub_resource type="Resource" id="Resource_kvpfn"]
+script = ExtResource("2_gee14")
+ui_texture = ExtResource("4_0tnpc")
+packed_scene = ExtResource("3_lnu2h")
+metadata/_custom_type_script = "uid://cpowjncfu48nu"
+
+[sub_resource type="Resource" id="Resource_dinhu"]
+script = ExtResource("2_gee14")
+ui_texture = ExtResource("6_vtaks")
+packed_scene = ExtResource("4_p57ef")
+metadata/_custom_type_script = "uid://cpowjncfu48nu"
+
+[sub_resource type="Resource" id="Resource_kvuet"]
+script = ExtResource("2_gee14")
+ui_texture = ExtResource("4_0tnpc")
+packed_scene = ExtResource("3_iywne")
+metadata/_custom_type_script = "uid://cpowjncfu48nu"
+
+[sub_resource type="Resource" id="Resource_trtic"]
+script = ExtResource("2_gee14")
+ui_texture = ExtResource("9_dinhu")
+packed_scene = ExtResource("8_kvpfn")
+metadata/_custom_type_script = "uid://cpowjncfu48nu"
+
+[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("cam", "world_container", "piece_container", "normal_spawnpoint", "inverted_spawnpoint", "top_platform", "bottom_platform", "next_piece_uis", "invert_count_label", "invert_count_container")]
 script = ExtResource("1_yqjtg")
-piece_scenes = Array[PackedScene]([ExtResource("3_lnu2h"), ExtResource("3_iywne"), ExtResource("4_p57ef")])
+turns_to_win = 15
+piece_configs = Array[ExtResource("2_gee14")]([SubResource("Resource_kvpfn"), SubResource("Resource_dinhu"), SubResource("Resource_kvuet"), SubResource("Resource_trtic")])
 cam = NodePath("Camera2D")
 world_container = NodePath("World")
 piece_container = NodePath("World/Piece Container")
@@ -17,6 +48,9 @@ normal_spawnpoint = NodePath("World/Top Platform/Top Spawn")
 inverted_spawnpoint = NodePath("World/Bottom Platform/Bottom Spawn")
 top_platform = NodePath("World/Top Platform")
 bottom_platform = NodePath("World/Bottom Platform")
+next_piece_uis = [NodePath("HUD/VBoxContainer/PieceSlot/TextureRect"), NodePath("HUD/VBoxContainer/PieceSlot2/TextureRect"), NodePath("HUD/VBoxContainer/PieceSlot3/TextureRect"), NodePath("HUD/VBoxContainer/PieceSlot4/TextureRect")]
+invert_count_label = NodePath("HUD/VBoxContainer2/Label")
+invert_count_container = NodePath("HUD/VBoxContainer2/Panel/TextureRect")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1900951051]
 zoom = Vector2(2, 2)
@@ -60,3 +94,84 @@ scale = Vector2(50, 1)
 position = Vector2(597, 62.999996)
 rotation = 1.5707964
 scale = Vector2(50, 1)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=94172623]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD" unique_id=1035688214]
+offset_left = 1601.0
+offset_top = 185.0
+offset_right = 1729.0
+offset_bottom = 313.0
+
+[node name="PieceSlot" type="Panel" parent="HUD/VBoxContainer" unique_id=300017059]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HUD/VBoxContainer/PieceSlot" unique_id=1356552241]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PieceSlot2" type="Panel" parent="HUD/VBoxContainer" unique_id=872463552]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HUD/VBoxContainer/PieceSlot2" unique_id=1632492523]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PieceSlot3" type="Panel" parent="HUD/VBoxContainer" unique_id=1070248478]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HUD/VBoxContainer/PieceSlot3" unique_id=430575939]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PieceSlot4" type="Panel" parent="HUD/VBoxContainer" unique_id=1260201297]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HUD/VBoxContainer/PieceSlot4" unique_id=1471571402]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HUD" unique_id=1301754996]
+offset_left = 191.0
+offset_top = 209.0
+offset_right = 447.0
+offset_bottom = 557.0
+
+[node name="Panel" type="Panel" parent="HUD/VBoxContainer2" unique_id=258425582]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HUD/VBoxContainer2/Panel" unique_id=1063084520]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_dinhu")
+
+[node name="Label" type="Label" parent="HUD/VBoxContainer2" unique_id=203403625]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "3"
+horizontal_alignment = 1
