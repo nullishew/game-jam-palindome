@@ -6,16 +6,17 @@
 [ext_resource type="PackedScene" uid="uid://b4g4t2trs4wr7" path="res://scenes/platform.tscn" id="3_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://7g6rkmeteclo" path="res://scenes/pieces/block_piece.tscn" id="3_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://cet7ctj3s6hk2" path="res://assets/placeholder_grid_paper.png" id="4_0tnpc"]
+[ext_resource type="Texture2D" uid="uid://co2wawj7rvqr1" path="res://assets/pieces/square_piece/square_piece_idle.png" id="4_kvuet"]
 [ext_resource type="PackedScene" uid="uid://bdajgv04xnnoe" path="res://scenes/death_zone.tscn" id="4_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://c5u6qthot4jji" path="res://scenes/pieces/triangle_piece.tscn" id="4_p57ef"]
 [ext_resource type="Texture2D" uid="uid://bq3ae8khmoe8a" path="res://assets/placeholder_triangle_grid_paper.png" id="6_vtaks"]
 [ext_resource type="PackedScene" uid="uid://diklw5uaphjog" path="res://scenes/pieces/circle_piece.tscn" id="8_kvpfn"]
-[ext_resource type="Texture2D" uid="uid://1pjgivsksw7t" path="res://assets/placeholder_circle_grid_paper.png" id="9_dinhu"]
+[ext_resource type="Texture2D" uid="uid://r1kfta300r5y" path="res://assets/pieces/circle_piece/circle_piece_idle.png" id="9_dinhu"]
 [ext_resource type="Texture2D" uid="uid://dkk1n20ej2r8v" path="res://assets/placeholder_reverse.png" id="12_dinhu"]
 
 [sub_resource type="Resource" id="Resource_kvpfn"]
 script = ExtResource("2_gee14")
-ui_texture = ExtResource("4_0tnpc")
+ui_texture = ExtResource("4_kvuet")
 packed_scene = ExtResource("3_lnu2h")
 metadata/_custom_type_script = "uid://cpowjncfu48nu"
 
@@ -114,6 +115,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+expand_mode = 3
 
 [node name="PieceSlot2" type="Panel" parent="HUD/VBoxContainer" unique_id=872463552]
 custom_minimum_size = Vector2(128, 128)
@@ -126,6 +128,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+expand_mode = 3
 
 [node name="PieceSlot3" type="Panel" parent="HUD/VBoxContainer" unique_id=1070248478]
 custom_minimum_size = Vector2(128, 128)
@@ -138,6 +141,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+expand_mode = 3
 
 [node name="PieceSlot4" type="Panel" parent="HUD/VBoxContainer" unique_id=1260201297]
 custom_minimum_size = Vector2(128, 128)
@@ -150,6 +154,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+expand_mode = 3
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="HUD" unique_id=1301754996]
 offset_left = 191.0

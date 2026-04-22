@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1pjgivsksw7t"
-path="res://.godot/imported/placeholder_circle_grid_paper.png-c60de3e05090b574b3656bd32db1ed5b.ctex"
+uid="uid://r1kfta300r5y"
+path="res://.godot/imported/circle_piece_idle.png-f24377a2d9449c0913d02bc468b1afe4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/placeholder_circle_grid_paper.png"
-dest_files=["res://.godot/imported/placeholder_circle_grid_paper.png-c60de3e05090b574b3656bd32db1ed5b.ctex"]
+source_file="res://assets/pieces/circle_piece/circle_piece_idle.png"
+dest_files=["res://.godot/imported/circle_piece_idle.png-f24377a2d9449c0913d02bc468b1afe4.ctex"]
 
 [params]
 

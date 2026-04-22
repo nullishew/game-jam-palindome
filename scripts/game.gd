@@ -13,10 +13,10 @@ extends Node2D
 @export var inverted_spawnpoint: Node2D
 @export var top_platform: Node2D
 @export var bottom_platform: Node2D
-
 @export var next_piece_uis: Array[TextureRect]
 @export var invert_count_label: Label
 @export var invert_count_container: Control
+@export var min_settle_time: float = 0.5
 
 
 var _piece_sequence: Array[PieceSpawnConfig] = []
@@ -25,6 +25,8 @@ var _placed_pieces: Array[Piece] = []
 var _held_piece: Piece
 
 var _place_timer: float = 0
+var is_gravity_inverted: bool:
+	get: return _is_gravity_inverted
 var _is_gravity_inverted: bool = false
 
 var _state: GameState
@@ -72,6 +74,7 @@ func _enter_state(state: GameState):
 				call_deferred("spawn_piece")
 		GameState.PLACE:
 			_place_timer = min_place_time
+			_settle_timer = 0
 		GameState.INVERT:
 			_place_timer = min_place_time
 			invert_count_container.modulate = Color(1, 0, 0, 0.5)
@@ -103,14 +106,14 @@ func _physics_process(delta: float) -> void:
 					_set_state(GameState.PLACE)
 		GameState.PLACE:
 			_place_timer -= delta
-			if _place_timer <= 0 && are_pieces_settled():
+			if _place_timer <= 0 && are_pieces_settled(delta):
 				if _turn_count % 3 == 0:
 					_set_state(GameState.INVERT)
 				else:
 					_set_state(GameState.HOLD)
 		GameState.INVERT:
 			_place_timer -= delta
-			if _place_timer <= 0 && are_pieces_settled():
+			if _place_timer <= 0 && are_pieces_settled(delta):
 				_set_state(GameState.HOLD)
 
 func spawn_piece():
@@ -208,11 +211,21 @@ func invert():
 		piece.linear_velocity = Vector2.ZERO
 		piece.angular_velocity = 0
 
-func are_pieces_settled() -> bool:
+var _settle_timer: float = 0.0
+func are_pieces_settled(delta: float) -> bool:
+	# for piece in _placed_pieces:
+	# 	if !piece.sleeping:
+	# 		return false
+	# return true
 	for piece in _placed_pieces:
-		if !piece.sleeping:
+		if piece.linear_velocity.length() > 5:
+			_settle_timer = 0
 			return false
-	return true
+		if abs(piece.angular_velocity) > 3:
+			_settle_timer = 0
+			return false
+	_settle_timer += delta
+	return _settle_timer >= min_settle_time
 
 func lose():
 	_set_state(GameState.LOSE)

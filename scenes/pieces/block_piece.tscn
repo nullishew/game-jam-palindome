@@ -2,23 +2,29 @@
 
 [ext_resource type="PhysicsMaterial" uid="uid://dh6cj6si5sd6o" path="res://resources/piece_physics_material.tres" id="1_602mv"]
 [ext_resource type="Script" uid="uid://btsm8qmr8f3pf" path="res://scripts/piece.gd" id="2_m2v3v"]
-[ext_resource type="Texture2D" uid="uid://cet7ctj3s6hk2" path="res://assets/placeholder_grid_paper.png" id="3_3f4gn"]
+[ext_resource type="Texture2D" uid="uid://co2wawj7rvqr1" path="res://assets/pieces/square_piece/square_piece_idle.png" id="3_bjfma"]
+[ext_resource type="Texture2D" uid="uid://bco05sld50h57" path="res://assets/pieces/square_piece/square_piece_moving.png" id="4_hkd64"]
+[ext_resource type="Texture2D" uid="uid://dsvdkvc3mnws4" path="res://assets/pieces/square_piece/square_piece_impact.png" id="5_4mjaa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uwrxv"]
 size = Vector2(32, 32)
 
-[node name="BlockPiece" type="RigidBody2D" unique_id=786190789]
+[node name="BlockPiece" type="RigidBody2D" unique_id=786190789 node_paths=PackedStringArray("sprite")]
 mass = 20.0
 physics_material_override = ExtResource("1_602mv")
 continuous_cd = 2
 linear_damp = 1.5
 angular_damp = 6.0
 script = ExtResource("2_m2v3v")
+sprite = NodePath("Sprite2D")
+idle_texture = ExtResource("3_bjfma")
+impact_texture = ExtResource("5_4mjaa")
+moving_texture = ExtResource("4_hkd64")
 metadata/_custom_type_script = "uid://btsm8qmr8f3pf"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=321147764]
-scale = Vector2(2, 2)
-texture = ExtResource("3_3f4gn")
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_bjfma")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=780094259]
 scale = Vector2(2, 2)

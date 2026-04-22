@@ -2,64 +2,114 @@
 
 [ext_resource type="Script" uid="uid://bq3w7qf1oq40d" path="res://scripts/game_over.gd" id="1_xeevv"]
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wqhvx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xeevv"]
+bg_color = Color(0, 0, 0, 0.32156864)
+
 [node name="GameOver" type="CanvasLayer" unique_id=1361454001 node_paths=PackedStringArray("turn_count_label", "menu_btn", "replay_btn")]
 script = ExtResource("1_xeevv")
-turn_count_label = NodePath("Label2")
-menu_btn = NodePath("Menu Button")
-replay_btn = NodePath("Replay Button")
+turn_count_label = NodePath("Panel/Turn Count/HBoxContainer2/Turn Count Label")
+menu_btn = NodePath("Panel/Menu Button")
+replay_btn = NodePath("Panel/Replay Button")
 
-[node name="Lose Label" type="Label" parent="." unique_id=1809826703]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=610277042]
+root_node = NodePath("")
+libraries/ = SubResource("AnimationLibrary_wqhvx")
+
+[node name="Panel" type="Panel" parent="." unique_id=140789070]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xeevv")
+
+[node name="Turn Count" type="Control" parent="Panel" unique_id=314995625]
+layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 549.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 150
-text = "faaaack
-/ (T_T) \\"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Turn Count" unique_id=1002859141]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 127.0
+offset_bottom = 210.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Your" type="Label" parent="Panel/Turn Count/HBoxContainer" unique_id=1265249547]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "your"
 horizontal_alignment = 1
 
-[node name="Replay Button" type="Button" parent="." unique_id=713294060]
+[node name="Monstrosity" type="Label" parent="Panel/Turn Count/HBoxContainer" unique_id=1430901495]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = " monstrosity"
+horizontal_alignment = 1
+
+[node name="Lasted" type="Label" parent="Panel/Turn Count/HBoxContainer" unique_id=1136039942]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = " lasted"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/Turn Count" unique_id=659556028]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 226.0
+offset_bottom = 363.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Turn Count Label" type="Label" parent="Panel/Turn Count/HBoxContainer2" unique_id=543115791]
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "67"
+horizontal_alignment = 1
+
+[node name="Turns" type="Label" parent="Panel/Turn Count/HBoxContainer2" unique_id=393414209]
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = " turns"
+horizontal_alignment = 1
+
+[node name="Emote Label" type="Label" parent="Panel" unique_id=421588151]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -250.0
+offset_top = 424.0
+offset_right = 273.0
+offset_bottom = 629.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 150
+text = "/ (T_T) \\"
+horizontal_alignment = 1
+
+[node name="Replay Button" type="Button" parent="Panel" unique_id=713294060]
+layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.15260416
 anchor_bottom = 0.16296296
 offset_left = 1053.0
 offset_top = 741.0
-offset_right = 1061.0
-offset_bottom = 749.0
+offset_right = 1183.8959
+offset_bottom = 797.4815
 theme_override_font_sizes/font_size = 40
 text = "Replay"
 metadata/_edit_use_anchors_ = true
 
-[node name="Menu Button" type="Button" parent="." unique_id=1082587947]
+[node name="Menu Button" type="Button" parent="Panel" unique_id=1082587947]
+layout_mode = 0
 offset_left = 595.0
 offset_top = 746.0
 offset_right = 852.0
 offset_bottom = 911.0
 theme_override_font_sizes/font_size = 40
 text = "Menu"
-
-[node name="Label" type="Label" parent="." unique_id=1800810477]
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -68.5
-offset_bottom = 68.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 60
-text = "your monstrosity lasted"
-horizontal_alignment = 1
-
-[node name="Label2" type="Label" parent="." unique_id=1050749010]
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = 44.0
-offset_bottom = 181.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 100
-text = "67 turns"
-horizontal_alignment = 1
