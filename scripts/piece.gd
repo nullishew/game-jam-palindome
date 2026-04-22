@@ -61,11 +61,11 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 
 	# detect falling onto things
 	var vel_along_g: float = abs(linear_velocity.y)
-	if _prev_vel_y > 2 and vel_along_g < 2:
+	if _prev_vel_y > 20 and vel_along_g < 2:
 		_impact_timer = impact_sprite_time
 	_prev_vel_y = vel_along_g
 	var in_contact := state.get_contact_count() > 0
-	if not _was_in_contact and in_contact and _prev_vel_y > 2:
+	if not _was_in_contact and in_contact and _prev_vel_y > 30:
 		_impact_timer = impact_sprite_time
 	_was_in_contact = in_contact
 
