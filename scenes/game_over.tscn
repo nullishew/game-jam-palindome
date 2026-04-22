@@ -2,51 +2,64 @@
 
 [ext_resource type="Script" uid="uid://bq3w7qf1oq40d" path="res://scripts/game_over.gd" id="1_xeevv"]
 
-[node name="GameOver" type="CanvasLayer" unique_id=1361454001 node_paths=PackedStringArray("win_label", "lose_label", "menu_btn", "replay_btn")]
+[node name="GameOver" type="CanvasLayer" unique_id=1361454001 node_paths=PackedStringArray("turn_count_label", "menu_btn", "replay_btn")]
 script = ExtResource("1_xeevv")
-win_label = NodePath("Win Label")
-lose_label = NodePath("Lose Label")
+turn_count_label = NodePath("Label2")
 menu_btn = NodePath("Menu Button")
 replay_btn = NodePath("Replay Button")
 
 [node name="Lose Label" type="Label" parent="." unique_id=1809826703]
-visible = false
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 549.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 200
+theme_override_font_sizes/font_size = 150
 text = "faaaack
 / (T_T) \\"
-horizontal_alignment = 1
-
-[node name="Win Label" type="Label" parent="." unique_id=1219819614]
-visible = false
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 549.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 200
-text = "heheheha
-grrrrr"
 horizontal_alignment = 1
 
 [node name="Replay Button" type="Button" parent="." unique_id=713294060]
 anchors_preset = -1
 anchor_right = 0.15260416
 anchor_bottom = 0.16296296
-offset_left = 889.0
-offset_top = 596.0
-offset_right = 897.0
-offset_bottom = 604.0
+offset_left = 1053.0
+offset_top = 741.0
+offset_right = 1061.0
+offset_bottom = 749.0
 theme_override_font_sizes/font_size = 40
 text = "Replay"
 metadata/_edit_use_anchors_ = true
 
 [node name="Menu Button" type="Button" parent="." unique_id=1082587947]
-offset_left = 894.0
-offset_top = 825.0
-offset_right = 1151.0
-offset_bottom = 990.0
+offset_left = 595.0
+offset_top = 746.0
+offset_right = 852.0
+offset_bottom = 911.0
 theme_override_font_sizes/font_size = 40
 text = "Menu"
+
+[node name="Label" type="Label" parent="." unique_id=1800810477]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -68.5
+offset_bottom = 68.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 60
+text = "your monstrosity lasted"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="." unique_id=1050749010]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 44.0
+offset_bottom = 181.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "67 turns"
+horizontal_alignment = 1

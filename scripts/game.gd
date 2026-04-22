@@ -19,7 +19,6 @@ extends Node2D
 @export var invert_count_container: Control
 
 
-var _unused_pieces: Array[PieceSpawnConfig]
 var _piece_sequence: Array[PieceSpawnConfig] = []
 var _curr_piece_index: int = 0
 var _placed_pieces: Array[Piece] = []
@@ -68,7 +67,7 @@ func _enter_state(state: GameState):
 				return
 			resize_platforms()
 			_turn_count += 1
-			invert_count_label.text = str(wrap(-_turn_count, 0, 3))
+			invert_count_label.text = str(1 + wrap(-_turn_count, 0, 3))
 			if !_held_piece:
 				call_deferred("spawn_piece")
 		GameState.PLACE:
@@ -76,22 +75,19 @@ func _enter_state(state: GameState):
 		GameState.INVERT:
 			_place_timer = min_place_time
 			invert_count_container.modulate = Color(1, 0, 0, 0.5)
+			invert_count_label.visible = false
 			invert()
-		GameState.WIN:
-			GameManager.is_win = true
-			SceneManager.open_game_over_menu()
-			# print("you win")
 		GameState.LOSE:
-			GameManager.is_win = false
+			GameManager.turns_survived = _turn_count
 			SceneManager.open_game_over_menu()
 			# print("you lose")
-			pass
 	_state = state
 
 func _exit_state(state: GameState):
 	match state:
 		GameState.INVERT:
 			invert_count_container.modulate = Color(1, 1, 1, 1)
+			invert_count_label.visible = true
 
 func _physics_process(delta: float) -> void:
 	update_platform_size(delta)
