@@ -2,6 +2,7 @@ class_name Game
 extends Node2D
 
 @export var turns_to_win: int = 12
+@export var line: Line2D
 
 @export var piece_configs: Array[PieceSpawnConfig]
 
@@ -56,6 +57,7 @@ func _ready() -> void:
 	_bottom_platform_target_pos_y = bottom_platform.global_position.y
 	_set_state(GameState.HOLD)
 
+
 func _set_state(state: GameState):
 	if state != null:
 		_exit_state(_state)
@@ -92,7 +94,31 @@ func _exit_state(state: GameState):
 			invert_count_container.modulate = Color(1, 1, 1, 1)
 			invert_count_label.visible = true
 
+func _raycast(from: Vector2, to: Vector2) -> Vector2:
+	var space = get_world_2d().direct_space_state
+	var query = PhysicsRayQueryParameters2D.create(from, to)
+	query.exclude = [_held_piece]
+	var result = space.intersect_ray(query)
+	return result.position if result else to
+
+func _process(delta: float) -> void:
+	if _held_piece and _state == GameState.HOLD:
+		var points = PackedVector2Array()
+		var from_y := inverted_spawnpoint.global_position.y if _is_gravity_inverted else normal_spawnpoint.global_position.y
+		var from: Vector2 = Vector2(_held_piece.global_position.x, from_y)
+		var max_y := top_platform.global_position.y if _is_gravity_inverted else bottom_platform.global_position.y
+		var to := _raycast(from, Vector2(_held_piece.global_position.x, max_y))
+		points.append(line.to_local(from))
+		points.append(line.to_local(to))
+		line.points = points
+
+		line.visible = true
+	else:
+		line.visible = false
+
 func _physics_process(delta: float) -> void:
+	
+
 	update_platform_size(delta)
 	call_deferred("update_camera", delta)
 
