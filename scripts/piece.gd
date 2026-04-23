@@ -22,7 +22,7 @@ var _prev_vel_y: float = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if is_player_piece:
-		hold()
+		select_piece()
 		GameManager.game.hold(self)
 	if impact_texture:
 		contact_monitor = true
@@ -83,21 +83,18 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 	_was_in_contact = in_contact
 
 
-func hold():
+func select_piece():
 	freeze = true
 
 
 func release():
 	freeze = false
 
-func despawn():
-	call_deferred("queue_free")
-
 
 var _prev_collision_mask
 var _prev_collision_layer
 
-func save_hide():
+func hold_piece_hide():
 	hide()
 	freeze = true
 	sleeping = true
@@ -106,10 +103,12 @@ func save_hide():
 	collision_layer = 0
 	collision_mask = 0
 
-func unsave_show():
-	show()
+func unhold_piece_show(pos: Vector2):
 	freeze = true
 	sleeping = true
+	global_position = pos
 	collision_layer = _prev_collision_layer
 	collision_mask = _prev_collision_mask
+	await get_tree().physics_frame
+	call_deferred("show")
 	

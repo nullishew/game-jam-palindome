@@ -2,7 +2,7 @@ class_name HUD
 extends CanvasLayer
 
 @export var next_piece_uis: Array[TextureRect]
-@export var save_slot_ui: TextureRect
+@export var hold_slot_ui: TextureRect
 
 @export var invert_count_label: Label
 @export var invert_count_container: Control
@@ -22,9 +22,9 @@ func _ready() -> void:
 			invert_count_label.visible = true
 	)
 	GameManager.turn_incremented.connect(_on_turn_incremented)
-	GameManager.saved_piece_updated.connect(
+	GameManager.hold_piece_updated.connect(
 		func(piece_config: PieceSpawnConfig):
-			save_slot_ui.texture = piece_config.ui_texture
+			hold_slot_ui.texture = piece_config.ui_texture
 	)
 
 

@@ -16,14 +16,17 @@ extends Node2D
 @export var min_settle_time: float = 0.5
 
 
-@export var invert_turn_count: int = 4 
+@export var invert_turn_count: int = 4
 
-var _saved_piece_config: PieceSpawnConfig = null
-var _saved_piece: Piece = null
+
 var _piece_sequence: Array[PieceSpawnConfig] = []
-var _curr_piece_index: int = -1
 var _placed_pieces: Array[Piece] = []
-var _held_piece: Piece
+
+var _hold_piece_config: PieceSpawnConfig = null
+var _hold_piece: Piece = null
+var _curr_piece_index: int = -1
+var _curr_piece: Piece
+var _curr_piece_pos: Vector2 = Vector2.ZERO
 
 var _place_timer: float = 0
 var is_gravity_inverted: bool:
@@ -57,8 +60,8 @@ func _ready() -> void:
 	)
 	_top_platform_target_pos_y = top_platform.global_position.y
 	_bottom_platform_target_pos_y = bottom_platform.global_position.y
-	_saved_piece_config = null
-	_saved_piece = null
+	_hold_piece_config = null
+	_hold_piece = null
 	_set_state(GameState.HOLD)
 
 func _input(event):
@@ -76,7 +79,7 @@ func _enter_state(state: GameState):
 			resize_platforms()
 			_turn_count += 1
 			GameManager.turn_incremented.emit(_turn_count)
-			if !_held_piece:
+			if !_curr_piece:
 				call_deferred("spawn_piece")
 		GameState.PLACE:
 			_place_timer = min_place_time
@@ -98,17 +101,17 @@ func _exit_state(state: GameState):
 func _raycast(from: Vector2, to: Vector2) -> Vector2:
 	var space = get_world_2d().direct_space_state
 	var query = PhysicsRayQueryParameters2D.create(from, to)
-	query.exclude = [_held_piece]
+	query.exclude = [_curr_piece]
 	var result = space.intersect_ray(query)
 	return result.position if result else to
 
 func _process(delta: float) -> void:
-	if _held_piece and _state == GameState.HOLD:
+	if _curr_piece and _state == GameState.HOLD:
 		var points = PackedVector2Array()
 		var from_y := inverted_spawnpoint.global_position.y if _is_gravity_inverted else normal_spawnpoint.global_position.y
-		var from: Vector2 = Vector2(_held_piece.global_position.x, from_y)
+		var from: Vector2 = Vector2(_curr_piece.global_position.x, from_y)
 		var max_y := top_platform.global_position.y if _is_gravity_inverted else bottom_platform.global_position.y
-		var to := _raycast(from, Vector2(_held_piece.global_position.x, max_y))
+		var to := _raycast(from, Vector2(_curr_piece.global_position.x, max_y))
 		points.append(line.to_local(from))
 		points.append(line.to_local(to))
 		line.points = points
@@ -125,32 +128,33 @@ func _physics_process(delta: float) -> void:
 
 	match _state:
 		GameState.HOLD:
-			if Input.is_action_just_pressed("save_piece"):
-				if _held_piece:
-					var temp_config: PieceSpawnConfig = _saved_piece_config
-					_saved_piece_config = _piece_sequence[_curr_piece_index]
+			if Input.is_action_just_pressed("hold_piece"):
+				if _curr_piece:
+					var temp_config: PieceSpawnConfig = _hold_piece_config
+					_hold_piece_config = _piece_sequence[_curr_piece_index]
 					_piece_sequence[_curr_piece_index] = temp_config
-					GameManager.saved_piece_updated.emit(_saved_piece_config)
-					_held_piece.save_hide()
-					var temp_piece = _saved_piece
-					_saved_piece = _held_piece
-					_held_piece = null
+					GameManager.hold_piece_updated.emit(_hold_piece_config)
+					_curr_piece.hold_piece_hide()
+					var temp_piece = _hold_piece
+					_hold_piece = _curr_piece
+					_curr_piece = null
 					if temp_piece:
-						temp_piece.unsave_show()
-						_held_piece = temp_piece
+						temp_piece.unhold_piece_show(_curr_piece_pos)
+						_curr_piece = temp_piece
 					else:
-						call_deferred("spawn_piece", false)
+						call_deferred("spawn_piece", _curr_piece_pos)
 					
 			else:
-				if _held_piece:
-					_held_piece.position.y = inverted_spawnpoint.global_position.y if _is_gravity_inverted else normal_spawnpoint.global_position.y
+				if _curr_piece:
+					_curr_piece.position.y = inverted_spawnpoint.global_position.y if _is_gravity_inverted else normal_spawnpoint.global_position.y
 					if _mouse_moved:
-						_held_piece.position.x = get_global_mouse_position().x
+						_curr_piece.position.x = get_global_mouse_position().x
 					else:
-						_held_piece.position.x += Input.get_axis("move_piece_left", "move_piece_right") * 5
-					_held_piece.position.x = clamp(_held_piece.position.x, -200, 200)
+						_curr_piece.position.x += Input.get_axis("move_piece_left", "move_piece_right") * 5
+					_curr_piece.position.x = clamp(_curr_piece.position.x, -200, 200)
+					_curr_piece_pos = _curr_piece.global_position
 					if Input.is_action_just_pressed("drop_piece"):
-						release(_held_piece)
+						release(_curr_piece)
 						_set_state(GameState.PLACE)
 		GameState.PLACE:
 			_place_timer -= delta
@@ -166,9 +170,8 @@ func _physics_process(delta: float) -> void:
 	
 	_mouse_moved = false
 
-func spawn_piece(is_swap: bool = false):
-	if !is_swap:
-		_curr_piece_index += 1
+func spawn_piece(custom_spawn_point: Vector2 = Vector2.ZERO):
+	_curr_piece_index += 1
 	while _piece_sequence.size() < _curr_piece_index + 5:
 		var next_cycle: Array[PieceSpawnConfig] = piece_configs.duplicate()
 		next_cycle.shuffle()
@@ -177,7 +180,7 @@ func spawn_piece(is_swap: bool = false):
 	var piece: Piece = piece_scene.instantiate()
 	piece.is_player_piece = true
 	piece.freeze = true
-	var spawnpoint: Vector2 = [normal_spawnpoint.global_position, inverted_spawnpoint.global_position][int(_is_gravity_inverted)]
+	var spawnpoint: Vector2 = custom_spawn_point if custom_spawn_point != Vector2.ZERO else [normal_spawnpoint.global_position, inverted_spawnpoint.global_position][int(_is_gravity_inverted)]
 	var offset: Vector2 = Vector2(randf_range(-0.5, 0.5), 0)
 	piece.global_position = spawnpoint + offset
 	piece.global_rotation = randi_range(0, 3) * PI / 2
@@ -189,12 +192,12 @@ func spawn_piece(is_swap: bool = false):
 
 
 func hold(piece: Piece):
-	if _held_piece: return
-	_held_piece = piece
+	if _curr_piece: return
+	_curr_piece = piece
 
 func release(piece: Piece):
-	if !_held_piece: return
-	_held_piece = null
+	if !_curr_piece: return
+	_curr_piece = null
 	piece.release()
 	_placed_pieces.append(piece)
 

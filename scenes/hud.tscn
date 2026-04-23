@@ -2,11 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://dkk1n20ej2r8v" path="res://assets/placeholder_reverse.png" id="1_ahhtf"]
 [ext_resource type="Script" uid="uid://l5ccoua1lf3k" path="res://scenes/hud.gd" id="1_oo0fn"]
+[ext_resource type="Texture2D" uid="uid://bdprmv1mlcai2" path="res://assets/slot_ui.png" id="3_5ysmq"]
 
-[node name="HUD" type="CanvasLayer" unique_id=827572359 node_paths=PackedStringArray("next_piece_uis", "save_slot_ui", "invert_count_label", "invert_count_container")]
+[node name="HUD" type="CanvasLayer" unique_id=827572359 node_paths=PackedStringArray("next_piece_uis", "hold_slot_ui", "invert_count_label", "invert_count_container")]
 script = ExtResource("1_oo0fn")
-next_piece_uis = [NodePath("MarginContainer/Control/Queue VBoxContainer/PieceSlot/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/PieceSlot2/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/PieceSlot3/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/PieceSlot4/MarginContainer/TextureRect")]
-save_slot_ui = NodePath("MarginContainer/Control/SavePieceSlot/MarginContainer/TextureRect")
+next_piece_uis = [NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 1/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 2/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 3/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 4/MarginContainer/TextureRect")]
+hold_slot_ui = NodePath("MarginContainer/Control/Hold VBoxContainer/Hold Slot/MarginContainer/TextureRect")
 invert_count_label = NodePath("MarginContainer/Control/Invert VBoxContainer/Label")
 invert_count_container = NodePath("MarginContainer/Control/Invert VBoxContainer")
 
@@ -17,99 +18,120 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 200
-theme_override_constants/margin_top = 100
+theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 200
-theme_override_constants/margin_bottom = 100
+theme_override_constants/margin_bottom = 50
 
 [node name="Control" type="Control" parent="MarginContainer" unique_id=38956023]
 layout_mode = 2
 
 [node name="Queue VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control" unique_id=273226338]
 layout_mode = 1
-anchors_preset = 1
+anchors_preset = 6
 anchor_left = 1.0
+anchor_top = 0.5
 anchor_right = 1.0
-offset_left = -200.0
-offset_bottom = 812.0
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -460.0
+offset_bottom = 460.0
 grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 16
 
-[node name="PieceSlot" type="Panel" parent="MarginContainer/Control/Queue VBoxContainer" unique_id=1376208725]
-custom_minimum_size = Vector2(200, 200)
+[node name="Label" type="Label" parent="MarginContainer/Control/Queue VBoxContainer" unique_id=921376122]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 10
+theme_override_font_sizes/font_size = 64
+text = "Next"
+horizontal_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot" unique_id=1564300096]
+[node name="Queue Slot 1" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer" unique_id=244912474]
+self_modulate = Color(1.666, 1.666, 1.666, 1)
+layout_mode = 2
+texture = ExtResource("3_5ysmq")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/Queue VBoxContainer/Queue Slot 1" unique_id=1333533479]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot/MarginContainer" unique_id=310413405]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer/Queue Slot 1/MarginContainer" unique_id=1895583001]
 layout_mode = 2
 expand_mode = 3
 
-[node name="PieceSlot2" type="Panel" parent="MarginContainer/Control/Queue VBoxContainer" unique_id=1615561985]
-custom_minimum_size = Vector2(200, 200)
+[node name="Queue Slot 2" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer" unique_id=1341694763]
+self_modulate = Color(1.666, 1.666, 1.666, 1)
 layout_mode = 2
+texture = ExtResource("3_5ysmq")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot2" unique_id=98040842]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/Queue VBoxContainer/Queue Slot 2" unique_id=53376768]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot2/MarginContainer" unique_id=282931393]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer/Queue Slot 2/MarginContainer" unique_id=756677752]
 layout_mode = 2
 expand_mode = 3
 
-[node name="PieceSlot3" type="Panel" parent="MarginContainer/Control/Queue VBoxContainer" unique_id=1885357274]
-custom_minimum_size = Vector2(200, 200)
+[node name="Queue Slot 3" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer" unique_id=1199023278]
+self_modulate = Color(1.666, 1.666, 1.666, 1)
 layout_mode = 2
+texture = ExtResource("3_5ysmq")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot3" unique_id=1944175538]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/Queue VBoxContainer/Queue Slot 3" unique_id=80938483]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot3/MarginContainer" unique_id=93737911]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer/Queue Slot 3/MarginContainer" unique_id=2062845380]
 layout_mode = 2
 expand_mode = 3
 
-[node name="PieceSlot4" type="Panel" parent="MarginContainer/Control/Queue VBoxContainer" unique_id=1211720691]
-custom_minimum_size = Vector2(200, 200)
+[node name="Queue Slot 4" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer" unique_id=1467816612]
+self_modulate = Color(1.666, 1.666, 1.666, 1)
 layout_mode = 2
+texture = ExtResource("3_5ysmq")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot4" unique_id=2122950708]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/Queue VBoxContainer/Queue Slot 4" unique_id=1286694369]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot4/MarginContainer" unique_id=1701795310]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer/Queue Slot 4/MarginContainer" unique_id=577192039]
 layout_mode = 2
 expand_mode = 3
 
@@ -141,24 +163,40 @@ theme_override_font_sizes/font_size = 64
 text = "3"
 horizontal_alignment = 1
 
-[node name="SavePieceSlot" type="Panel" parent="MarginContainer/Control" unique_id=1549805069]
-custom_minimum_size = Vector2(200, 200)
+[node name="Hold VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control" unique_id=2129426233]
 layout_mode = 0
-offset_right = 200.0
-offset_bottom = 200.0
+offset_right = 192.0
+offset_bottom = 292.0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/SavePieceSlot" unique_id=600909603]
+[node name="Label" type="Label" parent="MarginContainer/Control/Hold VBoxContainer" unique_id=1977253416]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 10
+theme_override_font_sizes/font_size = 64
+text = "Hold"
+horizontal_alignment = 1
+
+[node name="Hold Slot" type="TextureRect" parent="MarginContainer/Control/Hold VBoxContainer" unique_id=1257151179]
+self_modulate = Color(1.666, 1.666, 1.666, 1)
+layout_mode = 2
+texture = ExtResource("3_5ysmq")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/Hold VBoxContainer/Hold Slot" unique_id=600909603]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/SavePieceSlot/MarginContainer" unique_id=472768435]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Hold VBoxContainer/Hold Slot/MarginContainer" unique_id=472768435]
 layout_mode = 2
 expand_mode = 3
