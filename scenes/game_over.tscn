@@ -2,20 +2,119 @@
 
 [ext_resource type="Script" uid="uid://bq3w7qf1oq40d" path="res://scripts/game_over.gd" id="1_xeevv"]
 
+[sub_resource type="Animation" id="Animation_xeevv"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/Game Over Menu/Turn Count Label:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/Game Over Menu/Menu Button:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Panel/Game Over Menu/Replay Button:position:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_wqhvx"]
+resource_name = "game_over"
+length = 1.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.16666667, -0.16666667, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/Game Over Menu/Turn Count Label:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(-1200, 0, 0, 0.40000004, 0, -1200, 0, 0, 0.3333333, 1184.9766, 0, -0.29999995, -97.65258, 0, 0),
+"times": PackedFloat32Array(0, 0.5, 1.5)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel/Game Over Menu/Menu Button:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1200, -0.25, 0, 0.25, 0, 1200, -0.25, 0, 0.3333333, -1192.4883, 0, -0.26666665, 60.093895, 0, 0),
+"times": PackedFloat32Array(0, 0.5, 1.5)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Panel/Game Over Menu/Replay Button:position:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(-1200, -0.25, 0, 0.25, 0, -1200, -0.25, 0, 0.3333333, 1192.4883, 0, -0.29999995, -15.023474, 0, 0),
+"times": PackedFloat32Array(0, 0.5, 1.5)
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wqhvx"]
+_data = {
+&"RESET": SubResource("Animation_xeevv"),
+&"game_over": SubResource("Animation_wqhvx")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xeevv"]
 bg_color = Color(0, 0, 0, 0.32156864)
 
 [node name="GameOver" type="CanvasLayer" unique_id=1361454001 node_paths=PackedStringArray("turn_count_label", "menu_btn", "replay_btn")]
 script = ExtResource("1_xeevv")
-turn_count_label = NodePath("Panel/VBoxContainer/Turn Count Label")
-menu_btn = NodePath("Panel/VBoxContainer/Menu Button")
-replay_btn = NodePath("Panel/VBoxContainer/Replay Button")
+turn_count_label = NodePath("Panel/Game Over Menu/Turn Count Label")
+menu_btn = NodePath("Panel/Game Over Menu/Menu Button")
+replay_btn = NodePath("Panel/Game Over Menu/Replay Button")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=610277042]
-root_node = NodePath("")
 libraries/ = SubResource("AnimationLibrary_wqhvx")
+autoplay = &"game_over"
 
 [node name="Panel" type="Panel" parent="." unique_id=140789070]
 anchors_preset = 15
@@ -25,18 +124,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_xeevv")
 
-[node name="Shrug" type="Label" parent="Panel" unique_id=421588151]
-layout_mode = 0
-offset_left = 1328.0
-offset_top = 163.0
-offset_right = 1933.0
-offset_bottom = 369.0
-rotation = 0.5235988
-theme_override_font_sizes/font_size = 150
-text = "¯\\_(ツ)_/¯"
-horizontal_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=652553672]
+[node name="Game Over Menu" type="Control" parent="Panel" unique_id=1070689903]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -44,38 +132,59 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -225.0
-offset_top = -290.5
+offset_top = -290.50024
 offset_right = 225.0
-offset_bottom = 290.5
+offset_bottom = 290.50024
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Turn Count Label" type="Label" parent="Panel/VBoxContainer" unique_id=543115791]
-layout_mode = 2
+[node name="Turn Count Label" type="Label" parent="Panel/Game Over Menu" unique_id=543115791]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -284.0
+offset_right = 225.00562
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 200
 text = "67"
 horizontal_alignment = 1
 
-[node name="Menu Button" type="Button" parent="Panel/VBoxContainer" unique_id=1082587947]
+[node name="Menu Button" type="Button" parent="Panel/Game Over Menu" unique_id=1082587947]
 custom_minimum_size = Vector2(450, 150)
-layout_mode = 2
+layout_mode = 0
+offset_top = 277.0
+offset_right = 450.00073
+offset_bottom = 427.0
 theme_override_font_sizes/font_size = 40
 text = "Menu"
 
-[node name="Replay Button" type="Button" parent="Panel/VBoxContainer" unique_id=713294060]
+[node name="Replay Button" type="Button" parent="Panel/Game Over Menu" unique_id=713294060]
 custom_minimum_size = Vector2(450, 150)
-layout_mode = 2
+layout_mode = 0
+offset_top = 431.0
+offset_right = 450.0
+offset_bottom = 581.0
 theme_override_font_sizes/font_size = 40
 text = "Replay"
 metadata/_edit_use_anchors_ = true
 
 [node name="Crash Out" type="Label" parent="Panel" unique_id=1948264922]
-layout_mode = 0
-offset_left = 51.0
-offset_top = 473.99997
-offset_right = 656.0
-offset_bottom = 679.99994
-rotation = -0.5235988
-theme_override_font_sizes/font_size = 150
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -172.0
+offset_bottom = 170.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 250
 text = "/(T_T)\\"
 horizontal_alignment = 1

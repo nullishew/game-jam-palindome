@@ -1,47 +1,186 @@
 [gd_scene format=3 uid="uid://ccl1hgonvibm7"]
 
 [ext_resource type="Script" uid="uid://cujpe7u8wmpkh" path="res://scripts/menu.gd" id="1_yqeox"]
+[ext_resource type="Texture2D" uid="uid://2wssfgu7rva8" path="res://assets/pixel.png" id="2_vjb58"]
+[ext_resource type="Texture2D" uid="uid://r1kfta300r5y" path="res://assets/pieces/circle_piece/circle_piece_idle.png" id="3_con2f"]
+[ext_resource type="Texture2D" uid="uid://did35gbm72b6b" path="res://assets/pieces/i_piece/i_piece_idle.png" id="4_mhnvy"]
+[ext_resource type="Texture2D" uid="uid://co2wawj7rvqr1" path="res://assets/pieces/square_piece/square_piece_idle.png" id="5_g3eks"]
+[ext_resource type="Texture2D" uid="uid://c63qiv4kfv0bd" path="res://assets/pieces/triangle_piece/triangle_piece_idle.png" id="6_v86rl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g3eks"]
+bg_color = Color(0, 0, 0, 0.36078432)
 
 [node name="Menu" type="CanvasLayer" unique_id=558575991 node_paths=PackedStringArray("start_btn")]
 script = ExtResource("1_yqeox")
-start_btn = NodePath("Start Button")
+start_btn = NodePath("Panel/MarginContainer/Control/Start Button")
 
-[node name="Title Label" type="Label" parent="." unique_id=685550178]
-offset_left = 90.0
-offset_top = 162.0
-offset_right = 1120.0
-offset_bottom = 435.0
-theme_override_font_sizes/font_size = 200
+[node name="Background" type="TextureRect" parent="." unique_id=165843203]
+self_modulate = Color(0.84313726, 0.84705883, 1, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_vjb58")
+
+[node name="Control" type="Control" parent="Background" unique_id=2020022424]
+anchors_preset = 0
+offset_left = -44.0
+offset_top = -31.0
+offset_right = -4.0
+offset_bottom = 9.0
+scale = Vector2(1.1, 1.1)
+
+[node name="TextureRect" type="TextureRect" parent="Background/Control" unique_id=341963490]
+layout_mode = 0
+offset_left = 465.85715
+offset_top = 228.85715
+offset_right = 1012.8572
+offset_bottom = 775.8572
+texture = ExtResource("3_con2f")
+
+[node name="TextureRect11" type="TextureRect" parent="Background/Control" unique_id=1749762920]
+layout_mode = 0
+offset_left = 80.952385
+offset_top = 387.85715
+offset_right = 470.9524
+offset_bottom = 775.8572
+texture = ExtResource("5_g3eks")
+
+[node name="TextureRect3" type="TextureRect" parent="Background/Control" unique_id=1882177172]
+layout_mode = 0
+offset_left = 189.85715
+offset_top = 102.85715
+offset_right = 481.85715
+offset_bottom = 394.85715
+texture = ExtResource("5_g3eks")
+
+[node name="TextureRect5" type="TextureRect" parent="Background/Control" unique_id=2130805318]
+layout_mode = 0
+offset_left = 1749.857
+offset_top = 112.85715
+offset_right = 1939.153
+offset_bottom = 870.0408
+rotation = -4.712389
+texture = ExtResource("4_mhnvy")
+
+[node name="TextureRect6" type="TextureRect" parent="Background/Control" unique_id=1608130145]
+layout_mode = 0
+offset_left = 1625.857
+offset_top = 301.85715
+offset_right = 1744.857
+offset_bottom = 777.8572
+texture = ExtResource("4_mhnvy")
+expand_mode = 1
+
+[node name="TextureRect12" type="TextureRect" parent="Background/Control" unique_id=65535440]
+layout_mode = 0
+offset_left = 1052.857
+offset_top = 301.85715
+offset_right = 1329.857
+offset_bottom = 578.8572
+texture = ExtResource("3_con2f")
+
+[node name="TextureRect8" type="TextureRect" parent="Background/Control" unique_id=650536422]
+layout_mode = 0
+offset_left = 994.8572
+offset_top = 363.85715
+offset_right = 1250.8572
+offset_bottom = 619.8572
+rotation = 3.1415927
+texture = ExtResource("6_v86rl")
+
+[node name="TextureRect10" type="TextureRect" parent="Background/Control" unique_id=208815360]
+layout_mode = 0
+offset_left = 1324.7699
+offset_top = 771.85706
+offset_right = 1654.5249
+offset_bottom = 1101.6119
+rotation = 8.63938
+texture = ExtResource("6_v86rl")
+
+[node name="TextureRect9" type="TextureRect" parent="Background/Control" unique_id=1212766779]
+layout_mode = 0
+offset_left = 738.8572
+offset_top = 104.85715
+offset_right = 994.8572
+offset_bottom = 360.85715
+rotation = 1.5707964
+texture = ExtResource("6_v86rl")
+
+[node name="TextureRect13" type="TextureRect" parent="Background/Control" unique_id=112338587]
+layout_mode = 0
+offset_left = 1323.857
+offset_top = 475.53757
+offset_right = 1625.1766
+offset_bottom = 776.8572
+texture = ExtResource("5_g3eks")
+
+[node name="Panel" type="Panel" parent="." unique_id=1141629413]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g3eks")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=2144717107]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+metadata/_edit_lock_ = true
+
+[node name="Control" type="Control" parent="Panel/MarginContainer" unique_id=1474930338]
+layout_mode = 2
+
+[node name="Title Shadow Label" type="Label" parent="Panel/MarginContainer/Control" unique_id=1847810669]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 8.0
+offset_bottom = 350.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.15686275, 0.15686275, 0.15686275, 0.78431374)
+theme_override_colors/font_outline_color = Color(0.15686275, 0.15686275, 0.15686275, 0.78431374)
+theme_override_constants/outline_size = 30
+theme_override_font_sizes/font_size = 250
 text = "Palindome"
+horizontal_alignment = 1
 
-[node name="Platform movement Label" type="Label" parent="." unique_id=339504273]
-offset_left = 126.0
-offset_top = 419.0
-offset_right = 456.0
-offset_bottom = 442.0
-theme_override_font_sizes/font_size = 40
-text = "Arrow keys to move platforms horizontally"
+[node name="Title Label" type="Label" parent="Panel/MarginContainer/Control" unique_id=685550178]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -644.0
+offset_right = 644.0
+offset_bottom = 342.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.37254903)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 30
+theme_override_font_sizes/font_size = 250
+text = "Palindome"
+horizontal_alignment = 1
 
-[node name="Platform drop Label" type="Label" parent="." unique_id=840895616]
-offset_left = 134.0
-offset_top = 504.0
-offset_right = 446.0
-offset_bottom = 559.0
-theme_override_font_sizes/font_size = 40
-text = "space to release"
-
-[node name="Gravity Label" type="Label" parent="." unique_id=799579009]
-offset_left = 142.0
-offset_top = 597.0
-offset_right = 994.0
-offset_bottom = 652.0
-theme_override_font_sizes/font_size = 40
-text = "gravity does weird things every three moves"
-
-[node name="Start Button" type="Button" parent="." unique_id=1305181468]
-offset_left = 163.0
-offset_top = 774.0
-offset_right = 327.0
-offset_bottom = 891.0
-theme_override_font_sizes/font_size = 40
+[node name="Start Button" type="Button" parent="Panel/MarginContainer/Control" unique_id=1305181468]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -213.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 150
 text = "Start"
