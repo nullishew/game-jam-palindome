@@ -4,10 +4,13 @@ extends RigidBody2D
 
 @export var impact_sprite_time: float = 0.5
 @export var sprite: Sprite2D
+@export var override_sprite_scale_hitbox: Node2D
+@export var collision_shape: Node2D
 @export var idle_texture: Texture2D
 @export var impact_texture: Texture2D
 @export var moving_texture: Texture2D
 
+@export var possible_spawn_scale_multipliers: Array[float] = [1, 1.25, 1.5]
 
 var is_player_piece: bool = false
 
@@ -24,6 +27,16 @@ func _ready() -> void:
 	if impact_texture:
 		contact_monitor = true
 		max_contacts_reported = 1
+	scale_piece(possible_spawn_scale_multipliers.pick_random())
+
+
+func scale_piece(s: float):
+	if override_sprite_scale_hitbox:
+		override_sprite_scale_hitbox.scale *= s
+	else:
+		sprite.scale *= s
+	collision_shape.scale *= s
+	mass *= s * s
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -76,3 +89,27 @@ func hold():
 
 func release():
 	freeze = false
+
+func despawn():
+	call_deferred("queue_free")
+
+
+var _prev_collision_mask
+var _prev_collision_layer
+
+func save_hide():
+	hide()
+	freeze = true
+	sleeping = true
+	_prev_collision_layer = collision_layer
+	_prev_collision_mask = collision_mask
+	collision_layer = 0
+	collision_mask = 0
+
+func unsave_show():
+	show()
+	freeze = true
+	sleeping = true
+	collision_layer = _prev_collision_layer
+	collision_mask = _prev_collision_mask
+	

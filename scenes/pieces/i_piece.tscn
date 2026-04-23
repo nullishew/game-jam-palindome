@@ -7,22 +7,36 @@
 [ext_resource type="Texture2D" uid="uid://bnjsk6xih14do" path="res://assets/pieces/i_piece/i_piece_moving.png" id="5_30pr3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f436w"]
-size = Vector2(32, 128)
+size = Vector2(32, 96)
 
-[node name="IPiece" type="RigidBody2D" unique_id=496270264 node_paths=PackedStringArray("sprite")]
+[node name="IPiece" type="RigidBody2D" unique_id=496270264 node_paths=PackedStringArray("sprite", "override_sprite_scale_hitbox", "collision_shape")]
 mass = 15.0
 physics_material_override = ExtResource("1_am0gy")
 linear_damp = 2.0
 script = ExtResource("2_o67my")
-sprite = NodePath("Sprite2D")
+sprite = NodePath("Sprites/Sprite2D")
+override_sprite_scale_hitbox = NodePath("Sprites")
+collision_shape = NodePath("CollisionShape2D")
 idle_texture = ExtResource("3_am0gy")
 impact_texture = ExtResource("4_3guy0")
 moving_texture = ExtResource("5_30pr3")
+possible_spawn_scale_multipliers = Array[float]([1.25, 1.5])
 metadata/_custom_type_script = "uid://btsm8qmr8f3pf"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=30776167]
+[node name="Sprites" type="Node2D" parent="." unique_id=882136314]
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprites" unique_id=1870411733]
+position = Vector2(0, 16)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_am0gy")
+vframes = 2
+frame = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprites" unique_id=30776167]
+position = Vector2(0, -16)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_am0gy")
+vframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1443196901]
 shape = SubResource("RectangleShape2D_f436w")

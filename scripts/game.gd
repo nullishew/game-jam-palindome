@@ -1,7 +1,6 @@
 class_name Game
 extends Node2D
 
-@export var turns_to_win: int = 12
 @export var line: Line2D
 
 @export var piece_configs: Array[PieceSpawnConfig]
@@ -14,14 +13,15 @@ extends Node2D
 @export var inverted_spawnpoint: Node2D
 @export var top_platform: Node2D
 @export var bottom_platform: Node2D
-@export var next_piece_uis: Array[TextureRect]
-@export var invert_count_label: Label
-@export var invert_count_container: Control
 @export var min_settle_time: float = 0.5
 
 
+@export var invert_turn_count: int = 4 
+
+var _saved_piece_config: PieceSpawnConfig = null
+var _saved_piece: Piece = null
 var _piece_sequence: Array[PieceSpawnConfig] = []
-var _curr_piece_index: int = 0
+var _curr_piece_index: int = -1
 var _placed_pieces: Array[Piece] = []
 var _held_piece: Piece
 
@@ -57,6 +57,8 @@ func _ready() -> void:
 	)
 	_top_platform_target_pos_y = top_platform.global_position.y
 	_bottom_platform_target_pos_y = bottom_platform.global_position.y
+	_saved_piece_config = null
+	_saved_piece = null
 	_set_state(GameState.HOLD)
 
 func _input(event):
@@ -71,12 +73,9 @@ func _set_state(state: GameState):
 func _enter_state(state: GameState):
 	match state:
 		GameState.HOLD:
-			if _turn_count >= turns_to_win:
-				_set_state(GameState.WIN)
-				return
 			resize_platforms()
 			_turn_count += 1
-			invert_count_label.text = str(1 + wrap(-_turn_count, 0, 3))
+			GameManager.turn_incremented.emit(_turn_count)
 			if !_held_piece:
 				call_deferred("spawn_piece")
 		GameState.PLACE:
@@ -84,20 +83,17 @@ func _enter_state(state: GameState):
 			_settle_timer = 0
 		GameState.INVERT:
 			_place_timer = min_place_time
-			invert_count_container.modulate = Color(1, 0, 0, 0.5)
-			invert_count_label.visible = false
+			GameManager.invert_state_entered.emit()
 			invert()
 		GameState.LOSE:
 			GameManager.turns_survived = _turn_count
 			SceneManager.open_game_over_menu()
-			# print("you lose")
 	_state = state
 
 func _exit_state(state: GameState):
 	match state:
 		GameState.INVERT:
-			invert_count_container.modulate = Color(1, 1, 1, 1)
-			invert_count_label.visible = true
+			GameManager.invert_state_exited.emit()
 
 func _raycast(from: Vector2, to: Vector2) -> Vector2:
 	var space = get_world_2d().direct_space_state
@@ -129,19 +125,40 @@ func _physics_process(delta: float) -> void:
 
 	match _state:
 		GameState.HOLD:
-			if _held_piece:
-				if _mouse_moved:
-					_held_piece.position.x = get_global_mouse_position().x
-				else:
-					_held_piece.position.x += Input.get_axis("move_piece_left", "move_piece_right") * 5
-				_held_piece.position.x = clamp(_held_piece.position.x, -200, 200)
-				if Input.is_action_just_pressed("drop_piece"):
-					release(_held_piece)
-					_set_state(GameState.PLACE)
+			if Input.is_action_just_pressed("save_piece"):
+				if _held_piece:
+					var temp_config: PieceSpawnConfig = _saved_piece_config
+					_saved_piece_config = _piece_sequence[_curr_piece_index]
+					if !temp_config:
+						_curr_piece_index += 1
+					else:
+						_piece_sequence[_curr_piece_index] = temp_config
+					GameManager.saved_piece_updated.emit(_saved_piece_config)
+					_held_piece.save_hide()
+					var temp_piece = _saved_piece
+					_saved_piece = _held_piece
+					_held_piece = null
+					if temp_piece:
+						temp_piece.unsave_show()
+						_held_piece = temp_piece
+					else:
+						call_deferred("spawn_piece", false)
+					
+			else:
+				if _held_piece:
+					_held_piece.position.y = inverted_spawnpoint.global_position.y if _is_gravity_inverted else normal_spawnpoint.global_position.y
+					if _mouse_moved:
+						_held_piece.position.x = get_global_mouse_position().x
+					else:
+						_held_piece.position.x += Input.get_axis("move_piece_left", "move_piece_right") * 5
+					_held_piece.position.x = clamp(_held_piece.position.x, -200, 200)
+					if Input.is_action_just_pressed("drop_piece"):
+						release(_held_piece)
+						_set_state(GameState.PLACE)
 		GameState.PLACE:
 			_place_timer -= delta
 			if _place_timer <= 0 && are_pieces_settled(delta):
-				if _turn_count % 3 == 0:
+				if _turn_count % invert_turn_count == 0:
 					_set_state(GameState.INVERT)
 				else:
 					_set_state(GameState.HOLD)
@@ -152,7 +169,9 @@ func _physics_process(delta: float) -> void:
 	
 	_mouse_moved = false
 
-func spawn_piece():
+func spawn_piece(is_swap: bool = false):
+	if !is_swap:
+		_curr_piece_index += 1
 	while _piece_sequence.size() < _curr_piece_index + 5:
 		var next_cycle: Array[PieceSpawnConfig] = piece_configs.duplicate()
 		next_cycle.shuffle()
@@ -168,11 +187,8 @@ func spawn_piece():
 	offset = Vector2.ZERO
 	piece_container.add_child(piece)
 
-	# ui stuff
-	for i in range(next_piece_uis.size()):
-		next_piece_uis[i].texture = _piece_sequence[_curr_piece_index + i + 1].ui_texture
+	GameManager.queue_ui_updated.emit(_piece_sequence, _curr_piece_index + 1)
 
-	_curr_piece_index += 1
 
 
 func hold(piece: Piece):

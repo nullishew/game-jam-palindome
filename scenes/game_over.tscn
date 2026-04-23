@@ -9,9 +9,9 @@ bg_color = Color(0, 0, 0, 0.32156864)
 
 [node name="GameOver" type="CanvasLayer" unique_id=1361454001 node_paths=PackedStringArray("turn_count_label", "menu_btn", "replay_btn")]
 script = ExtResource("1_xeevv")
-turn_count_label = NodePath("Panel/Turn Count/HBoxContainer2/Turn Count Label")
-menu_btn = NodePath("Panel/Menu Button")
-replay_btn = NodePath("Panel/Replay Button")
+turn_count_label = NodePath("Panel/VBoxContainer/Turn Count Label")
+menu_btn = NodePath("Panel/VBoxContainer/Menu Button")
+replay_btn = NodePath("Panel/VBoxContainer/Replay Button")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=610277042]
 root_node = NodePath("")
@@ -25,79 +25,57 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_xeevv")
 
-[node name="Turn Count" type="Control" parent="Panel" unique_id=314995625]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Turn Count" unique_id=1002859141]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 127.0
-offset_bottom = 210.0
-grow_horizontal = 2
-alignment = 1
-
-[node name="You" type="Label" parent="Panel/Turn Count/HBoxContainer" unique_id=1265249547]
-layout_mode = 2
-theme_override_font_sizes/font_size = 60
-text = "You"
-horizontal_alignment = 1
-
-[node name="Lasted" type="Label" parent="Panel/Turn Count/HBoxContainer" unique_id=1136039942]
-layout_mode = 2
-theme_override_font_sizes/font_size = 60
-text = " lasted"
-horizontal_alignment = 1
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/Turn Count" unique_id=659556028]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 226.0
-offset_bottom = 363.0
-grow_horizontal = 2
-alignment = 1
-
-[node name="Turn Count Label" type="Label" parent="Panel/Turn Count/HBoxContainer2" unique_id=543115791]
-layout_mode = 2
-theme_override_font_sizes/font_size = 100
-text = "67"
-horizontal_alignment = 1
-
-[node name="Emote Label" type="Label" parent="Panel" unique_id=421588151]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = -250.0
-offset_top = 424.0
-offset_right = 273.0
-offset_bottom = 629.0
-grow_horizontal = 2
+[node name="Shrug" type="Label" parent="Panel" unique_id=421588151]
+layout_mode = 0
+offset_left = 1328.0
+offset_top = 163.0
+offset_right = 1933.0
+offset_bottom = 369.0
+rotation = 0.5235988
 theme_override_font_sizes/font_size = 150
 text = "¯\\_(ツ)_/¯"
 horizontal_alignment = 1
 
-[node name="Replay Button" type="Button" parent="Panel" unique_id=713294060]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=652553672]
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.15260416
-anchor_bottom = 0.16296296
-offset_left = 1053.0
-offset_top = 741.0
-offset_right = 1183.8959
-offset_bottom = 797.4815
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -290.5
+offset_right = 225.0
+offset_bottom = 290.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Turn Count Label" type="Label" parent="Panel/VBoxContainer" unique_id=543115791]
+layout_mode = 2
+theme_override_font_sizes/font_size = 200
+text = "67"
+horizontal_alignment = 1
+
+[node name="Menu Button" type="Button" parent="Panel/VBoxContainer" unique_id=1082587947]
+custom_minimum_size = Vector2(450, 150)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Menu"
+
+[node name="Replay Button" type="Button" parent="Panel/VBoxContainer" unique_id=713294060]
+custom_minimum_size = Vector2(450, 150)
+layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Replay"
 metadata/_edit_use_anchors_ = true
 
-[node name="Menu Button" type="Button" parent="Panel" unique_id=1082587947]
+[node name="Crash Out" type="Label" parent="Panel" unique_id=1948264922]
 layout_mode = 0
-offset_left = 595.0
-offset_top = 746.0
-offset_right = 852.0
-offset_bottom = 911.0
-theme_override_font_sizes/font_size = 40
-text = "Menu"
+offset_left = 51.0
+offset_top = 473.99997
+offset_right = 656.0
+offset_bottom = 679.99994
+rotation = -0.5235988
+theme_override_font_sizes/font_size = 150
+text = "/(T_T)\\"
+horizontal_alignment = 1

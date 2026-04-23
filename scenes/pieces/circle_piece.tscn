@@ -9,23 +9,24 @@
 friction = 5.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2c6lj"]
-radius = 41.59327
+radius = 36.013885
 
-[node name="CirclePiece" type="RigidBody2D" unique_id=762002478 node_paths=PackedStringArray("sprite")]
+[node name="CirclePiece" type="RigidBody2D" unique_id=762002478 node_paths=PackedStringArray("sprite", "collision_shape")]
 mass = 5.0
 physics_material_override = SubResource("PhysicsMaterial_2c6lj")
 linear_damp = 2.0
 angular_damp = 3.0
 script = ExtResource("1_14j71")
 sprite = NodePath("Sprite2D")
+collision_shape = NodePath("CollisionShape2D")
 idle_texture = ExtResource("2_2c6lj")
 impact_texture = ExtResource("3_80qsa")
 moving_texture = ExtResource("4_ablvg")
 metadata/_custom_type_script = "uid://btsm8qmr8f3pf"
 
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2055733577]
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("4_ablvg")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1003085750]
 shape = SubResource("CircleShape2D_2c6lj")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2055733577]
-scale = Vector2(0.34, 0.34)
-texture = ExtResource("4_ablvg")

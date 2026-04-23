@@ -12,9 +12,14 @@
 [ext_resource type="PackedScene" uid="uid://diklw5uaphjog" path="res://scenes/pieces/circle_piece.tscn" id="8_kvpfn"]
 [ext_resource type="Texture2D" uid="uid://did35gbm72b6b" path="res://assets/pieces/i_piece/i_piece_idle.png" id="8_kvuet"]
 [ext_resource type="Texture2D" uid="uid://r1kfta300r5y" path="res://assets/pieces/circle_piece/circle_piece_idle.png" id="9_dinhu"]
+[ext_resource type="Texture2D" uid="uid://2wssfgu7rva8" path="res://assets/pixel.png" id="11_ca42v"]
 [ext_resource type="Shader" uid="uid://cfkfvppib35bq" path="res://scripts/line_shader.gdshader" id="11_ir15t"]
 [ext_resource type="Texture2D" uid="uid://c6d8cgb04exnr" path="res://assets/line_dot.png" id="11_trtic"]
-[ext_resource type="Texture2D" uid="uid://dkk1n20ej2r8v" path="res://assets/placeholder_reverse.png" id="12_dinhu"]
+[ext_resource type="Texture2D" uid="uid://c86t71fd8aav5" path="res://assets/pieces/circle_piece/circle_piece_moving.png" id="12_264po"]
+[ext_resource type="Texture2D" uid="uid://carycf6wnschb" path="res://assets/pieces/triangle_piece/triangle_piece_impact.png" id="13_1kice"]
+[ext_resource type="Texture2D" uid="uid://bnjsk6xih14do" path="res://assets/pieces/i_piece/i_piece_moving.png" id="14_5newe"]
+[ext_resource type="Texture2D" uid="uid://dsvdkvc3mnws4" path="res://assets/pieces/square_piece/square_piece_impact.png" id="15_1kice"]
+[ext_resource type="PackedScene" uid="uid://ccy05kcl0d213" path="res://scenes/hud.tscn" id="20_1kice"]
 
 [sub_resource type="Resource" id="Resource_kvpfn"]
 script = ExtResource("2_gee14")
@@ -44,9 +49,8 @@ metadata/_custom_type_script = "uid://cpowjncfu48nu"
 shader = ExtResource("11_ir15t")
 shader_parameter/speed = -1.0
 
-[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("line", "cam", "world_container", "piece_container", "normal_spawnpoint", "inverted_spawnpoint", "top_platform", "bottom_platform", "next_piece_uis", "invert_count_label", "invert_count_container")]
+[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("line", "cam", "world_container", "piece_container", "normal_spawnpoint", "inverted_spawnpoint", "top_platform", "bottom_platform", "invert_count_label", "invert_count_container")]
 script = ExtResource("1_yqjtg")
-turns_to_win = 15
 line = NodePath("World/Line2D")
 piece_configs = Array[ExtResource("2_gee14")]([SubResource("Resource_kvpfn"), SubResource("Resource_dinhu"), SubResource("Resource_kvuet"), SubResource("Resource_trtic")])
 cam = NodePath("Camera2D")
@@ -56,14 +60,87 @@ normal_spawnpoint = NodePath("World/Top Platform/Top Spawn")
 inverted_spawnpoint = NodePath("World/Bottom Platform/Bottom Spawn")
 top_platform = NodePath("World/Top Platform")
 bottom_platform = NodePath("World/Bottom Platform")
-next_piece_uis = [NodePath("HUD/VBoxContainer/PieceSlot/MarginContainer/TextureRect"), NodePath("HUD/VBoxContainer/PieceSlot2/MarginContainer/TextureRect"), NodePath("HUD/VBoxContainer/PieceSlot3/MarginContainer/TextureRect"), NodePath("HUD/VBoxContainer/PieceSlot4/MarginContainer/TextureRect")]
-invert_count_label = NodePath("HUD/VBoxContainer2/Label")
-invert_count_container = NodePath("HUD/VBoxContainer2/Panel/TextureRect")
+invert_count_label = NodePath("")
+invert_count_container = NodePath("")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1900951051]
 zoom = Vector2(5, 5)
 
 [node name="World" type="Node2D" parent="." unique_id=1555225489]
+
+[node name="Background" type="Node2D" parent="World" unique_id=724320775]
+
+[node name="Parallax2D" type="Parallax2D" parent="World/Background" unique_id=1125605853]
+repeat_size = Vector2(1920, 1080)
+autoscroll = Vector2(0, 10)
+repeat_times = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Background/Parallax2D" unique_id=999477729]
+self_modulate = Color(0.84313726, 0.84705883, 1, 1)
+scale = Vector2(1920, 1080)
+texture = ExtResource("11_ca42v")
+
+[node name="Parallax2D2" type="Parallax2D" parent="World/Background" unique_id=1170915841]
+scale = Vector2(0.67, 0.67)
+repeat_size = Vector2(1200, 1400)
+autoscroll = Vector2(0, 30)
+repeat_times = 16
+
+[node name="Sprite2D2" type="Sprite2D" parent="World/Background/Parallax2D2" unique_id=1387695853]
+self_modulate = Color(0, 0, 0, 0.1764706)
+position = Vector2(-31.999992, 37)
+scale = Vector2(1.7128904, 1.7128904)
+texture = ExtResource("12_264po")
+
+[node name="Sprite2D3" type="Sprite2D" parent="World/Background/Parallax2D2" unique_id=1427436529]
+self_modulate = Color(0, 0, 0, 0.1764706)
+position = Vector2(461.99994, 306.99997)
+rotation = -0.2617994
+scale = Vector2(1.5478425, 1.5478425)
+skew = 0.5235988
+texture = ExtResource("13_1kice")
+
+[node name="Sprite2D4" type="Sprite2D" parent="World/Background/Parallax2D2" unique_id=1775984119]
+self_modulate = Color(0, 0, 0, 0.1764706)
+position = Vector2(455.89838, -367.41394)
+rotation = -2.6179938
+scale = Vector2(0.9327612, 1.4948679)
+texture = ExtResource("14_5newe")
+
+[node name="Sprite2D5" type="Sprite2D" parent="World/Background/Parallax2D2" unique_id=1506976214]
+self_modulate = Color(0, 0, 0, 0.1764706)
+position = Vector2(137, -445)
+rotation = -0.2617994
+scale = Vector2(1.067672, 1.067672)
+texture = ExtResource("15_1kice")
+
+[node name="Sprite2D6" type="Sprite2D" parent="World/Background/Parallax2D2" unique_id=784664890]
+self_modulate = Color(0, 0, 0, 0.1764706)
+position = Vector2(581.15625, 98.70746)
+rotation = 0.5235988
+scale = Vector2(1.0878849, 1.0878849)
+texture = ExtResource("15_1kice")
+
+[node name="Sprite2D7" type="Sprite2D" parent="World/Background/Parallax2D2" unique_id=1794107698]
+self_modulate = Color(0, 0, 0, 0.1764706)
+position = Vector2(-88.000015, 440.00003)
+rotation = -0.7853982
+scale = Vector2(0.8163642, 1.401974)
+texture = ExtResource("14_5newe")
+
+[node name="Sprite2D8" type="Sprite2D" parent="World/Background/Parallax2D2" unique_id=2134834466]
+self_modulate = Color(0, 0, 0, 0.1764706)
+position = Vector2(-336.00003, -170)
+rotation = 1.8325958
+scale = Vector2(1.9312063, 1.9312063)
+skew = 0.5235988
+texture = ExtResource("13_1kice")
+
+[node name="Sprite2D9" type="Sprite2D" parent="World/Background/Parallax2D2" unique_id=59078383]
+self_modulate = Color(0, 0, 0, 0.1764706)
+position = Vector2(-421.99997, 502)
+scale = Vector2(1.086914, 1.086914)
+texture = ExtResource("12_264po")
 
 [node name="Line2D" type="Line2D" parent="World" unique_id=1067185598]
 texture_repeat = 2
@@ -74,10 +151,6 @@ texture = ExtResource("11_trtic")
 texture_mode = 1
 
 [node name="Piece Container" type="Node2D" parent="World" unique_id=1338131520]
-
-[node name="TrianglePiece" parent="World/Piece Container" unique_id=812756609 instance=ExtResource("4_p57ef")]
-position = Vector2(34, -1)
-rotation = -0.7853982
 
 [node name="Top Platform" parent="World" unique_id=1619606996 instance=ExtResource("3_lbhrr")]
 position = Vector2(0, -230)
@@ -111,115 +184,4 @@ position = Vector2(597, 62.999996)
 rotation = 1.5707964
 scale = Vector2(50, 1)
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=94172623]
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD" unique_id=1035688214]
-offset_left = 1601.0
-offset_top = 185.0
-offset_right = 1729.0
-offset_bottom = 313.0
-
-[node name="PieceSlot" type="Panel" parent="HUD/VBoxContainer" unique_id=300017059]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/PieceSlot" unique_id=270426655]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="TextureRect" type="TextureRect" parent="HUD/VBoxContainer/PieceSlot/MarginContainer" unique_id=1356552241]
-layout_mode = 2
-expand_mode = 3
-
-[node name="PieceSlot2" type="Panel" parent="HUD/VBoxContainer" unique_id=872463552]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/PieceSlot2" unique_id=1100840589]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="TextureRect" type="TextureRect" parent="HUD/VBoxContainer/PieceSlot2/MarginContainer" unique_id=1632492523]
-layout_mode = 2
-expand_mode = 3
-
-[node name="PieceSlot3" type="Panel" parent="HUD/VBoxContainer" unique_id=1070248478]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/PieceSlot3" unique_id=284320993]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="TextureRect" type="TextureRect" parent="HUD/VBoxContainer/PieceSlot3/MarginContainer" unique_id=430575939]
-layout_mode = 2
-expand_mode = 3
-
-[node name="PieceSlot4" type="Panel" parent="HUD/VBoxContainer" unique_id=1260201297]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/PieceSlot4" unique_id=1398853988]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="TextureRect" type="TextureRect" parent="HUD/VBoxContainer/PieceSlot4/MarginContainer" unique_id=1471571402]
-layout_mode = 2
-expand_mode = 3
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="HUD" unique_id=1301754996]
-offset_left = 191.0
-offset_top = 209.0
-offset_right = 447.0
-offset_bottom = 557.0
-
-[node name="Panel" type="Panel" parent="HUD/VBoxContainer2" unique_id=258425582]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="HUD/VBoxContainer2/Panel" unique_id=1063084520]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("12_dinhu")
-
-[node name="Label" type="Label" parent="HUD/VBoxContainer2" unique_id=203403625]
-layout_mode = 2
-theme_override_font_sizes/font_size = 64
-text = "3"
-horizontal_alignment = 1
+[node name="HUD" parent="." unique_id=827572359 instance=ExtResource("20_1kice")]

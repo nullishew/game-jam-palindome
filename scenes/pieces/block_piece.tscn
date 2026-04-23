@@ -9,14 +9,15 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uwrxv"]
 size = Vector2(32, 32)
 
-[node name="BlockPiece" type="RigidBody2D" unique_id=786190789 node_paths=PackedStringArray("sprite")]
-mass = 20.0
+[node name="BlockPiece" type="RigidBody2D" unique_id=786190789 node_paths=PackedStringArray("sprite", "collision_shape")]
+mass = 25.0
 physics_material_override = ExtResource("1_602mv")
 continuous_cd = 2
 linear_damp = 1.5
 angular_damp = 6.0
 script = ExtResource("2_m2v3v")
 sprite = NodePath("Sprite2D")
+collision_shape = NodePath("CollisionShape2D")
 idle_texture = ExtResource("3_bjfma")
 impact_texture = ExtResource("5_4mjaa")
 moving_texture = ExtResource("4_hkd64")

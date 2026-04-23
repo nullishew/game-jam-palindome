@@ -1,0 +1,164 @@
+[gd_scene format=3 uid="uid://ccy05kcl0d213"]
+
+[ext_resource type="Texture2D" uid="uid://dkk1n20ej2r8v" path="res://assets/placeholder_reverse.png" id="1_ahhtf"]
+[ext_resource type="Script" uid="uid://l5ccoua1lf3k" path="res://scenes/hud.gd" id="1_oo0fn"]
+
+[node name="HUD" type="CanvasLayer" unique_id=827572359 node_paths=PackedStringArray("next_piece_uis", "save_slot_ui", "invert_count_label", "invert_count_container")]
+script = ExtResource("1_oo0fn")
+next_piece_uis = [NodePath("MarginContainer/Control/Queue VBoxContainer/PieceSlot/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/PieceSlot2/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/PieceSlot3/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/PieceSlot4/MarginContainer/TextureRect")]
+save_slot_ui = NodePath("MarginContainer/Control/SavePieceSlot/MarginContainer/TextureRect")
+invert_count_label = NodePath("MarginContainer/Control/Invert VBoxContainer/Label")
+invert_count_container = NodePath("MarginContainer/Control/Invert VBoxContainer")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1110552726]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 100
+
+[node name="Control" type="Control" parent="MarginContainer" unique_id=38956023]
+layout_mode = 2
+
+[node name="Queue VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control" unique_id=273226338]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 812.0
+grow_horizontal = 0
+
+[node name="PieceSlot" type="Panel" parent="MarginContainer/Control/Queue VBoxContainer" unique_id=1376208725]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot" unique_id=1564300096]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot/MarginContainer" unique_id=310413405]
+layout_mode = 2
+expand_mode = 3
+
+[node name="PieceSlot2" type="Panel" parent="MarginContainer/Control/Queue VBoxContainer" unique_id=1615561985]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot2" unique_id=98040842]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot2/MarginContainer" unique_id=282931393]
+layout_mode = 2
+expand_mode = 3
+
+[node name="PieceSlot3" type="Panel" parent="MarginContainer/Control/Queue VBoxContainer" unique_id=1885357274]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot3" unique_id=1944175538]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot3/MarginContainer" unique_id=93737911]
+layout_mode = 2
+expand_mode = 3
+
+[node name="PieceSlot4" type="Panel" parent="MarginContainer/Control/Queue VBoxContainer" unique_id=1211720691]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot4" unique_id=2122950708]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Queue VBoxContainer/PieceSlot4/MarginContainer" unique_id=1701795310]
+layout_mode = 2
+expand_mode = 3
+
+[node name="Invert VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control" unique_id=298324733]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -348.0
+offset_right = 256.0
+grow_vertical = 0
+
+[node name="Panel" type="Panel" parent="MarginContainer/Control/Invert VBoxContainer" unique_id=341911456]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Invert VBoxContainer/Panel" unique_id=2099010198]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ahhtf")
+
+[node name="Label" type="Label" parent="MarginContainer/Control/Invert VBoxContainer" unique_id=681304422]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "3"
+horizontal_alignment = 1
+
+[node name="SavePieceSlot" type="Panel" parent="MarginContainer/Control" unique_id=1549805069]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 200.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/SavePieceSlot" unique_id=600909603]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/SavePieceSlot/MarginContainer" unique_id=472768435]
+layout_mode = 2
+expand_mode = 3
