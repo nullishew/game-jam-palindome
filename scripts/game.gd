@@ -49,7 +49,7 @@ func _ready() -> void:
 	GameManager.game = self
 	_is_gravity_inverted = false
 	_piece_sequence.clear()
-	_curr_piece_index = 0
+	_curr_piece_index = -1
 	PhysicsServer2D.area_set_param(
 		get_viewport().get_world_2d().space,
 		PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR,
