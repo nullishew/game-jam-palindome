@@ -6,9 +6,19 @@
 [ext_resource type="Texture2D" uid="uid://did35gbm72b6b" path="res://assets/pieces/i_piece/i_piece_idle.png" id="4_mhnvy"]
 [ext_resource type="Texture2D" uid="uid://co2wawj7rvqr1" path="res://assets/pieces/square_piece/square_piece_idle.png" id="5_g3eks"]
 [ext_resource type="Texture2D" uid="uid://c63qiv4kfv0bd" path="res://assets/pieces/triangle_piece/triangle_piece_idle.png" id="6_v86rl"]
+[ext_resource type="Texture2D" uid="uid://c6vh36ksddhx" path="res://assets/platform.png" id="7_v86rl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g3eks"]
-bg_color = Color(0, 0, 0, 0.36078432)
+bg_color = Color(0, 0, 0, 0.25882354)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v86rl"]
+bg_color = Color(1, 1, 0.9647059, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13sgg"]
+bg_color = Color(1, 1, 1, 0.23529412)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i6lef"]
+bg_color = Color(1, 1, 1, 0.11764706)
 
 [node name="Menu" type="CanvasLayer" unique_id=558575991 node_paths=PackedStringArray("start_btn")]
 script = ExtResource("1_yqeox")
@@ -26,9 +36,9 @@ texture = ExtResource("2_vjb58")
 [node name="Control" type="Control" parent="Background" unique_id=2020022424]
 anchors_preset = 0
 offset_left = -44.0
-offset_top = -31.0
+offset_top = -61.0
 offset_right = -4.0
-offset_bottom = 9.0
+offset_bottom = -21.0
 scale = Vector2(1.1, 1.1)
 
 [node name="TextureRect" type="TextureRect" parent="Background/Control" unique_id=341963490]
@@ -116,6 +126,21 @@ offset_right = 1625.1766
 offset_bottom = 776.8572
 texture = ExtResource("5_g3eks")
 
+[node name="TextureRect2" type="TextureRect" parent="Background" unique_id=1138136170]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -892.808
+offset_top = -290.0
+offset_right = 892.808
+offset_bottom = -47.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("7_v86rl")
+
 [node name="Panel" type="Panel" parent="." unique_id=1141629413]
 anchors_preset = 15
 anchor_right = 1.0
@@ -131,10 +156,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 50
+theme_override_constants/margin_left = 107
 theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
+theme_override_constants/margin_right = 107
+theme_override_constants/margin_bottom = 87
 metadata/_edit_lock_ = true
 
 [node name="Control" type="Control" parent="Panel/MarginContainer" unique_id=1474930338]
@@ -176,11 +201,17 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -213.0
+offset_top = -161.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 20
-theme_override_font_sizes/font_size = 150
+theme_override_font_sizes/font_size = 113
+theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_13sgg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_i6lef")
 text = "Start"

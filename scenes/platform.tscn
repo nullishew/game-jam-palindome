@@ -1,14 +1,13 @@
 [gd_scene format=3 uid="uid://b4g4t2trs4wr7"]
 
-[ext_resource type="Texture2D" uid="uid://cet7ctj3s6hk2" path="res://assets/placeholder_grid_paper.png" id="1_ba0x2"]
+[ext_resource type="Texture2D" uid="uid://c6vh36ksddhx" path="res://assets/platform.png" id="1_ba0x2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nlgqw"]
-size = Vector2(352, 32)
+size = Vector2(352, 48)
 
 [node name="Platform" type="AnimatableBody2D" unique_id=1619606996]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=277007747]
-scale = Vector2(11, 1)
 texture = ExtResource("1_ba0x2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1873009450]

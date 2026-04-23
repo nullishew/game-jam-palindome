@@ -235,7 +235,7 @@ func update_camera(delta: float):
 	var center_y = (top_y + bottom_y) / 2.0
 	_target_cam_pos = Vector2(0, center_y)
 
-	var padding = 50.0
+	var padding = 100
 	var height = abs(top_y - bottom_y) + padding
 	var viewport_height = cam.get_viewport_rect().size.y
 	var zoom = viewport_height / height 
