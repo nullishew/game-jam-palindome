@@ -34,6 +34,8 @@ var _state: GameState
 var _turn_count: int = 0
 
 
+var _mouse_moved: bool = false
+
 enum GameState {
 	HOLD,
 	PLACE,
@@ -57,6 +59,9 @@ func _ready() -> void:
 	_bottom_platform_target_pos_y = bottom_platform.global_position.y
 	_set_state(GameState.HOLD)
 
+func _input(event):
+	if event is InputEventMouseMotion:
+		_mouse_moved = true
 
 func _set_state(state: GameState):
 	if state != null:
@@ -125,9 +130,12 @@ func _physics_process(delta: float) -> void:
 	match _state:
 		GameState.HOLD:
 			if _held_piece:
-				_held_piece.position.x += Input.get_axis("ui_left", "ui_right") * 5
-				_held_piece.position.x = clamp(_held_piece.position.x, -500, 500)
-				if Input.is_action_just_pressed("ui_accept"):
+				if _mouse_moved:
+					_held_piece.position.x = get_global_mouse_position().x
+				else:
+					_held_piece.position.x += Input.get_axis("move_piece_left", "move_piece_right") * 5
+				_held_piece.position.x = clamp(_held_piece.position.x, -200, 200)
+				if Input.is_action_just_pressed("drop_piece"):
 					release(_held_piece)
 					_set_state(GameState.PLACE)
 		GameState.PLACE:
@@ -141,6 +149,8 @@ func _physics_process(delta: float) -> void:
 			_place_timer -= delta
 			if _place_timer <= 0 && are_pieces_settled(delta):
 				_set_state(GameState.HOLD)
+	
+	_mouse_moved = false
 
 func spawn_piece():
 	while _piece_sequence.size() < _curr_piece_index + 5:
