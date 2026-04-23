@@ -129,10 +129,7 @@ func _physics_process(delta: float) -> void:
 				if _held_piece:
 					var temp_config: PieceSpawnConfig = _saved_piece_config
 					_saved_piece_config = _piece_sequence[_curr_piece_index]
-					if !temp_config:
-						_curr_piece_index += 1
-					else:
-						_piece_sequence[_curr_piece_index] = temp_config
+					_piece_sequence[_curr_piece_index] = temp_config
 					GameManager.saved_piece_updated.emit(_saved_piece_config)
 					_held_piece.save_hide()
 					var temp_piece = _saved_piece
