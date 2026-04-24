@@ -1,15 +1,14 @@
 [gd_scene format=3 uid="uid://b0d0if618ovrv"]
 
 [ext_resource type="Script" uid="uid://dvq8ujk6f6ax7" path="res://scripts/transition.gd" id="1_f0i4t"]
-[ext_resource type="Texture2D" uid="uid://cet7ctj3s6hk2" path="res://assets/placeholder_grid_paper.png" id="1_rerct"]
-[ext_resource type="Texture2D" uid="uid://bnjsk6xih14do" path="res://assets/pieces/i_piece/i_piece_moving.png" id="3_px735"]
+[ext_resource type="Texture2D" uid="uid://d32lkbavca6f4" path="res://assets/ui/bar_transition_placeholder.png" id="3_px735"]
 
 [sub_resource type="Animation" id="Animation_rerct"]
 length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:position:y")
+tracks/0/path = NodePath("VBoxContainer/Control/bar 1 TextureRect:position:y")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -20,303 +19,138 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TextureRect2:position:y")
+tracks/1/path = NodePath("VBoxContainer/Control2/bar 2 TextureRect:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(140, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("TextureRect3:position:y")
+tracks/2/path = NodePath("VBoxContainer/Control3/bar 3 TextureRect:position:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(-140, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("TextureRect4:position:y")
+tracks/3/path = NodePath("VBoxContainer/Control4/bar 4 TextureRect:position:y")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(-420, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/4/type = "bezier"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("TextureRect5:position:y")
+tracks/4/path = NodePath("VBoxContainer:position:y")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("TextureRect6:position:y")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/6/type = "bezier"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("TextureRect7:position:y")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/7/type = "bezier"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("TextureRect8:position:y")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/8/type = "bezier"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("TextureRect9:position:y")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(-420, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 
 [sub_resource type="Animation" id="Animation_f0i4t"]
 resource_name = "in"
 length = 0.8
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(2, 0),
-"points": PackedFloat32Array(-1080, -0.25, 0, 0.25, 0, 0, -0.16666667, -180, 0, 0),
-"times": PackedFloat32Array(0, 0.7)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TextureRect2:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(-1080, 0, 0, 0.083333336, 180, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0.05, 0.7)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("TextureRect3:position:y")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(-1080, 0, 0, 0.083333336, 180, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0.1, 0.7)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("TextureRect4:position:y")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(-1080, 0, 0, 0.083333336, 180, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0.15, 0.7)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("TextureRect5:position:y")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(-1080, 0, 0, 0.083333336, 180, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0.2, 0.7)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("TextureRect6:position:y")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(-1080, 0, 0, 0.083333336, 180, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0.25, 0.7)
-}
-tracks/6/type = "bezier"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("TextureRect7:position:y")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(-1080, 0, 0, 0.083333336, 180, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0.3, 0.7)
-}
-tracks/7/type = "bezier"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("TextureRect8:position:y")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(-1080, 0, 0, 0.083333336, 180, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0.35, 0.7)
-}
-tracks/8/type = "bezier"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("TextureRect9:position:y")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(-1080, 0, 0, 0.083333336, 180, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0.4, 0.7)
-}
 
 [sub_resource type="Animation" id="Animation_px735"]
 resource_name = "out"
 length = 0.5
+
+[sub_resource type="Animation" id="Animation_xmi56"]
+resource_name = "transition"
+length = 0.6
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:position:y")
+tracks/0/path = NodePath("VBoxContainer/Control/bar 1 TextureRect:position:y")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.5, 1088.4241, 1080, -0.5, -1074.6705, 0, 0),
-"times": PackedFloat32Array(0, 0.5)
+"handle_modes": PackedInt32Array(2, 2, 2),
+"points": PackedFloat32Array(-1500, -0.06817159, -38.456955, 0.1, 56.412, 420, -0.13916788, -1479.8334, 0, 0, 2664.5532, -0.20583457, -2329.7227, 0, 0),
+"times": PackedFloat32Array(0, 0.5, 0.7)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TextureRect2:position:y")
+tracks/1/path = NodePath("VBoxContainer/Control2/bar 2 TextureRect:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, -0.1, 0, 0.5, 1081.5472, 1080, -0.5, -1078.1089, 0, 0),
-"times": PackedFloat32Array(0, 0.5)
+"handle_modes": PackedInt32Array(2, 2, 2),
+"points": PackedFloat32Array(-1500, 0, 0, 0.1, 13.394, 140, -0.06666666, -993.8036, 0.047386963, 706.4, 2664.5527, -0.15874237, -2424.8135, 0, 0),
+"times": PackedFloat32Array(0.08, 0.5, 0.6666667)
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("TextureRect3:position:y")
+tracks/2/path = NodePath("VBoxContainer/Control3/bar 3 TextureRect:position:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, -0.1, 0, 0.45, 1081.5472, 1080, -0.45, -1071.232, 0, 0),
-"times": PackedFloat32Array(0.05, 0.5)
+"handle_modes": PackedInt32Array(2, 2, 2),
+"points": PackedFloat32Array(-1500, 0, 0, 0.1, 29.599, -140, -0.058742344, -1062.47, 0.085753635, 1551.022, 2268.3413, -0.092075706, -1632.3907, 0, 0),
+"times": PackedFloat32Array(0.16, 0.5, 0.6333333)
 }
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("TextureRect4:position:y")
+tracks/3/path = NodePath("VBoxContainer/Control4/bar 4 TextureRect:position:y")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, -0.1, 0, 0.4, 1088.4241, 1080, -0.4, -1081.5472, 0, 0),
-"times": PackedFloat32Array(0.1, 0.5)
+"handle_modes": PackedInt32Array(2, 2, 0),
+"points": PackedFloat32Array(-1500, 0, 0, 0.1, 0, -420, -0.025409013, -576.44, 0.11837357, 2685.4749, 4170.156, -0.092075646, -2139.5413, 0, 0),
+"times": PackedFloat32Array(0.24, 0.5, 1)
 }
-tracks/4/type = "bezier"
+tracks/4/type = "method"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("TextureRect5:position:y")
+tracks/4/path = NodePath(".")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, -0.1, 0, 0.35, 1088.4241, 1080, -0.35, -1078.1089, 0, 0),
-"times": PackedFloat32Array(0.15, 0.5)
+"times": PackedFloat32Array(0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"_on_in_finished"
+}, {
+"args": [],
+"method": &"_on_out_finished"
+}]
 }
 tracks/5/type = "bezier"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("TextureRect6:position:y")
+tracks/5/path = NodePath("VBoxContainer:position:y")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, -0.1, 0, 0.3, 1084.9857, 1080, -0.3, -1081.5472, 0, 0),
-"times": PackedFloat32Array(0.2, 0.5)
-}
-tracks/6/type = "bezier"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("TextureRect7:position:y")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, -0.1, 0, 0.25, 1081.5472, 1080, -0.25, -1088.4241, 0, 0),
-"times": PackedFloat32Array(0.25, 0.5)
-}
-tracks/7/type = "bezier"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("TextureRect8:position:y")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, -0.1, 0, 0.19999999, 1076.3896, 1080, -0.19999999, -1086.7048, 0, 0),
-"times": PackedFloat32Array(0.3, 0.5)
-}
-tracks/8/type = "bezier"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("TextureRect9:position:y")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, 0, 1078.1089, 0.15, 1076.3896, 1080, -0.15, -1086.7048, 0, 0),
-"times": PackedFloat32Array(0.35, 0.5)
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(-620, 0, 0, 0.083333336, 33.333336, -420, -0.083333336, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.5)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_px735"]
 _data = {
 &"RESET": SubResource("Animation_rerct"),
 &"in": SubResource("Animation_f0i4t"),
-&"out": SubResource("Animation_px735")
+&"out": SubResource("Animation_px735"),
+&"transition": SubResource("Animation_xmi56")
 }
 
 [node name="Transition" type="CanvasLayer" unique_id=270387717 node_paths=PackedStringArray("anim_player")]
@@ -324,79 +158,76 @@ layer = 999
 script = ExtResource("1_f0i4t")
 anim_player = NodePath("AnimationPlayer")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=777868693]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 0.00048828125
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("1_rerct")
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=43063719]
 libraries/ = SubResource("AnimationLibrary_px735")
 
-[node name="TextureRect2" type="TextureRect" parent="." unique_id=1467768499]
-custom_minimum_size = Vector2(270, 1080)
-offset_left = -120.0
-offset_right = 150.0
-offset_bottom = 1080.0002
-size_flags_stretch_ratio = 0.0
+[node name="VBoxContainer" type="HBoxContainer" parent="." unique_id=591628432]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -420.0
+offset_right = 6.0
+offset_bottom = 420.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Control" type="Control" parent="VBoxContainer" unique_id=350719801]
+custom_minimum_size = Vector2(480, 1920)
+layout_mode = 2
+
+[node name="bar 1 TextureRect" type="TextureRect" parent="VBoxContainer/Control" unique_id=1708271463]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -0.00048828125
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_px735")
 
-[node name="TextureRect3" type="TextureRect" parent="." unique_id=748612602]
-custom_minimum_size = Vector2(270, 1080)
-offset_left = 150.0
-offset_right = 420.0
-offset_bottom = 1080.0
-size_flags_stretch_ratio = 0.0
+[node name="Control2" type="Control" parent="VBoxContainer" unique_id=1480105882]
+custom_minimum_size = Vector2(480, 1920)
+layout_mode = 2
+
+[node name="bar 2 TextureRect" type="TextureRect" parent="VBoxContainer/Control2" unique_id=1252531186]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 140.0
+offset_bottom = 140.00488
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_px735")
 
-[node name="TextureRect4" type="TextureRect" parent="." unique_id=260097030]
-custom_minimum_size = Vector2(270, 1080)
-offset_left = 420.0
-offset_right = 690.0
-offset_bottom = 1080.0005
-size_flags_stretch_ratio = 0.0
+[node name="Control3" type="Control" parent="VBoxContainer" unique_id=1443976405]
+custom_minimum_size = Vector2(480, 1920)
+layout_mode = 2
+
+[node name="bar 3 TextureRect" type="TextureRect" parent="VBoxContainer/Control3" unique_id=84560038]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -140.0
+offset_bottom = -140.0039
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_px735")
 
-[node name="TextureRect5" type="TextureRect" parent="." unique_id=1310905509]
-custom_minimum_size = Vector2(270, 1080)
-offset_left = 690.0
-offset_right = 960.0
-offset_bottom = 1080.0
-size_flags_stretch_ratio = 0.0
-texture = ExtResource("3_px735")
+[node name="Control4" type="Control" parent="VBoxContainer" unique_id=1273210619]
+custom_minimum_size = Vector2(480, 1920)
+layout_mode = 2
 
-[node name="TextureRect6" type="TextureRect" parent="." unique_id=1354451802]
-custom_minimum_size = Vector2(270, 1080)
-offset_left = 960.0
-offset_right = 1230.0
-offset_bottom = 1080.0002
-size_flags_stretch_ratio = 0.0
-texture = ExtResource("3_px735")
-
-[node name="TextureRect7" type="TextureRect" parent="." unique_id=364792155]
-custom_minimum_size = Vector2(270, 1080)
-offset_left = 1230.0
-offset_right = 1500.0
-offset_bottom = 1080.0
-size_flags_stretch_ratio = 0.0
-texture = ExtResource("3_px735")
-
-[node name="TextureRect8" type="TextureRect" parent="." unique_id=760087495]
-custom_minimum_size = Vector2(270, 1080)
-offset_left = 1500.0
-offset_right = 1770.0
-offset_bottom = 1080.0005
-size_flags_stretch_ratio = 0.0
-texture = ExtResource("3_px735")
-
-[node name="TextureRect9" type="TextureRect" parent="." unique_id=874540508]
-custom_minimum_size = Vector2(270, 1080)
-offset_left = 1770.0
-offset_right = 2040.0
-offset_bottom = 1080.0
-size_flags_stretch_ratio = 0.0
+[node name="bar 4 TextureRect" type="TextureRect" parent="VBoxContainer/Control4" unique_id=525684357]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -420.0
+offset_bottom = -420.0017
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_px735")
