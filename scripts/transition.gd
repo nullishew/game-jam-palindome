@@ -7,19 +7,25 @@ signal out_finished()
 
 @export var anim_player: AnimationPlayer
 
-
 func _ready() -> void:
+	hide()
+
+func transition():
+	show()
 	anim_player.play("transition")
-	# await anim_player.animation_finished
-	# in_finished.emit()
-	# anim_player.play("out")
-	# await anim_player.animation_finished
-	# out_finished.emit()
 
 
 func _on_in_finished():
 	in_finished.emit()
+	pause()
 
 
 func _on_out_finished():
 	out_finished.emit()
+	hide()
+
+func pause():
+	anim_player.pause()
+
+func resume():
+	anim_player.play()

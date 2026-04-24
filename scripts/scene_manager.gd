@@ -6,21 +6,34 @@ var game_over_scene = preload("res://scenes/game_over.tscn")
 var transition_scene = preload("res://scenes/transition.tscn")
 
 var _overlay: CanvasLayer
+var _transition: Transition
 
 var _is_changing: bool = false
 
+func _ready() -> void:
+	_transition = transition_scene.instantiate()
+	get_tree().root.call_deferred("add_child", _transition)
+
+	# force cache / preload game scene runtime assets to remove jitter on first game start
+	await get_tree().process_frame
+	var inst = game_scene.instantiate()
+	inst.visible = false
+	get_tree().root.add_child(inst)
+	await get_tree().process_frame
+	inst.queue_free()
+
+
 func change_scene(packed_scene: PackedScene):
 	_is_changing = true
-	var transition: Transition = transition_scene.instantiate()
-	transition.in_finished.connect(
-		func():
-			if _overlay:
-				_overlay.queue_free()
-				_overlay = null
-			get_tree().call_deferred("change_scene_to_packed", packed_scene)
-			)
-	transition.out_finished.connect(func(): transition.call_deferred("queue_free"))
-	get_tree().root.add_child(transition)
+	await get_tree().process_frame
+	_transition.transition()
+	await _transition.in_finished
+	if _overlay:
+		_overlay.queue_free()
+		_overlay = null
+	await get_tree().process_frame
+	_transition.resume()
+	get_tree().call_deferred("change_scene_to_packed", packed_scene)
 	
 
 func start_game():
