@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://b5kjqcha2kilw"
-path="res://.godot/imported/palindome_jam_soundtrack.wav-23ea2f0050a5c37b7c33e5b04fd3e9a4.sample"
+path="res://.godot/imported/palindome_jam_soundtrack.wav-5e414e7ddb6aa882c6035b446f1d02fa.sample"
 
 [deps]
 
-source_file="res://assets/palindome_jam_soundtrack.wav"
-dest_files=["res://.godot/imported/palindome_jam_soundtrack.wav-23ea2f0050a5c37b7c33e5b04fd3e9a4.sample"]
+source_file="res://resources/audio/palindome_jam_soundtrack.wav"
+dest_files=["res://.godot/imported/palindome_jam_soundtrack.wav-5e414e7ddb6aa882c6035b446f1d02fa.sample"]
 
 [params]
 

@@ -13,6 +13,8 @@ func _ready() -> void:
 func transition():
 	show()
 	anim_player.play("transition")
+	await get_tree().create_timer(0.2).timeout
+	AudioManager.play_sound(AudioManager.TRANSITION_SOUND, AudioManager.AudioBus.SFX)
 
 
 func _on_in_finished():

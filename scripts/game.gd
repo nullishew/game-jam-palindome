@@ -18,6 +18,8 @@ extends Node2D
 
 @export var invert_turn_count: int = 4
 
+var is_game_over: bool:
+	get: return _state == GameState.LOSE
 
 var _piece_sequence: Array[PieceSpawnConfig] = []
 var _placed_pieces: Array[Piece] = []
@@ -91,6 +93,8 @@ func _enter_state(state: GameState):
 		GameState.LOSE:
 			GameManager.turns_survived = _turn_count
 			SceneManager.open_game_over_menu()
+			print("heheheha grr")
+			AudioManager.play_sound(AudioManager.TOWEL_DISPENSER_SOUND, AudioManager.AudioBus.SFX)
 	_state = state
 
 func _exit_state(state: GameState):

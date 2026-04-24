@@ -1,6 +1,9 @@
 extends Node
 
-var soundtrack: AudioStream = preload("res://assets/palindome_jam_soundtrack.wav")
+const SOUNDTRACK: AudioStream = preload("res://resources/audio/palindome_jam_soundtrack.wav")
+const THUD_SOUND: AudioStream = preload("res://resources/audio/thud.wav")
+const TRANSITION_SOUND: AudioStream = preload("res://resources/audio/transition.wav")
+const TOWEL_DISPENSER_SOUND: AudioStream = preload("res://resources/audio/towel_dispenser.wav")
 
 enum AudioBus {
 	SOUNDTRACK,
@@ -13,7 +16,7 @@ const AUDIO_BUS_STRINGS: Dictionary[AudioBus, String] = {
 }
 
 func _ready() -> void:
-	play_sound(soundtrack, AudioBus.SOUNDTRACK)
+	play_sound(SOUNDTRACK, AudioBus.SOUNDTRACK)
 
 
 func play_sound(stream: AudioStream, bus: AudioBus):

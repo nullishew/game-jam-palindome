@@ -18,6 +18,7 @@ var is_player_piece: bool = false
 var _was_in_contact: bool = false
 var _impact_timer: float = 0
 var _prev_vel_y: float = 0
+var _was_impact: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -42,10 +43,15 @@ func scale_piece(s: float):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if _impact_timer > 0:
+		if not _was_impact:
+			AudioManager.play_sound(AudioManager.THUD_SOUND, AudioManager.AudioBus.SFX)
+			print("impact")
+		_was_impact = true
 		_impact_timer -= delta
 		if impact_texture:
 			sprite.texture = impact_texture
 	else:
+		_was_impact = false
 		if linear_velocity.length() > 5 or abs(angular_velocity) > 5:
 			if moving_texture:
 				sprite.texture = moving_texture
