@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dvq8ujk6f6ax7" path="res://scripts/transition.gd" id="1_f0i4t"]
 [ext_resource type="Texture2D" uid="uid://dfgn1ad0stdmo" path="res://assets/ui/bar_transition_sigh.png" id="2_f0i4t"]
+[ext_resource type="Texture2D" uid="uid://dseak35nunu8c" path="res://assets/ui/bar_transition_jawdrop.png" id="3_hi828"]
+[ext_resource type="Texture2D" uid="uid://dvkyn6vq6644a" path="res://assets/ui/bar_transition_wince.png" id="3_xmi56"]
+[ext_resource type="Texture2D" uid="uid://c7jto7gwcqtn" path="res://assets/ui/bar_transition_sideeye.png" id="4_hi828"]
 
 [sub_resource type="Animation" id="Animation_rerct"]
 length = 0.001
@@ -160,7 +163,7 @@ anim_player = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=43063719]
 libraries/ = SubResource("AnimationLibrary_px735")
-speed_scale = 0.73
+speed_scale = 0.67
 
 [node name="VBoxContainer" type="HBoxContainer" parent="." unique_id=591628432]
 z_index = 999
@@ -187,7 +190,7 @@ anchor_bottom = 1.0
 offset_bottom = -0.00048828125
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_f0i4t")
+texture = ExtResource("3_xmi56")
 
 [node name="Control2" type="Control" parent="VBoxContainer" unique_id=1480105882]
 custom_minimum_size = Vector2(480, 1920)
@@ -202,7 +205,7 @@ offset_top = 140.0
 offset_bottom = 140.00488
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_f0i4t")
+texture = ExtResource("3_hi828")
 
 [node name="Control3" type="Control" parent="VBoxContainer" unique_id=1443976405]
 custom_minimum_size = Vector2(480, 1920)
@@ -217,7 +220,7 @@ offset_top = -140.0
 offset_bottom = -140.0039
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_f0i4t")
+texture = ExtResource("4_hi828")
 
 [node name="Control4" type="Control" parent="VBoxContainer" unique_id=1273210619]
 custom_minimum_size = Vector2(480, 1920)
