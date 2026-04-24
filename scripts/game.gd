@@ -86,8 +86,8 @@ func _enter_state(state: GameState):
 			_settle_timer = 0
 		GameState.INVERT:
 			_place_timer = min_place_time
-			GameManager.invert_state_entered.emit()
 			invert()
+			GameManager.invert_state_entered.emit(_is_gravity_inverted)
 		GameState.LOSE:
 			GameManager.turns_survived = _turn_count
 			SceneManager.open_game_over_menu()

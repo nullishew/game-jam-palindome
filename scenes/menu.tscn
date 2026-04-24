@@ -165,20 +165,6 @@ metadata/_edit_lock_ = true
 [node name="Control" type="Control" parent="Panel/MarginContainer" unique_id=1474930338]
 layout_mode = 2
 
-[node name="Title Shadow Label" type="Label" parent="Panel/MarginContainer/Control" unique_id=1847810669]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 8.0
-offset_bottom = 350.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.15686275, 0.15686275, 0.15686275, 0.78431374)
-theme_override_colors/font_outline_color = Color(0.15686275, 0.15686275, 0.15686275, 0.78431374)
-theme_override_constants/outline_size = 30
-theme_override_font_sizes/font_size = 250
-text = "Palindome"
-horizontal_alignment = 1
-
 [node name="Title Label" type="Label" parent="Panel/MarginContainer/Control" unique_id=685550178]
 layout_mode = 1
 anchors_preset = 5
@@ -188,9 +174,11 @@ offset_left = -644.0
 offset_right = 644.0
 offset_bottom = 342.0
 grow_horizontal = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.37254903)
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
 theme_override_constants/outline_size = 30
+theme_override_constants/shadow_outline_size = 75
 theme_override_font_sizes/font_size = 250
 text = "Palindome"
 horizontal_alignment = 1
@@ -215,3 +203,24 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_13sgg")
 theme_override_styles/hover = SubResource("StyleBoxFlat_i6lef")
 text = "Start"
+
+[node name="Start Button Text" type="Label" parent="Panel/MarginContainer/Control/Start Button" unique_id=1067924298]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -161.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_outline_size = 50
+theme_override_font_sizes/font_size = 113
+theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
+text = "Start"
+horizontal_alignment = 1

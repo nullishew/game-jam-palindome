@@ -1,6 +1,11 @@
 [gd_scene format=3 uid="uid://b238bf1mnrb3"]
 
 [ext_resource type="Script" uid="uid://bq3w7qf1oq40d" path="res://scripts/game_over.gd" id="1_xeevv"]
+[ext_resource type="StyleBox" uid="uid://cwdodvie5dijm" path="res://resources/menu_button_ui/menu_button_normal_stylebox.tres" id="2_wqhvx"]
+[ext_resource type="StyleBox" uid="uid://bhn1p5jywhewd" path="res://resources/menu_button_ui/menu_button_pressed_stylebox.tres" id="3_tbwuq"]
+[ext_resource type="StyleBox" uid="uid://7d3xxgifanaf" path="res://resources/menu_button_ui/menu_button_hover_stylebox.tres" id="4_7m3ot"]
+[ext_resource type="StyleBox" uid="uid://djikl8q0utpmy" path="res://resources/menu_button_ui/menu_button_disabled_stylebox.tres" id="5_irg28"]
+[ext_resource type="StyleBox" uid="uid://b4r18fogvaykm" path="res://resources/menu_button_ui/menu_button_focus_stylebox.tres" id="5_v3hpu"]
 
 [sub_resource type="Animation" id="Animation_xeevv"]
 length = 0.001
@@ -18,7 +23,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_wqhvx"]
 resource_name = "game_over"
-length = 0.5
+length = 2.0
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -28,7 +33,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(2, 0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.16666667, -0.16666667, 0, 0),
-"times": PackedFloat32Array(0, 0.5)
+"times": PackedFloat32Array(0, 1)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
@@ -37,9 +42,9 @@ tracks/1/path = NodePath("Panel/Game Over Menu:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(2, 3),
-"points": PackedFloat32Array(1000, 0, 0, 0.083333336, -125.083374, 249.49976, -0.5, 2.4299622, 0.5, -2.4299622),
-"times": PackedFloat32Array(0, 0.5)
+"handle_modes": PackedInt32Array(2, 0),
+"points": PackedFloat32Array(1000, 0, 0, 0, -500, 103.5, -1.5, 0, 0, 0),
+"times": PackedFloat32Array(0, 2)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wqhvx"]
@@ -54,8 +59,8 @@ bg_color = Color(0, 0, 0, 0.32156864)
 [node name="GameOver" type="CanvasLayer" unique_id=1361454001 node_paths=PackedStringArray("turn_count_label", "menu_btn", "replay_btn")]
 script = ExtResource("1_xeevv")
 turn_count_label = NodePath("Panel/Game Over Menu/Turn Count Label")
-menu_btn = NodePath("Panel/Game Over Menu/Menu Button")
-replay_btn = NodePath("Panel/Game Over Menu/Replay Button")
+menu_btn = NodePath("Panel/Game Over Menu/HBoxContainer/Menu Button")
+replay_btn = NodePath("Panel/Game Over Menu/HBoxContainer/Replay Button")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=610277042]
 libraries/ = SubResource("AnimationLibrary_wqhvx")
@@ -77,40 +82,116 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -225.0
+offset_left = -452.0
 offset_top = -290.50024
-offset_right = 225.0
-offset_bottom = 290.49988
+offset_right = 452.0
+offset_bottom = 582.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 140
 
 [node name="Turn Count Label" type="Label" parent="Panel/Game Over Menu" unique_id=543115791]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
 theme_override_constants/outline_size = 25
+theme_override_constants/shadow_outline_size = 50
 theme_override_font_sizes/font_size = 200
 text = "67"
 horizontal_alignment = 1
 
-[node name="Replay Button" type="Button" parent="Panel/Game Over Menu" unique_id=713294060]
-custom_minimum_size = Vector2(450, 150)
+[node name="Emote Container" type="Control" parent="Panel/Game Over Menu" unique_id=1267767820]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Game Over Menu/Emote Container" unique_id=1347407780]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = -2
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 12
+theme_override_font_sizes/font_size = 100
+text = "(╯°□°)╯︵ ┻━┻"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Game Over Menu" unique_id=182890824]
+layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="Menu Button" type="Button" parent="Panel/Game Over Menu/HBoxContainer" unique_id=1082587947]
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 7
 theme_override_font_sizes/font_size = 60
-text = "Replay"
+theme_override_styles/normal = ExtResource("2_wqhvx")
+theme_override_styles/pressed = ExtResource("3_tbwuq")
+theme_override_styles/hover = ExtResource("4_7m3ot")
+theme_override_styles/disabled = ExtResource("5_irg28")
+theme_override_styles/focus = ExtResource("5_v3hpu")
+
+[node name="Menu Label" type="Label" parent="Panel/Game Over Menu/HBoxContainer/Menu Button" unique_id=516026881]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 200.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 25
+theme_override_constants/shadow_outline_size = 40
+theme_override_font_sizes/font_size = 120
+text = "☰"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Replay Button" type="Button" parent="Panel/Game Over Menu/HBoxContainer" unique_id=713294060]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = ExtResource("2_wqhvx")
+theme_override_styles/pressed = ExtResource("3_tbwuq")
+theme_override_styles/hover = ExtResource("4_7m3ot")
+theme_override_styles/disabled = ExtResource("5_irg28")
+theme_override_styles/focus = ExtResource("5_v3hpu")
 metadata/_edit_use_anchors_ = true
 
-[node name="Menu Button" type="Button" parent="Panel/Game Over Menu" unique_id=1082587947]
-custom_minimum_size = Vector2(450, 150)
-layout_mode = 2
+[node name="Replay Label" type="Label" parent="Panel/Game Over Menu/HBoxContainer/Replay Button" unique_id=1296257838]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 0
+offset_left = -12.0
+offset_right = 188.0
+offset_bottom = 200.0
+rotation = -1.5707964
+scale = Vector2(-1, 1)
+pivot_offset = Vector2(100, 100)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 7
-theme_override_font_sizes/font_size = 60
-text = "Menu"
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 25
+theme_override_constants/shadow_outline_size = 40
+theme_override_font_sizes/font_size = 120
+text = "↻"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Crash Out" type="Label" parent="Panel" unique_id=1948264922]
 visible = false

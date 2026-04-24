@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://r1kfta300r5y" path="res://assets/pieces/circle_piece/circle_piece_idle.png" id="9_dinhu"]
 [ext_resource type="Texture2D" uid="uid://2wssfgu7rva8" path="res://assets/pixel.png" id="11_ca42v"]
 [ext_resource type="Shader" uid="uid://cfkfvppib35bq" path="res://scripts/line_shader.gdshader" id="11_ir15t"]
-[ext_resource type="Texture2D" uid="uid://c6d8cgb04exnr" path="res://assets/line_dot.png" id="11_trtic"]
+[ext_resource type="Texture2D" uid="uid://c6d8cgb04exnr" path="res://assets/ui/line_dot.png" id="11_trtic"]
 [ext_resource type="Texture2D" uid="uid://c86t71fd8aav5" path="res://assets/pieces/circle_piece/circle_piece_moving.png" id="12_264po"]
 [ext_resource type="Texture2D" uid="uid://carycf6wnschb" path="res://assets/pieces/triangle_piece/triangle_piece_impact.png" id="13_1kice"]
 [ext_resource type="Texture2D" uid="uid://bnjsk6xih14do" path="res://assets/pieces/i_piece/i_piece_moving.png" id="14_5newe"]
