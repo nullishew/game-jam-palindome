@@ -15,6 +15,8 @@ func transition():
 	anim_player.play("transition")
 	await get_tree().create_timer(0.2).timeout
 	AudioManager.play_sound(AudioManager.TRANSITION_SOUND, AudioManager.AudioBus.SFX)
+	await anim_player.animation_finished
+
 
 
 func _on_in_finished():

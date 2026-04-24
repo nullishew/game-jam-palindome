@@ -45,7 +45,6 @@ func _process(delta: float) -> void:
 	if _impact_timer > 0:
 		if not _was_impact:
 			AudioManager.play_sound(AudioManager.THUD_SOUND, AudioManager.AudioBus.SFX)
-			print("impact")
 		_was_impact = true
 		_impact_timer -= delta
 		if impact_texture:

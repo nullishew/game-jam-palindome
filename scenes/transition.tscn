@@ -11,7 +11,7 @@ length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("VBoxContainer/Control/bar 1 TextureRect:position:y")
+tracks/0/path = NodePath("HBoxContainer/Control/bar 1 TextureRect:position:y")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -22,7 +22,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("VBoxContainer/Control2/bar 2 TextureRect:position:y")
+tracks/1/path = NodePath("HBoxContainer/Control2/bar 2 TextureRect:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -33,7 +33,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("VBoxContainer/Control3/bar 3 TextureRect:position:y")
+tracks/2/path = NodePath("HBoxContainer/Control3/bar 3 TextureRect:position:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -44,7 +44,7 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("VBoxContainer/Control4/bar 4 TextureRect:position:y")
+tracks/3/path = NodePath("HBoxContainer/Control4/bar 4 TextureRect:position:y")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -55,7 +55,7 @@ tracks/3/keys = {
 tracks/4/type = "bezier"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("VBoxContainer:position:y")
+tracks/4/path = NodePath("HBoxContainer:position:y")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -78,7 +78,7 @@ length = 0.6
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("VBoxContainer/Control/bar 1 TextureRect:position:y")
+tracks/0/path = NodePath("HBoxContainer/Control/bar 1 TextureRect:position:y")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -89,7 +89,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("VBoxContainer/Control2/bar 2 TextureRect:position:y")
+tracks/1/path = NodePath("HBoxContainer/Control2/bar 2 TextureRect:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -100,7 +100,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("VBoxContainer/Control3/bar 3 TextureRect:position:y")
+tracks/2/path = NodePath("HBoxContainer/Control3/bar 3 TextureRect:position:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -111,7 +111,7 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("VBoxContainer/Control4/bar 4 TextureRect:position:y")
+tracks/3/path = NodePath("HBoxContainer/Control4/bar 4 TextureRect:position:y")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -139,7 +139,7 @@ tracks/4/keys = {
 tracks/5/type = "bezier"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("VBoxContainer:position:y")
+tracks/5/path = NodePath("HBoxContainer:position:y")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -156,16 +156,17 @@ _data = {
 &"transition": SubResource("Animation_xmi56")
 }
 
-[node name="Transition" type="CanvasLayer" unique_id=270387717 node_paths=PackedStringArray("anim_player")]
+[node name="Transition" type="CanvasLayer" unique_id=270387717 node_paths=PackedStringArray("anim_player", "container")]
 layer = 999
 script = ExtResource("1_f0i4t")
 anim_player = NodePath("AnimationPlayer")
+container = NodePath("HBoxContainer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=43063719]
 libraries/ = SubResource("AnimationLibrary_px735")
 speed_scale = 0.6
 
-[node name="VBoxContainer" type="HBoxContainer" parent="." unique_id=591628432]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=591628432]
 z_index = 999
 anchors_preset = 15
 anchor_right = 1.0
@@ -176,13 +177,15 @@ offset_right = 6.0
 offset_bottom = 420.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="Control" type="Control" parent="VBoxContainer" unique_id=350719801]
+[node name="Control" type="Control" parent="HBoxContainer" unique_id=350719801]
 custom_minimum_size = Vector2(480, 1920)
 layout_mode = 2
+mouse_filter = 2
 
-[node name="bar 1 TextureRect" type="TextureRect" parent="VBoxContainer/Control" unique_id=1708271463]
+[node name="bar 1 TextureRect" type="TextureRect" parent="HBoxContainer/Control" unique_id=1708271463]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -190,13 +193,15 @@ anchor_bottom = 1.0
 offset_bottom = -0.00048828125
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("3_xmi56")
 
-[node name="Control2" type="Control" parent="VBoxContainer" unique_id=1480105882]
+[node name="Control2" type="Control" parent="HBoxContainer" unique_id=1480105882]
 custom_minimum_size = Vector2(480, 1920)
 layout_mode = 2
+mouse_filter = 2
 
-[node name="bar 2 TextureRect" type="TextureRect" parent="VBoxContainer/Control2" unique_id=1252531186]
+[node name="bar 2 TextureRect" type="TextureRect" parent="HBoxContainer/Control2" unique_id=1252531186]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -205,13 +210,15 @@ offset_top = 140.0
 offset_bottom = 140.00488
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("3_hi828")
 
-[node name="Control3" type="Control" parent="VBoxContainer" unique_id=1443976405]
+[node name="Control3" type="Control" parent="HBoxContainer" unique_id=1443976405]
 custom_minimum_size = Vector2(480, 1920)
 layout_mode = 2
+mouse_filter = 2
 
-[node name="bar 3 TextureRect" type="TextureRect" parent="VBoxContainer/Control3" unique_id=84560038]
+[node name="bar 3 TextureRect" type="TextureRect" parent="HBoxContainer/Control3" unique_id=84560038]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -220,13 +227,15 @@ offset_top = -140.0
 offset_bottom = -140.0039
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("4_hi828")
 
-[node name="Control4" type="Control" parent="VBoxContainer" unique_id=1273210619]
+[node name="Control4" type="Control" parent="HBoxContainer" unique_id=1273210619]
 custom_minimum_size = Vector2(480, 1920)
 layout_mode = 2
+mouse_filter = 2
 
-[node name="bar 4 TextureRect" type="TextureRect" parent="VBoxContainer/Control4" unique_id=525684357]
+[node name="bar 4 TextureRect" type="TextureRect" parent="HBoxContainer/Control4" unique_id=525684357]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -235,4 +244,5 @@ offset_top = -420.0
 offset_bottom = -420.0017
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("2_f0i4t")

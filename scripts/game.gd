@@ -45,8 +45,8 @@ enum GameState {
 	HOLD,
 	PLACE,
 	INVERT,
-	WIN,
 	LOSE,
+	PAUSE,
 }
 
 func _ready() -> void:
@@ -75,8 +75,18 @@ func _set_state(state: GameState):
 		_exit_state(_state)
 	_enter_state(state)
 
+var _prev_state: GameState
+func pause():
+	_prev_state = _state
+	_set_state(GameState.PAUSE)
+func unpause():
+	_set_state(_prev_state)
+
+
 func _enter_state(state: GameState):
 	match state:
+		GameState.PAUSE:
+			SceneManager.open_pause_menu()
 		GameState.HOLD:
 			resize_platforms()
 			_turn_count += 1
@@ -93,7 +103,6 @@ func _enter_state(state: GameState):
 		GameState.LOSE:
 			GameManager.turns_survived = _turn_count
 			SceneManager.open_game_over_menu()
-			print("heheheha grr")
 			AudioManager.play_sound(AudioManager.TOWEL_DISPENSER_SOUND, AudioManager.AudioBus.SFX)
 	_state = state
 
@@ -101,6 +110,9 @@ func _exit_state(state: GameState):
 	match state:
 		GameState.INVERT:
 			GameManager.invert_state_exited.emit()
+		GameState.PAUSE:
+			SceneManager.close_pause_menu()
+		
 
 func _raycast(from: Vector2, to: Vector2) -> Vector2:
 	var space = get_world_2d().direct_space_state
@@ -110,6 +122,11 @@ func _raycast(from: Vector2, to: Vector2) -> Vector2:
 	return result.position if result else to
 
 func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("pause_menu_toggle"):
+		if _state == GameState.PAUSE:
+			unpause()
+		else:
+			pause()
 	if _curr_piece and _state == GameState.HOLD:
 		var points = PackedVector2Array()
 		var from_y := inverted_spawnpoint.global_position.y if _is_gravity_inverted else normal_spawnpoint.global_position.y
