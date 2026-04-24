@@ -14,7 +14,7 @@ extends CanvasLayer
 @export var invert_arrow_color: Color
 @export var invert_arrow_border_color: Color
 
-
+@export var pause_button: Button
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -45,6 +45,7 @@ func _ready() -> void:
 		func(piece_config: PieceSpawnConfig):
 			hold_slot_ui.texture = piece_config.ui_texture
 	)
+	pause_button.pressed.connect(func(): GameManager.game.pause())
 
 
 func _exit_tree() -> void:

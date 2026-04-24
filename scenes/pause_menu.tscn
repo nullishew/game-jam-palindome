@@ -252,7 +252,3 @@ theme_override_font_sizes/font_size = 120
 text = "▶"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Button" type="Button" parent="Panel/VBoxContainer/HBoxContainer2" unique_id=483237468]
-layout_mode = 2
-text = "dsas"
