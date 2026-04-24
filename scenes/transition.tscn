@@ -163,7 +163,7 @@ anim_player = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=43063719]
 libraries/ = SubResource("AnimationLibrary_px735")
-speed_scale = 0.67
+speed_scale = 0.6
 
 [node name="VBoxContainer" type="HBoxContainer" parent="." unique_id=591628432]
 z_index = 999
