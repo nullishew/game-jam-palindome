@@ -14,7 +14,7 @@ func _ready() -> void:
 	_transition = transition_scene.instantiate()
 	get_tree().root.call_deferred("add_child", _transition)
 
-	# force cache / preload game scene runtime assets to remove jitter on first game start
+	# force cache / preload game scene runtime assets to remove stutter on first game start
 	await get_tree().process_frame
 	var inst = game_scene.instantiate()
 	inst.visible = false
@@ -24,6 +24,7 @@ func _ready() -> void:
 
 
 func change_scene(packed_scene: PackedScene):
+	if _is_changing: return
 	_is_changing = true
 	await get_tree().process_frame
 	_transition.transition()
@@ -34,6 +35,7 @@ func change_scene(packed_scene: PackedScene):
 	await get_tree().process_frame
 	_transition.resume()
 	get_tree().call_deferred("change_scene_to_packed", packed_scene)
+	_is_changing = false
 	
 
 func start_game():
