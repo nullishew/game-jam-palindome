@@ -6,16 +6,16 @@
 [ext_resource type="Texture2D" uid="uid://c86t71fd8aav5" path="res://assets/pieces/circle_piece/circle_piece_moving.png" id="4_ablvg"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2c6lj"]
-friction = 5.0
+friction = 10.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2c6lj"]
 radius = 36.013885
 
 [node name="CirclePiece" type="RigidBody2D" unique_id=762002478 node_paths=PackedStringArray("sprite", "collision_shape")]
-mass = 5.0
+mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_2c6lj")
 linear_damp = 2.0
-angular_damp = 3.0
+angular_damp = 6.0
 script = ExtResource("1_14j71")
 sprite = NodePath("Sprite2D")
 collision_shape = NodePath("CollisionShape2D")
