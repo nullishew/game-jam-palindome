@@ -9,7 +9,7 @@
 [node name="TrianglePiece" type="RigidBody2D" unique_id=812756609 node_paths=PackedStringArray("sprite", "collision_shape")]
 mass = 10.0
 physics_material_override = ExtResource("1_0ro25")
-linear_damp = 0.6
+linear_damp = 2.0
 script = ExtResource("2_m8c2a")
 sprite = NodePath("Sprite2D")
 collision_shape = NodePath("CollisionPolygon2D")
