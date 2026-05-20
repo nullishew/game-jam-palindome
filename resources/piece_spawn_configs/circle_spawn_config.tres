@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PieceSpawnConfig" format=3 uid="uid://ej4doo37u15r"]
+
+[ext_resource type="PackedScene" uid="uid://diklw5uaphjog" path="res://scenes/pieces/circle_piece.tscn" id="1_pecde"]
+[ext_resource type="Script" uid="uid://cpowjncfu48nu" path="res://scripts/piece_spawn_config.gd" id="2_8cffg"]
+[ext_resource type="Texture2D" uid="uid://r1kfta300r5y" path="res://assets/pieces/circle_piece/circle_piece_idle.png" id="3_rt3bw"]
+
+[resource]
+script = ExtResource("2_8cffg")
+ui_texture = ExtResource("3_rt3bw")
+packed_scene = ExtResource("1_pecde")
+metadata/_custom_type_script = "uid://cpowjncfu48nu"

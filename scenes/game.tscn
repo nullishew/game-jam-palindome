@@ -2,16 +2,12 @@
 
 [ext_resource type="Script" uid="uid://c0pg5bts2c01c" path="res://scripts/game.gd" id="1_yqjtg"]
 [ext_resource type="Script" uid="uid://cpowjncfu48nu" path="res://scripts/piece_spawn_config.gd" id="2_gee14"]
-[ext_resource type="PackedScene" uid="uid://cdw325613l8rk" path="res://scenes/pieces/i_piece.tscn" id="3_iywne"]
+[ext_resource type="Resource" uid="uid://ddvlfs7xxkopw" path="res://resources/piece_spawn_configs/block_spawn_config.tres" id="3_264po"]
 [ext_resource type="PackedScene" uid="uid://b4g4t2trs4wr7" path="res://scenes/platform.tscn" id="3_lbhrr"]
-[ext_resource type="PackedScene" uid="uid://7g6rkmeteclo" path="res://scenes/pieces/block_piece.tscn" id="3_lnu2h"]
-[ext_resource type="Texture2D" uid="uid://co2wawj7rvqr1" path="res://assets/pieces/square_piece/square_piece_idle.png" id="4_kvuet"]
+[ext_resource type="Resource" uid="uid://mcl75rxngymv" path="res://resources/piece_spawn_configs/triangle_spawn_config.tres" id="4_1kice"]
 [ext_resource type="PackedScene" uid="uid://bdajgv04xnnoe" path="res://scenes/death_zone.tscn" id="4_lbhrr"]
-[ext_resource type="PackedScene" uid="uid://c5u6qthot4jji" path="res://scenes/pieces/triangle_piece.tscn" id="4_p57ef"]
-[ext_resource type="Texture2D" uid="uid://c63qiv4kfv0bd" path="res://assets/pieces/triangle_piece/triangle_piece_idle.png" id="6_kvuet"]
-[ext_resource type="PackedScene" uid="uid://diklw5uaphjog" path="res://scenes/pieces/circle_piece.tscn" id="8_kvpfn"]
-[ext_resource type="Texture2D" uid="uid://did35gbm72b6b" path="res://assets/pieces/i_piece/i_piece_idle.png" id="8_kvuet"]
-[ext_resource type="Texture2D" uid="uid://r1kfta300r5y" path="res://assets/pieces/circle_piece/circle_piece_idle.png" id="9_dinhu"]
+[ext_resource type="Resource" uid="uid://css1jxrjeb1ym" path="res://resources/piece_spawn_configs/i_spawn_config.tres" id="5_5newe"]
+[ext_resource type="Resource" uid="uid://ej4doo37u15r" path="res://resources/piece_spawn_configs/circle_spawn_config.tres" id="6_37s47"]
 [ext_resource type="Script" uid="uid://bravgtsr1mrig" path="res://scripts/features/camera_controller.gd" id="11_5newe"]
 [ext_resource type="Texture2D" uid="uid://2wssfgu7rva8" path="res://assets/pixel.png" id="11_ca42v"]
 [ext_resource type="Shader" uid="uid://cfkfvppib35bq" path="res://scripts/line_shader.gdshader" id="11_ir15t"]
@@ -19,44 +15,22 @@
 [ext_resource type="Script" uid="uid://bs8u3xv2a4nan" path="res://scripts/features/platform_controller.gd" id="12_37s47"]
 [ext_resource type="Texture2D" uid="uid://c86t71fd8aav5" path="res://assets/pieces/circle_piece/circle_piece_moving.png" id="12_264po"]
 [ext_resource type="Texture2D" uid="uid://carycf6wnschb" path="res://assets/pieces/triangle_piece/triangle_piece_impact.png" id="13_1kice"]
+[ext_resource type="Script" uid="uid://dsk3v6a3mwkq" path="res://scripts/features/piece_queue_component.gd" id="13_bt5mj"]
 [ext_resource type="Texture2D" uid="uid://bnjsk6xih14do" path="res://assets/pieces/i_piece/i_piece_moving.png" id="14_5newe"]
 [ext_resource type="Texture2D" uid="uid://dsvdkvc3mnws4" path="res://assets/pieces/square_piece/square_piece_impact.png" id="15_1kice"]
 [ext_resource type="PackedScene" uid="uid://ccy05kcl0d213" path="res://scenes/hud.tscn" id="20_1kice"]
-
-[sub_resource type="Resource" id="Resource_kvpfn"]
-script = ExtResource("2_gee14")
-ui_texture = ExtResource("4_kvuet")
-packed_scene = ExtResource("3_lnu2h")
-metadata/_custom_type_script = "uid://cpowjncfu48nu"
-
-[sub_resource type="Resource" id="Resource_dinhu"]
-script = ExtResource("2_gee14")
-ui_texture = ExtResource("6_kvuet")
-packed_scene = ExtResource("4_p57ef")
-metadata/_custom_type_script = "uid://cpowjncfu48nu"
-
-[sub_resource type="Resource" id="Resource_kvuet"]
-script = ExtResource("2_gee14")
-ui_texture = ExtResource("8_kvuet")
-packed_scene = ExtResource("3_iywne")
-metadata/_custom_type_script = "uid://cpowjncfu48nu"
-
-[sub_resource type="Resource" id="Resource_trtic"]
-script = ExtResource("2_gee14")
-ui_texture = ExtResource("9_dinhu")
-packed_scene = ExtResource("8_kvpfn")
-metadata/_custom_type_script = "uid://cpowjncfu48nu"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ca42v"]
 shader = ExtResource("11_ir15t")
 shader_parameter/speed = -1.0
 
-[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("line", "camera_controller", "platform_controller", "world_container", "piece_container", "normal_spawnpoint", "inverted_spawnpoint", "top_platform", "bottom_platform")]
+[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("line", "camera_controller", "platform_controller", "piece_queue_component", "world_container", "piece_container", "normal_spawnpoint", "inverted_spawnpoint", "top_platform", "bottom_platform")]
 script = ExtResource("1_yqjtg")
 line = NodePath("World/Line2D")
-piece_configs = Array[ExtResource("2_gee14")]([SubResource("Resource_kvpfn"), SubResource("Resource_dinhu"), SubResource("Resource_kvuet"), SubResource("Resource_trtic")])
+piece_configs = Array[ExtResource("2_gee14")]([ExtResource("3_264po"), ExtResource("4_1kice"), ExtResource("5_5newe"), ExtResource("6_37s47")])
 camera_controller = NodePath("Camera2D")
 platform_controller = NodePath("PlatformController")
+piece_queue_component = NodePath("PieceQueueComponent")
 world_container = NodePath("World")
 piece_container = NodePath("World/Piece Container")
 normal_spawnpoint = NodePath("World/Top Platform/Top Spawn")
@@ -74,6 +48,11 @@ bottom_platform = NodePath("../World/Bottom Platform")
 script = ExtResource("12_37s47")
 top_platform = NodePath("../World/Top Platform")
 bottom_platform = NodePath("../World/Bottom Platform")
+
+[node name="PieceQueueComponent" type="Node" parent="." unique_id=1532387017]
+script = ExtResource("13_bt5mj")
+piece_configs = Array[ExtResource("2_gee14")]([ExtResource("3_264po"), ExtResource("4_1kice"), ExtResource("5_5newe"), ExtResource("6_37s47")])
+metadata/_custom_type_script = "uid://dsk3v6a3mwkq"
 
 [node name="World" type="Node2D" parent="." unique_id=1555225489]
 

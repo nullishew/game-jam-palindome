@@ -3,10 +3,10 @@ extends Node2D
 
 @export var line: Line2D
 
-@export var piece_configs: Array[PieceSpawnConfig]
 
 @export var camera_controller: CameraController
 @export var platform_controller: PlatformController
+@export var piece_queue_component: PieceQueueComponent
 
 @export var min_place_time: float = 1
 @export var world_container: Node2D
@@ -23,14 +23,13 @@ extends Node2D
 var is_game_over: bool:
 	get: return _state == GameState.LOSE
 
-var _piece_sequence: Array[PieceSpawnConfig] = []
 var _placed_pieces: Array[Piece] = []
 
 var _hold_piece_config: PieceSpawnConfig = null
 var _hold_piece: Piece = null
-var _curr_piece_index: int = -1
 var _curr_piece: Piece
 var _curr_piece_pos: Vector2 = Vector2.ZERO
+var _curr_piece_config: PieceSpawnConfig = null
 
 var _place_timer: float = 0
 var is_gravity_inverted: bool:
@@ -55,17 +54,15 @@ func _ready() -> void:
 	camera_controller.make_current() # just to not break physics from the one frame delay breh
 	GameManager.game = self
 	_is_gravity_inverted = false
-	_piece_sequence.clear()
-	_curr_piece_index = -1
 	PhysicsServer2D.area_set_param(
 		get_viewport().get_world_2d().space,
 		PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR,
 		[Vector2.DOWN, Vector2.UP][int(_is_gravity_inverted)]
 	)
-	# _top_platform_target_pos_y = top_platform.global_position.y
-	# _bottom_platform_target_pos_y = bottom_platform.global_position.y
 	_hold_piece_config = null
 	_hold_piece = null
+	_curr_piece_config = null
+	_curr_piece = null
 	_set_state(GameState.HOLD)
 
 func _input(event):
@@ -153,20 +150,19 @@ func _physics_process(delta: float) -> void:
 	match _state:
 		GameState.HOLD:
 			if Input.is_action_just_pressed("hold_piece"):
-				if _curr_piece:
-					var temp_config: PieceSpawnConfig = _hold_piece_config
-					_hold_piece_config = _piece_sequence[_curr_piece_index]
-					_piece_sequence[_curr_piece_index] = temp_config
-					GameManager.hold_piece_updated.emit(_hold_piece_config)
-					_curr_piece.hold_piece_hide()
-					var temp_piece = _hold_piece
-					_hold_piece = _curr_piece
-					_curr_piece = null
-					if temp_piece:
-						temp_piece.unhold_piece_show(_curr_piece_pos)
-						_curr_piece = temp_piece
-					else:
-						call_deferred("spawn_piece", _curr_piece_pos)
+				var temp_config: PieceSpawnConfig = _hold_piece_config
+				_hold_piece_config = _curr_piece_config
+				_curr_piece_config = temp_config
+				GameManager.hold_piece_updated.emit(_hold_piece_config)
+				_curr_piece.hold_piece_hide()
+				var temp_piece = _hold_piece
+				_hold_piece = _curr_piece
+				_curr_piece = null
+				if temp_piece:
+					temp_piece.unhold_piece_show(_curr_piece_pos)
+					_curr_piece = temp_piece
+				else:
+					call_deferred("spawn_piece", _curr_piece_pos)
 					
 			else:
 				if _curr_piece:
@@ -195,12 +191,8 @@ func _physics_process(delta: float) -> void:
 	_mouse_moved = false
 
 func spawn_piece(custom_spawn_point: Vector2 = Vector2.ZERO):
-	_curr_piece_index += 1
-	while _piece_sequence.size() < _curr_piece_index + 5:
-		var next_cycle: Array[PieceSpawnConfig] = piece_configs.duplicate()
-		next_cycle.shuffle()
-		_piece_sequence.append_array(next_cycle)
-	var piece_scene: PackedScene =_piece_sequence[_curr_piece_index].packed_scene
+	_curr_piece_config = piece_queue_component.pop_front()
+	var piece_scene: PackedScene = _curr_piece_config.packed_scene
 	var piece: Piece = piece_scene.instantiate()
 	piece.is_player_piece = true
 	piece.freeze = true
@@ -211,7 +203,8 @@ func spawn_piece(custom_spawn_point: Vector2 = Vector2.ZERO):
 	offset = Vector2.ZERO
 	piece_container.add_child(piece)
 
-	GameManager.queue_ui_updated.emit(_piece_sequence, _curr_piece_index + 1)
+	GameManager.queue_ui_updated.emit(piece_queue_component.peek(4), 0)
+
 
 
 
@@ -222,6 +215,7 @@ func hold(piece: Piece):
 func release(piece: Piece):
 	if !_curr_piece: return
 	_curr_piece = null
+	_curr_piece_config = null
 	piece.release()
 	_placed_pieces.append(piece)
 
