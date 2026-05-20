@@ -27,7 +27,6 @@ shader_parameter/speed = -1.0
 [node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("line", "camera_controller", "platform_controller", "piece_queue_component", "world_container", "piece_container", "normal_spawnpoint", "inverted_spawnpoint", "top_platform", "bottom_platform")]
 script = ExtResource("1_yqjtg")
 line = NodePath("World/Line2D")
-piece_configs = Array[ExtResource("2_gee14")]([ExtResource("3_264po"), ExtResource("4_1kice"), ExtResource("5_5newe"), ExtResource("6_37s47")])
 camera_controller = NodePath("Camera2D")
 platform_controller = NodePath("PlatformController")
 piece_queue_component = NodePath("PieceQueueComponent")
