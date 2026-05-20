@@ -4,6 +4,7 @@ extends Node2D
 
 
 @export var piece_queue_component: PieceQueueComponent
+@export var piece_spawn_controller: PieceSpawnController
 
 @export var camera_controller: CameraController
 @export var platform_controller: PlatformController
@@ -188,18 +189,10 @@ func _physics_process(delta: float) -> void:
 	_mouse_moved = false
 
 func spawn_piece(custom_spawn_point: Vector2 = Vector2.ZERO):
-	_curr_piece_config = piece_queue_component.pop_front()
-	var piece_scene: PackedScene = _curr_piece_config.packed_scene
-	var piece: Piece = piece_scene.instantiate()
-	piece.is_player_piece = true
-	piece.freeze = true
-	var spawnpoint: Vector2 = custom_spawn_point if custom_spawn_point != Vector2.ZERO else [normal_spawnpoint.global_position, inverted_spawnpoint.global_position][int(_is_gravity_inverted)]
-	var offset: Vector2 = Vector2(randf_range(-0.5, 0.5), 0)
-	piece.global_position = spawnpoint + offset
-	piece.global_rotation = randi_range(0, 3) * PI / 2
-	offset = Vector2.ZERO
-	piece_container.add_child(piece)
-
+	var config = piece_queue_component.pop_front()
+	var spawn_point: Vector2 = custom_spawn_point if custom_spawn_point != Vector2.ZERO else [normal_spawnpoint.global_position, inverted_spawnpoint.global_position][int(_is_gravity_inverted)]
+	_curr_piece_config = config
+	var _curr_piece = piece_spawn_controller.spawn_piece(config, spawn_point)
 	GameManager.queue_ui_updated.emit(piece_queue_component.peek(4), 0)
 
 

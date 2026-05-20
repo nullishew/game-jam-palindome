@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bdajgv04xnnoe" path="res://scenes/death_zone.tscn" id="4_lbhrr"]
 [ext_resource type="Resource" uid="uid://css1jxrjeb1ym" path="res://resources/piece_spawn_configs/i_spawn_config.tres" id="5_5newe"]
 [ext_resource type="Resource" uid="uid://ej4doo37u15r" path="res://resources/piece_spawn_configs/circle_spawn_config.tres" id="6_37s47"]
+[ext_resource type="Script" uid="uid://dxabjkkobfw1v" path="res://scripts/features/piece_spawn_controller.gd" id="9_5newe"]
 [ext_resource type="Script" uid="uid://f7c8k35oislr" path="res://scripts/features/placement_preview_controller.gd" id="10_1kice"]
 [ext_resource type="Script" uid="uid://bravgtsr1mrig" path="res://scripts/features/camera_controller.gd" id="11_5newe"]
 [ext_resource type="Texture2D" uid="uid://2wssfgu7rva8" path="res://assets/pixel.png" id="11_ca42v"]
@@ -25,9 +26,10 @@
 shader = ExtResource("11_ir15t")
 shader_parameter/speed = -1.0
 
-[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("piece_queue_component", "camera_controller", "platform_controller", "placement_preview_controller", "world_container", "piece_container", "normal_spawnpoint", "inverted_spawnpoint", "top_platform", "bottom_platform")]
+[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("piece_queue_component", "piece_spawn_controller", "camera_controller", "platform_controller", "placement_preview_controller", "world_container", "piece_container", "normal_spawnpoint", "inverted_spawnpoint", "top_platform", "bottom_platform")]
 script = ExtResource("1_yqjtg")
 piece_queue_component = NodePath("PieceQueueComponent")
+piece_spawn_controller = NodePath("PieceSpawnController")
 camera_controller = NodePath("Camera2D")
 platform_controller = NodePath("PlatformController")
 placement_preview_controller = NodePath("PlacementPreviewController")
@@ -44,15 +46,20 @@ script = ExtResource("11_5newe")
 top_platform = NodePath("../World/Top Platform")
 bottom_platform = NodePath("../World/Bottom Platform")
 
-[node name="PlatformController" type="Node" parent="." unique_id=1512633353 node_paths=PackedStringArray("top_platform", "bottom_platform")]
-script = ExtResource("12_37s47")
-top_platform = NodePath("../World/Top Platform")
-bottom_platform = NodePath("../World/Bottom Platform")
-
 [node name="PieceQueueComponent" type="Node" parent="." unique_id=1532387017]
 script = ExtResource("13_bt5mj")
 piece_configs = Array[ExtResource("2_gee14")]([ExtResource("3_264po"), ExtResource("4_1kice"), ExtResource("5_5newe"), ExtResource("6_37s47")])
 metadata/_custom_type_script = "uid://dsk3v6a3mwkq"
+
+[node name="PieceSpawnController" type="Node" parent="." unique_id=1537247158 node_paths=PackedStringArray("piece_container")]
+script = ExtResource("9_5newe")
+piece_container = NodePath("../World/Piece Container")
+metadata/_custom_type_script = "uid://dxabjkkobfw1v"
+
+[node name="PlatformController" type="Node" parent="." unique_id=1512633353 node_paths=PackedStringArray("top_platform", "bottom_platform")]
+script = ExtResource("12_37s47")
+top_platform = NodePath("../World/Top Platform")
+bottom_platform = NodePath("../World/Bottom Platform")
 
 [node name="PlacementPreviewController" type="Node" parent="." unique_id=1355831630 node_paths=PackedStringArray("line")]
 script = ExtResource("10_1kice")
