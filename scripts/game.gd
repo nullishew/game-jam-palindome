@@ -5,7 +5,7 @@ extends Node2D
 
 @export var piece_configs: Array[PieceSpawnConfig]
 
-@export var cam: Camera2D
+@export var cam: CameraController
 @export var min_place_time: float = 1
 @export var world_container: Node2D
 @export var piece_container: Node2D
@@ -145,7 +145,7 @@ func _physics_process(delta: float) -> void:
 	
 
 	update_platform_size(delta)
-	call_deferred("update_camera", delta)
+	cam.call_deferred("update_camera", delta)
 
 	match _state:
 		GameState.HOLD:
@@ -247,28 +247,6 @@ func resize_platforms():
 			_top_platform_target_pos_y = bottom_p.y - min_piece_distance_to_platform
 	
 	
-
-
-var _target_cam_zoom: Vector2
-var _target_cam_pos: Vector2
-
-func update_camera(delta: float):
-	var top_y = top_platform.global_position.y
-	var bottom_y = bottom_platform.global_position.y
-
-	var center_y = (top_y + bottom_y) / 2.0
-	_target_cam_pos = Vector2(0, center_y)
-
-	var padding = 100
-	var height = abs(top_y - bottom_y) + padding
-	var viewport_height = cam.get_viewport_rect().size.y
-	var zoom = viewport_height / height 
-	_target_cam_zoom = Vector2(zoom, zoom)
-
-	var t := 1.0 - exp(-delta * 4.0)
-	cam.zoom = cam.zoom.lerp(_target_cam_zoom, t)
-	cam.global_position = cam.global_position.lerp(_target_cam_pos, t)
-
 
 
 

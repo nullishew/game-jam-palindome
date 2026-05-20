@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://diklw5uaphjog" path="res://scenes/pieces/circle_piece.tscn" id="8_kvpfn"]
 [ext_resource type="Texture2D" uid="uid://did35gbm72b6b" path="res://assets/pieces/i_piece/i_piece_idle.png" id="8_kvuet"]
 [ext_resource type="Texture2D" uid="uid://r1kfta300r5y" path="res://assets/pieces/circle_piece/circle_piece_idle.png" id="9_dinhu"]
+[ext_resource type="Script" uid="uid://bravgtsr1mrig" path="res://scripts/features/camera_controller.gd" id="11_5newe"]
 [ext_resource type="Texture2D" uid="uid://2wssfgu7rva8" path="res://assets/pixel.png" id="11_ca42v"]
 [ext_resource type="Shader" uid="uid://cfkfvppib35bq" path="res://scripts/line_shader.gdshader" id="11_ir15t"]
 [ext_resource type="Texture2D" uid="uid://c6d8cgb04exnr" path="res://assets/ui/line_dot.png" id="11_trtic"]
@@ -61,8 +62,11 @@ inverted_spawnpoint = NodePath("World/Bottom Platform/Bottom Spawn")
 top_platform = NodePath("World/Top Platform")
 bottom_platform = NodePath("World/Bottom Platform")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1900951051]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1900951051 node_paths=PackedStringArray("top_platform", "bottom_platform")]
 zoom = Vector2(5, 5)
+script = ExtResource("11_5newe")
+top_platform = NodePath("../World/Top Platform")
+bottom_platform = NodePath("../World/Bottom Platform")
 
 [node name="World" type="Node2D" parent="." unique_id=1555225489]
 
