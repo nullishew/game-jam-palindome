@@ -5,7 +5,9 @@ extends Node2D
 
 @export var piece_configs: Array[PieceSpawnConfig]
 
-@export var cam: CameraController
+@export var camera_controller: CameraController
+@export var platform_controller: PlatformController
+
 @export var min_place_time: float = 1
 @export var world_container: Node2D
 @export var piece_container: Node2D
@@ -50,7 +52,7 @@ enum GameState {
 }
 
 func _ready() -> void:
-	cam.make_current() # just to not break physics from the one frame delay breh
+	camera_controller.make_current() # just to not break physics from the one frame delay breh
 	GameManager.game = self
 	_is_gravity_inverted = false
 	_piece_sequence.clear()
@@ -60,8 +62,8 @@ func _ready() -> void:
 		PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR,
 		[Vector2.DOWN, Vector2.UP][int(_is_gravity_inverted)]
 	)
-	_top_platform_target_pos_y = top_platform.global_position.y
-	_bottom_platform_target_pos_y = bottom_platform.global_position.y
+	# _top_platform_target_pos_y = top_platform.global_position.y
+	# _bottom_platform_target_pos_y = bottom_platform.global_position.y
 	_hold_piece_config = null
 	_hold_piece = null
 	_set_state(GameState.HOLD)
@@ -83,12 +85,14 @@ func unpause():
 	_set_state(_prev_state)
 
 
+
+
 func _enter_state(state: GameState):
 	match state:
 		GameState.PAUSE:
 			SceneManager.open_pause_menu()
 		GameState.HOLD:
-			resize_platforms()
+			platform_controller.resize_platform_distance(_placed_pieces, _is_gravity_inverted)
 			_turn_count += 1
 			GameManager.turn_incremented.emit(_turn_count)
 			if !_curr_piece:
@@ -106,13 +110,14 @@ func _enter_state(state: GameState):
 			AudioManager.play_sound(AudioManager.TOWEL_DISPENSER_SOUND, AudioManager.AudioBus.SFX)
 	_state = state
 
+
 func _exit_state(state: GameState):
 	match state:
 		GameState.INVERT:
 			GameManager.invert_state_exited.emit()
 		GameState.PAUSE:
 			SceneManager.close_pause_menu()
-		
+
 
 func _raycast(from: Vector2, to: Vector2) -> Vector2:
 	var space = get_world_2d().direct_space_state
@@ -142,10 +147,8 @@ func _process(delta: float) -> void:
 		line.visible = false
 
 func _physics_process(delta: float) -> void:
-	
-
-	update_platform_size(delta)
-	cam.call_deferred("update_camera", delta)
+	platform_controller.update_platform_distance(delta)
+	camera_controller.call_deferred("update_camera", delta)
 
 	match _state:
 		GameState.HOLD:
@@ -221,32 +224,6 @@ func release(piece: Piece):
 	_curr_piece = null
 	piece.release()
 	_placed_pieces.append(piece)
-
-var _top_platform_target_pos_y: float
-var _bottom_platform_target_pos_y: float
-
-func update_platform_size(delta: float):
-	var t := 1.0 - exp(-delta * 4.0)
-	bottom_platform.global_position.y = lerp(bottom_platform.global_position.y, _bottom_platform_target_pos_y, t)
-	top_platform.global_position.y = lerp(top_platform.global_position.y, _top_platform_target_pos_y, t)
-
-func resize_platforms():
-	var top_p: Vector2 = Vector2(-INF, -INF)
-	var bottom_p: Vector2 = Vector2(INF, INF)
-	for piece in _placed_pieces:
-		top_p = top_p.max(piece.global_position)
-		bottom_p = bottom_p.min(piece.global_position)
-	var min_piece_distance_to_platform: float = 300
-	if _is_gravity_inverted:
-		var dist = bottom_platform.global_position.y - top_p.y
-		if dist < min_piece_distance_to_platform:
-			_bottom_platform_target_pos_y = top_p.y + min_piece_distance_to_platform
-	else:
-		var dist = bottom_p.y - top_platform.global_position.y
-		if dist < min_piece_distance_to_platform:
-			_top_platform_target_pos_y = bottom_p.y - min_piece_distance_to_platform
-	
-	
 
 
 
