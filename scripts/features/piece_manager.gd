@@ -2,6 +2,12 @@ class_name PieceManager
 extends Node
 
 
+enum SpawnMode {
+	TOP,
+	BOTTOM,
+}
+
+
 @export var piece_queue_component: PieceQueueComponent
 @export var piece_spawn_controller: PieceSpawnController
 
@@ -9,11 +15,19 @@ extends Node
 
 
 
-@export var normal_spawnpoint: Node2D
-@export var inverted_spawnpoint: Node2D
+@export var top_spawn_point: Node2D
+@export var bottom_spawn_point: Node2D
+
 
 var placed_pieces: Array[Piece]:
 	get: return _placed_pieces
+var spawn_global_position: Vector2:
+	get: return _spawn_points_by_mode[_spawn_mode].global_position
+
+
+var _spawn_points_by_mode: Dictionary[SpawnMode, Node2D]
+var _spawn_mode: SpawnMode = SpawnMode.TOP
+
 var _placed_pieces: Array[Piece] = []
 
 var _hold_piece_config: PieceSpawnConfig = null
@@ -27,10 +41,21 @@ var _settle_timer: float = 0.0
 
 
 func _ready() -> void:
+	_spawn_points_by_mode = {
+		SpawnMode.BOTTOM: bottom_spawn_point,
+		SpawnMode.TOP: top_spawn_point,
+	}
+
 	_hold_piece_config = null
 	_hold_piece = null
 	_curr_piece_config = null
 	_curr_piece = null
+
+
+func set_spawn_mode(mode: SpawnMode):
+	_spawn_mode = mode
+	print(_spawn_mode)
+	print(spawn_global_position)
 
 
 func release_current_piece():
@@ -41,11 +66,13 @@ func release_current_piece():
 	piece.release()
 	_placed_pieces.append(piece)
 
+
 func has_current_piece() -> bool:
 	return _curr_piece != null
 
-func update_current_piece_position(delta: float, is_gravity_inverted: bool, mouse_moved: bool, mouse_x: float):
-	_curr_piece.position.y = inverted_spawnpoint.global_position.y if is_gravity_inverted else normal_spawnpoint.global_position.y
+
+func update_current_piece_position(delta: float, mouse_moved: bool, mouse_x: float):
+	_curr_piece.position.y = spawn_global_position.y
 	if mouse_moved:
 		_curr_piece.position.x = mouse_x
 	else:
@@ -54,7 +81,7 @@ func update_current_piece_position(delta: float, is_gravity_inverted: bool, mous
 	_curr_piece_pos = _curr_piece.global_position
 
 
-func swap_current_hold_piece(is_gravity_inverted: bool):
+func swap_current_hold_piece():
 	var temp_config: PieceSpawnConfig = _hold_piece_config
 	_hold_piece_config = _curr_piece_config
 	_curr_piece_config = temp_config
@@ -67,7 +94,8 @@ func swap_current_hold_piece(is_gravity_inverted: bool):
 		temp_piece.exit_hold(_curr_piece_pos)
 		_curr_piece = temp_piece
 	else:
-		call_deferred("spawn_piece", is_gravity_inverted, _curr_piece_pos)
+		call_deferred("spawn_piece", _curr_piece_pos)
+
 
 func wake_all_pieces():
 	for piece in _placed_pieces:
@@ -75,15 +103,10 @@ func wake_all_pieces():
 		piece.linear_velocity = Vector2.ZERO
 		piece.angular_velocity = 0
 
-func try_spawn_piece(is_gravity_inverted: bool, custom_spawn_point: Vector2 = Vector2.ZERO):
-	if _curr_piece: return
-	spawn_piece(is_gravity_inverted, custom_spawn_point)
 
-
-
-func spawn_piece(is_gravity_inverted: bool, custom_spawn_point: Vector2 = Vector2.ZERO):
+func spawn_piece(custom_spawn_point: Vector2 = Vector2.ZERO):
 	var config = piece_queue_component.pop_front()
-	var spawn_point: Vector2 = custom_spawn_point if custom_spawn_point != Vector2.ZERO else [normal_spawnpoint.global_position, inverted_spawnpoint.global_position][int(is_gravity_inverted)]
+	var spawn_point: Vector2 = custom_spawn_point if custom_spawn_point != Vector2.ZERO else spawn_global_position
 	_curr_piece_config = config
 	_curr_piece = piece_spawn_controller.spawn_piece(config, spawn_point)
 	GameManager.queue_ui_updated.emit(piece_queue_component.peek(4), 0)
@@ -111,23 +134,15 @@ func _are_pieces_settled() -> bool:
 			return false
 	return true
 
+
 @export var placement_preview_controller: PlacementPreviewController
 
-@export var top_platform: Node2D
-@export var bottom_platform: Node2D
 
-
-func update_piece_placement_preview(is_player_turn: bool, is_gravity_inverted: bool, world: World2D):
+func update_piece_placement_preview(is_player_turn: bool, world: World2D, active_platform_y: float):
 	if _curr_piece and is_player_turn:
 		placement_preview_controller.update_preview(
-			Vector2(
-				_curr_piece.global_position.x,
-				inverted_spawnpoint.global_position.y if is_gravity_inverted else normal_spawnpoint.global_position.y
-			),
-			Vector2(
-				_curr_piece.global_position.x,
-				top_platform.global_position.y if is_gravity_inverted else bottom_platform.global_position.y
-			),
+			Vector2(_curr_piece.global_position.x, spawn_global_position.y),
+			Vector2(_curr_piece.global_position.x, active_platform_y),
 			world,
 			_curr_piece
 		)
