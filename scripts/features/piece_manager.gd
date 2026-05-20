@@ -49,7 +49,7 @@ func update_current_piece_position(delta: float, is_gravity_inverted: bool, mous
 	if mouse_moved:
 		_curr_piece.position.x = mouse_x
 	else:
-		_curr_piece.position.x += Input.get_axis("move_piece_left", "move_piece_right") * 5
+		_curr_piece.position.x += Input.get_axis("move_piece_left", "move_piece_right") * 200 * delta
 	_curr_piece.position.x = clamp(_curr_piece.position.x, -200, 200)
 	_curr_piece_pos = _curr_piece.global_position
 
