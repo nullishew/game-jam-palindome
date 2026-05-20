@@ -59,12 +59,12 @@ func swap_current_hold_piece(is_gravity_inverted: bool):
 	_hold_piece_config = _curr_piece_config
 	_curr_piece_config = temp_config
 	GameManager.hold_piece_updated.emit(_hold_piece_config)
-	_curr_piece.hold_piece_hide()
+	_curr_piece.enter_hold()
 	var temp_piece = _hold_piece
 	_hold_piece = _curr_piece
 	_curr_piece = null
 	if temp_piece:
-		temp_piece.unhold_piece_show(_curr_piece_pos)
+		temp_piece.exit_hold(_curr_piece_pos)
 		_curr_piece = temp_piece
 	else:
 		call_deferred("spawn_piece", is_gravity_inverted, _curr_piece_pos)

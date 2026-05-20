@@ -98,7 +98,7 @@ func release():
 var _prev_collision_mask
 var _prev_collision_layer
 
-func hold_piece_hide():
+func enter_hold():
 	hide()
 	freeze = true
 	sleeping = true
@@ -107,7 +107,7 @@ func hold_piece_hide():
 	collision_layer = 0
 	collision_mask = 0
 
-func unhold_piece_show(pos: Vector2):
+func exit_hold(pos: Vector2):
 	freeze = true
 	sleeping = true
 	global_position = pos
