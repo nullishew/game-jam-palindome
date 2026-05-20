@@ -24,7 +24,6 @@ var _was_impact: bool = false
 func _ready() -> void:
 	if is_player_piece:
 		select_piece()
-		GameManager.game.hold(self)
 	if impact_texture:
 		contact_monitor = true
 		max_contacts_reported = 1
