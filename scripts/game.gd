@@ -1,12 +1,13 @@
 class_name Game
 extends Node2D
 
-@export var line: Line2D
 
+
+@export var piece_queue_component: PieceQueueComponent
 
 @export var camera_controller: CameraController
 @export var platform_controller: PlatformController
-@export var piece_queue_component: PieceQueueComponent
+@export var placement_preview_controller: PlacementPreviewController
 
 @export var min_place_time: float = 1
 @export var world_container: Node2D
@@ -83,7 +84,6 @@ func unpause():
 
 
 
-
 func _enter_state(state: GameState):
 	match state:
 		GameState.PAUSE:
@@ -116,13 +116,6 @@ func _exit_state(state: GameState):
 			SceneManager.close_pause_menu()
 
 
-func _raycast(from: Vector2, to: Vector2) -> Vector2:
-	var space = get_world_2d().direct_space_state
-	var query = PhysicsRayQueryParameters2D.create(from, to)
-	query.exclude = [_curr_piece]
-	var result = space.intersect_ray(query)
-	return result.position if result else to
-
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("pause_menu_toggle"):
 		if _state == GameState.PAUSE:
@@ -130,18 +123,22 @@ func _process(delta: float) -> void:
 		else:
 			pause()
 	if _curr_piece and _state == GameState.HOLD:
-		var points = PackedVector2Array()
-		var from_y := inverted_spawnpoint.global_position.y if _is_gravity_inverted else normal_spawnpoint.global_position.y
-		var from: Vector2 = Vector2(_curr_piece.global_position.x, from_y)
-		var max_y := top_platform.global_position.y if _is_gravity_inverted else bottom_platform.global_position.y
-		var to := _raycast(from, Vector2(_curr_piece.global_position.x, max_y))
-		points.append(line.to_local(from))
-		points.append(line.to_local(to))
-		line.points = points
-
-		line.visible = true
+		placement_preview_controller.update_preview(
+			Vector2(
+				_curr_piece.global_position.x,
+				inverted_spawnpoint.global_position.y if _is_gravity_inverted else normal_spawnpoint.global_position.y
+			),
+			Vector2(
+				_curr_piece.global_position.x,
+				top_platform.global_position.y if _is_gravity_inverted else bottom_platform.global_position.y
+			),
+			get_world_2d(),
+			_curr_piece
+		)
+		placement_preview_controller.show_preview()
 	else:
-		line.visible = false
+		placement_preview_controller.hide_preview()
+
 
 func _physics_process(delta: float) -> void:
 	platform_controller.update_platform_distance(delta)
