@@ -29,8 +29,8 @@ var _turn_count: int = 0
 var _mouse_moved: bool = false
 
 enum GameState {
-	HOLD,
-	PLACE,
+	AIM,
+	SETTLE,
 	INVERT,
 	LOSE,
 	PAUSE,
@@ -41,7 +41,7 @@ func _ready() -> void:
 	camera_controller.make_current() # just to not break physics from the one frame delay breh
 	GameManager.game = self
 	_set_gravity_inversion(false)
-	_set_state(GameState.HOLD)
+	_set_state(GameState.AIM)
 
 
 func _process(_delta: float) -> void:
@@ -55,7 +55,7 @@ func _process(_delta: float) -> void:
 		if _is_gravity_inverted
 		else platform_controller.bottom_platform.global_position
 	).y
-	piece_manager.update_piece_placement_preview(_state == GameState.HOLD, get_world_2d(), active_platform_y)
+	piece_manager.update_piece_placement_preview(_state == GameState.AIM, get_world_2d(), active_platform_y)
 
 
 func _physics_process(delta: float) -> void:
@@ -63,7 +63,7 @@ func _physics_process(delta: float) -> void:
 	camera_controller.call_deferred("update_camera", delta)
 
 	match _state:
-		GameState.HOLD:
+		GameState.AIM:
 			if Input.is_action_just_pressed("hold_piece"):
 				piece_manager.swap_current_hold_piece()
 			else:
@@ -71,18 +71,18 @@ func _physics_process(delta: float) -> void:
 					piece_manager.update_current_piece_position(delta, _mouse_moved, get_global_mouse_position().x)
 					if Input.is_action_just_pressed("drop_piece"):
 						piece_manager.release_current_piece()
-						_set_state(GameState.PLACE)
-		GameState.PLACE:
+						_set_state(GameState.SETTLE)
+		GameState.SETTLE:
 			_place_timer -= delta
 			if _place_timer <= 0 && piece_manager.are_pieces_settled(delta, min_settle_time):
 				if _turn_count % invert_turn_count == 0:
 					_set_state(GameState.INVERT)
 				else:
-					_set_state(GameState.HOLD)
+					_set_state(GameState.AIM)
 		GameState.INVERT:
 			_place_timer -= delta
 			if _place_timer <= 0 && piece_manager.are_pieces_settled(delta, min_settle_time):
-				_set_state(GameState.HOLD)
+				_set_state(GameState.AIM)
 	
 	_mouse_moved = false
 
@@ -109,13 +109,13 @@ func _enter_state(state: GameState):
 	match state:
 		GameState.PAUSE:
 			SceneManager.open_pause_menu()
-		GameState.HOLD:
+		GameState.AIM:
 			platform_controller.resize_platform_distance(piece_manager.placed_pieces, _is_gravity_inverted)
 			_turn_count += 1
 			GameManager.turn_incremented.emit(_turn_count)
 			if not piece_manager.has_current_piece():
 				piece_manager.call_deferred("spawn_piece")
-		GameState.PLACE:
+		GameState.SETTLE:
 			_place_timer = min_place_time
 			piece_manager.reset_settle_timer()
 		GameState.INVERT:
