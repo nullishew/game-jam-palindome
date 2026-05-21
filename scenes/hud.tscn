@@ -28,6 +28,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 200
 theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 200
@@ -35,6 +36,7 @@ theme_override_constants/margin_bottom = 50
 
 [node name="Control" type="Control" parent="MarginContainer" unique_id=38956023]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Queue VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control" unique_id=273226338]
 layout_mode = 1
@@ -49,6 +51,7 @@ offset_bottom = 460.0
 grow_horizontal = 0
 grow_vertical = 2
 scale = Vector2(0.9, 0.9)
+mouse_filter = 0
 theme_override_constants/separation = 16
 
 [node name="Label" type="Label" parent="MarginContainer/Control/Queue VBoxContainer" unique_id=921376122]
@@ -155,6 +158,7 @@ anchor_bottom = 0.44
 offset_right = 192.0
 offset_bottom = -106.04001
 scale = Vector2(0.9, 0.9)
+mouse_filter = 0
 
 [node name="Label" type="Label" parent="MarginContainer/Control/Hold VBoxContainer" unique_id=1977253416]
 layout_mode = 2
@@ -199,6 +203,7 @@ offset_top = 370.0
 offset_right = -532.0
 offset_bottom = 855.0
 grow_horizontal = 2
+mouse_filter = 0
 
 [node name="Invert Count Label" type="Label" parent="MarginContainer/Control/Invert VBoxContainer" unique_id=681304422]
 layout_mode = 2

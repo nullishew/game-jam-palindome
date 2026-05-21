@@ -12,6 +12,8 @@ extends Node2D
 @export var min_settle_time: float = 0.5
 
 
+var _is_mouse_button_input_unhandled: bool = false
+
 var is_game_over: bool:
 	get: return _state == GameState.LOSE
 
@@ -39,6 +41,7 @@ func _ready() -> void:
 	camera_controller.make_current() # just to not break physics from the one frame delay breh
 	GameManager.game = self
 	gravity_controller.reset()
+	_is_mouse_button_input_unhandled = false
 	_set_state(GameState.AIM)
 
 
@@ -66,7 +69,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				if piece_manager.has_current_piece():
 					piece_manager.update_current_piece_position(delta, _mouse_moved, get_global_mouse_position().x)
-					if Input.is_action_just_pressed("drop_piece"):
+					if _is_mouse_button_input_unhandled and Input.is_action_just_pressed("drop_piece"):
 						piece_manager.release_current_piece()
 						_set_state(GameState.SETTLE)
 		GameState.SETTLE:
@@ -82,11 +85,15 @@ func _physics_process(delta: float) -> void:
 				_set_state(GameState.AIM)
 	
 	_mouse_moved = false
+	_is_mouse_button_input_unhandled = false
 
 
-func _input(event):
+
+func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		_mouse_moved = true
+	if event is InputEventMouseButton:
+		_is_mouse_button_input_unhandled = true
 
 
 func _enter_state(state: GameState):
