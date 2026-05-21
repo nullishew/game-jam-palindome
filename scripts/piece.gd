@@ -67,7 +67,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 			max_y_impulse = max(max_y_impulse, abs(impulse.y))
 			# check that the other body is above this body
 			# for direct falling from above edge case where impulse isnt enough
-			if GameManager.game.is_gravity_inverted:
+			if GameManager.game.gravity_controller.is_gravity_inverted:
 				if collider.global_position.y > global_position.y:
 					_impact_timer = impact_sprite_time
 			else:

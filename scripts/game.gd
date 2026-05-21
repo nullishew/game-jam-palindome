@@ -3,6 +3,7 @@ extends Node2D
 
 
 @export var piece_manager: PieceManager
+@export var gravity_controller: GravityController
 @export var camera_controller: CameraController
 @export var platform_controller: PlatformController
 
@@ -14,19 +15,16 @@ extends Node2D
 var is_game_over: bool:
 	get: return _state == GameState.LOSE
 
-var is_gravity_inverted: bool:
-	get: return _is_gravity_inverted
-
 
 var _place_timer: float = 0
 
-var _is_gravity_inverted: bool = false
-
 var _state: GameState
+var _prev_state: GameState
+
 var _turn_count: int = 0
 
-
 var _mouse_moved: bool = false
+
 
 enum GameState {
 	AIM,
@@ -40,7 +38,7 @@ enum GameState {
 func _ready() -> void:
 	camera_controller.make_current() # just to not break physics from the one frame delay breh
 	GameManager.game = self
-	_set_gravity_inversion(false)
+	gravity_controller.reset()
 	_set_state(GameState.AIM)
 
 
@@ -50,12 +48,11 @@ func _process(_delta: float) -> void:
 			unpause()
 		else:
 			pause()
-	var active_platform_y: float = (
-		platform_controller.top_platform.global_position
-		if _is_gravity_inverted
-		else platform_controller.bottom_platform.global_position
-	).y
-	piece_manager.update_piece_placement_preview(_state == GameState.AIM, get_world_2d(), active_platform_y)
+	piece_manager.update_piece_placement_preview(
+		_state == GameState.AIM,
+		get_world_2d(),
+		platform_controller.get_active_platform(gravity_controller.is_gravity_inverted).global_position.y
+	)
 
 
 func _physics_process(delta: float) -> void:
@@ -91,26 +88,13 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		_mouse_moved = true
 
-func _set_state(state: GameState):
-	if state != null:
-		_exit_state(_state)
-	_enter_state(state)
-
-var _prev_state: GameState
-func pause():
-	_prev_state = _state
-	_set_state(GameState.PAUSE)
-func unpause():
-	_set_state(_prev_state)
-
-
 
 func _enter_state(state: GameState):
 	match state:
 		GameState.PAUSE:
 			SceneManager.open_pause_menu()
 		GameState.AIM:
-			platform_controller.resize_platform_distance(piece_manager.placed_pieces, _is_gravity_inverted)
+			platform_controller.resize_platform_distance(piece_manager.placed_pieces, gravity_controller.is_gravity_inverted)
 			_turn_count += 1
 			GameManager.turn_incremented.emit(_turn_count)
 			if not piece_manager.has_current_piece():
@@ -120,8 +104,8 @@ func _enter_state(state: GameState):
 			piece_manager.reset_settle_timer()
 		GameState.INVERT:
 			_place_timer = min_place_time
-			invert_gravity()
-			GameManager.invert_state_entered.emit(_is_gravity_inverted)
+			gravity_controller.invert_gravity()
+			GameManager.invert_state_entered.emit(gravity_controller.is_gravity_inverted)
 		GameState.LOSE:
 			GameManager.turns_survived = _turn_count
 			SceneManager.open_game_over_menu()
@@ -137,20 +121,19 @@ func _exit_state(state: GameState):
 			SceneManager.close_pause_menu()
 
 
-func invert_gravity():
-	_set_gravity_inversion(not _is_gravity_inverted)
+func _set_state(state: GameState):
+	if state != null:
+		_exit_state(_state)
+	_enter_state(state)
 
-func _set_gravity_inversion(is_inverted: bool):
-	_is_gravity_inverted = is_inverted
-	piece_manager.set_spawn_mode([PieceManager.SpawnMode.TOP, PieceManager.SpawnMode.BOTTOM][int(_is_gravity_inverted)])
-	
-	PhysicsServer2D.area_set_param(
-		get_viewport().get_world_2d().space,
-		PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR,
-		[Vector2.DOWN, Vector2.UP][int(_is_gravity_inverted)]
-	)
 
-	piece_manager.wake_all_pieces()
+func pause():
+	_prev_state = _state
+	_set_state(GameState.PAUSE)
+
+
+func unpause():
+	_set_state(_prev_state)
 
 
 func lose():

@@ -15,11 +15,19 @@ func _ready() -> void:
 	_bottom_platform_target_pos_y = bottom_platform.global_position.y
 
 
+func get_active_platform(is_gravity_inverted: bool) -> Node2D:
+	return (
+		top_platform
+		if is_gravity_inverted
+		else bottom_platform
+	)
+
 
 func update_platform_distance(delta: float):
 	var t := 1.0 - exp(-delta * 4.0)
 	bottom_platform.global_position.y = lerp(bottom_platform.global_position.y, _bottom_platform_target_pos_y, t)
 	top_platform.global_position.y = lerp(top_platform.global_position.y, _top_platform_target_pos_y, t)
+
 
 func resize_platform_distance(placed_pieces: Array[Piece], is_gravity_inverted: bool):
 	var top_p: Vector2 = Vector2(-INF, -INF)
@@ -36,4 +44,3 @@ func resize_platform_distance(placed_pieces: Array[Piece], is_gravity_inverted: 
 		var dist = bottom_p.y - top_platform.global_position.y
 		if dist < min_piece_distance_to_platform:
 			_top_platform_target_pos_y = bottom_p.y - min_piece_distance_to_platform
-	

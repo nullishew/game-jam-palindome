@@ -8,12 +8,16 @@ enum SpawnMode {
 }
 
 
+const SPAWN_MODE_BY_GRAVITY_MODE: Dictionary[GravityController.GravityMode, SpawnMode] = {
+	GravityController.GravityMode.NORMAL: SpawnMode.TOP,
+	GravityController.GravityMode.INVERTED: SpawnMode.BOTTOM,
+}
+
+
 @export var piece_queue_component: PieceQueueComponent
 @export var piece_spawn_controller: PieceSpawnController
 
 @export var piece_container: Node2D
-
-
 
 @export var top_spawn_point: Node2D
 @export var bottom_spawn_point: Node2D
@@ -25,8 +29,8 @@ var spawn_global_position: Vector2:
 	get: return _spawn_points_by_mode[_spawn_mode].global_position
 
 
-var _spawn_points_by_mode: Dictionary[SpawnMode, Node2D]
 var _spawn_mode: SpawnMode = SpawnMode.TOP
+var _spawn_points_by_mode: Dictionary[SpawnMode, Node2D]
 
 var _placed_pieces: Array[Piece] = []
 
@@ -38,6 +42,15 @@ var _curr_piece_pos: Vector2 = Vector2.ZERO
 var _curr_piece_config: PieceSpawnConfig = null
 
 var _settle_timer: float = 0.0
+
+
+func _init() -> void:
+	GameManager.gravity_mode_set.connect(_on_gravity_mode_set)
+
+
+func _on_gravity_mode_set(mode: GravityController.GravityMode):
+	set_spawn_mode(SPAWN_MODE_BY_GRAVITY_MODE[mode])
+	wake_all_pieces()
 
 
 func _ready() -> void:

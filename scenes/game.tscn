@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c0pg5bts2c01c" path="res://scripts/game.gd" id="1_yqjtg"]
 [ext_resource type="Script" uid="uid://cpowjncfu48nu" path="res://scripts/piece_spawn_config.gd" id="2_gee14"]
 [ext_resource type="Resource" uid="uid://ddvlfs7xxkopw" path="res://resources/piece_spawn_configs/block_spawn_config.tres" id="3_264po"]
+[ext_resource type="Script" uid="uid://dwdql42b0t8a4" path="res://scripts/features/gravity_controller.gd" id="3_bt5mj"]
 [ext_resource type="PackedScene" uid="uid://b4g4t2trs4wr7" path="res://scenes/platform.tscn" id="3_lbhrr"]
 [ext_resource type="Resource" uid="uid://mcl75rxngymv" path="res://resources/piece_spawn_configs/triangle_spawn_config.tres" id="4_1kice"]
 [ext_resource type="PackedScene" uid="uid://bdajgv04xnnoe" path="res://scenes/death_zone.tscn" id="4_lbhrr"]
@@ -27,23 +28,16 @@
 shader = ExtResource("11_ir15t")
 shader_parameter/speed = -1.0
 
-[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("piece_manager", "camera_controller", "platform_controller", "world_container", "piece_container", "normal_spawnpoint", "inverted_spawnpoint", "top_platform", "bottom_platform")]
+[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("piece_manager", "gravity_controller", "camera_controller", "platform_controller")]
 script = ExtResource("1_yqjtg")
 piece_manager = NodePath("PieceManager")
+gravity_controller = NodePath("GravityController")
 camera_controller = NodePath("Camera2D")
 platform_controller = NodePath("PlatformController")
-world_container = NodePath("World")
-piece_container = NodePath("World/Piece Container")
-normal_spawnpoint = NodePath("World/Top Platform/Top Spawn")
-inverted_spawnpoint = NodePath("World/Bottom Platform/Bottom Spawn")
-top_platform = NodePath("World/Top Platform")
-bottom_platform = NodePath("World/Bottom Platform")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1900951051 node_paths=PackedStringArray("top_platform", "bottom_platform")]
-zoom = Vector2(5, 5)
-script = ExtResource("11_5newe")
-top_platform = NodePath("../World/Top Platform")
-bottom_platform = NodePath("../World/Bottom Platform")
+[node name="GravityController" type="Node" parent="." unique_id=76204897]
+script = ExtResource("3_bt5mj")
+metadata/_custom_type_script = "uid://dwdql42b0t8a4"
 
 [node name="PlatformController" type="Node" parent="." unique_id=1512633353 node_paths=PackedStringArray("top_platform", "bottom_platform")]
 script = ExtResource("12_37s47")
@@ -73,6 +67,12 @@ metadata/_custom_type_script = "uid://dxabjkkobfw1v"
 [node name="PlacementPreviewController" type="Node" parent="PieceManager" unique_id=1355831630 node_paths=PackedStringArray("line")]
 script = ExtResource("10_1kice")
 line = NodePath("../../World/Line2D")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1900951051 node_paths=PackedStringArray("top_platform", "bottom_platform")]
+zoom = Vector2(5, 5)
+script = ExtResource("11_5newe")
+top_platform = NodePath("../World/Top Platform")
+bottom_platform = NodePath("../World/Bottom Platform")
 
 [node name="World" type="Node2D" parent="." unique_id=1555225489]
 
