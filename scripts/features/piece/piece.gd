@@ -24,7 +24,6 @@ var _was_impact: bool = false
 func _ready() -> void:
 	if is_player_piece:
 		select_piece()
-		GameManager.game.hold(self)
 	if impact_texture:
 		contact_monitor = true
 		max_contacts_reported = 1
@@ -68,7 +67,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 			max_y_impulse = max(max_y_impulse, abs(impulse.y))
 			# check that the other body is above this body
 			# for direct falling from above edge case where impulse isnt enough
-			if GameManager.game.is_gravity_inverted:
+			if GameManager.game.gravity_controller.is_gravity_inverted:
 				if collider.global_position.y > global_position.y:
 					_impact_timer = impact_sprite_time
 			else:
@@ -99,7 +98,7 @@ func release():
 var _prev_collision_mask
 var _prev_collision_layer
 
-func hold_piece_hide():
+func enter_hold():
 	hide()
 	freeze = true
 	sleeping = true
@@ -108,7 +107,7 @@ func hold_piece_hide():
 	collision_layer = 0
 	collision_mask = 0
 
-func unhold_piece_show(pos: Vector2):
+func exit_hold(pos: Vector2):
 	freeze = true
 	sleeping = true
 	global_position = pos
