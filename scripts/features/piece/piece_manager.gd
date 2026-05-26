@@ -65,6 +65,10 @@ func _ready() -> void:
 	_curr_piece = null
 
 
+func set_difficulty(stage: DifficultyConfig):
+	piece_queue_component.set_difficulty(stage)
+
+
 func set_spawn_mode(mode: SpawnMode):
 	_spawn_mode = mode
 	print(_spawn_mode)

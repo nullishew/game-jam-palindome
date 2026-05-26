@@ -7,16 +7,19 @@ extends Node2D
 @export var camera_controller: CameraController
 @export var platform_controller: PlatformController
 
-@export var invert_turn_count: int = 4
 @export var min_place_time: float = 1
 @export var min_settle_time: float = 0.5
 
+@export var invert_turn_count: int = 4
+@export var difficulty_config: DifficultyConfig
 
-var _is_mouse_button_input_unhandled: bool = false
 
 var is_game_over: bool:
 	get: return _state == GameState.LOSE
 
+
+var _is_mouse_button_input_unhandled: bool = false
+var _mouse_moved: bool = false
 
 var _place_timer: float = 0
 
@@ -24,8 +27,7 @@ var _state: GameState
 var _prev_state: GameState
 
 var _turn_count: int = 0
-
-var _mouse_moved: bool = false
+var _difficulty_stage_index: int = 0
 
 
 enum GameState {
@@ -42,6 +44,7 @@ func _ready() -> void:
 	GameManager.game = self
 	gravity_controller.reset()
 	_is_mouse_button_input_unhandled = false
+	set_difficulty(difficulty_config)
 	_set_state(GameState.AIM)
 
 
@@ -141,6 +144,10 @@ func pause():
 
 func unpause():
 	_set_state(_prev_state)
+
+
+func set_difficulty(config: DifficultyConfig):
+	piece_manager.set_difficulty(config)
 
 
 func lose():

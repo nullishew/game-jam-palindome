@@ -1,14 +1,10 @@
 [gd_scene format=3 uid="uid://bxu4bfu82u3al"]
 
 [ext_resource type="Script" uid="uid://c0pg5bts2c01c" path="res://scripts/systems/game.gd" id="1_yqjtg"]
-[ext_resource type="Script" uid="uid://cpowjncfu48nu" path="res://scripts/features/piece/piece_spawn_config.gd" id="2_gee14"]
-[ext_resource type="Resource" uid="uid://ddvlfs7xxkopw" path="res://resources/piece_spawn_configs/block_spawn_config.tres" id="3_264po"]
+[ext_resource type="Resource" uid="uid://cn5xn8va052jg" path="res://resources/game_difficulty_config_1.tres" id="2_e1j6l"]
 [ext_resource type="Script" uid="uid://dwdql42b0t8a4" path="res://scripts/features/gravity_controller.gd" id="3_bt5mj"]
 [ext_resource type="PackedScene" uid="uid://b4g4t2trs4wr7" path="res://scenes/platform.tscn" id="3_lbhrr"]
-[ext_resource type="Resource" uid="uid://mcl75rxngymv" path="res://resources/piece_spawn_configs/triangle_spawn_config.tres" id="4_1kice"]
 [ext_resource type="PackedScene" uid="uid://bdajgv04xnnoe" path="res://scenes/death_zone.tscn" id="4_lbhrr"]
-[ext_resource type="Resource" uid="uid://css1jxrjeb1ym" path="res://resources/piece_spawn_configs/i_spawn_config.tres" id="5_5newe"]
-[ext_resource type="Resource" uid="uid://ej4doo37u15r" path="res://resources/piece_spawn_configs/circle_spawn_config.tres" id="6_37s47"]
 [ext_resource type="Script" uid="uid://dxabjkkobfw1v" path="res://scripts/features/piece/piece_spawn_controller.gd" id="9_5newe"]
 [ext_resource type="Script" uid="uid://f7c8k35oislr" path="res://scripts/features/piece/piece_placement_preview/placement_preview_controller.gd" id="10_1kice"]
 [ext_resource type="Script" uid="uid://bravgtsr1mrig" path="res://scripts/features/camera_controller.gd" id="11_5newe"]
@@ -34,6 +30,7 @@ piece_manager = NodePath("PieceManager")
 gravity_controller = NodePath("GravityController")
 camera_controller = NodePath("Camera2D")
 platform_controller = NodePath("PlatformController")
+difficulty_config = ExtResource("2_e1j6l")
 
 [node name="GravityController" type="Node" parent="." unique_id=76204897]
 script = ExtResource("3_bt5mj")
@@ -56,7 +53,6 @@ metadata/_custom_type_script = "uid://4t5ve34owb61"
 
 [node name="PieceQueueComponent" type="Node" parent="PieceManager" unique_id=1532387017]
 script = ExtResource("13_bt5mj")
-piece_configs = Array[ExtResource("2_gee14")]([ExtResource("3_264po"), ExtResource("4_1kice"), ExtResource("5_5newe"), ExtResource("6_37s47")])
 metadata/_custom_type_script = "uid://dsk3v6a3mwkq"
 
 [node name="PieceSpawnController" type="Node" parent="PieceManager" unique_id=1537247158 node_paths=PackedStringArray("piece_container")]
