@@ -5,5 +5,6 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	
 func _on_body_entered(body: Node2D):
-	if body is Piece and not GameManager.game.is_game_over:
-		GameManager.game.lose()
+	if body is Piece:
+		body.despawn()
+		# GameManager.game.lose()

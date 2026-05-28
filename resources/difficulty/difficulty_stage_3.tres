@@ -16,5 +16,6 @@ metadata/_custom_type_script = "uid://cqhh5s47qk48l"
 [resource]
 script = ExtResource("7_imyux")
 duration_turns = 8
+minimum_height_increase = 200.0
 piece_queue_config = SubResource("Resource_s8g25")
 metadata/_custom_type_script = "uid://c8dmoo7qmkc50"

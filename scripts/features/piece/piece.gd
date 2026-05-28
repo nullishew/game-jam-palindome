@@ -116,3 +116,7 @@ func exit_hold(pos: Vector2):
 	await get_tree().physics_frame
 	call_deferred("show")
 	
+
+func despawn():
+	GameManager.game.piece_manager.unregister_piece(self)
+	call_deferred("queue_free")

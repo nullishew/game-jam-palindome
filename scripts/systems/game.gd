@@ -6,6 +6,7 @@ extends Node2D
 @export var gravity_controller: GravityController
 @export var camera_controller: CameraController
 @export var platform_controller: PlatformController
+@export var minimum_height_controller: MinimumHeightController
 
 @export var min_place_time: float = 1
 @export var min_settle_time: float = 0.5
@@ -84,7 +85,9 @@ func _physics_process(delta: float) -> void:
 		GameState.SETTLE:
 			_place_timer -= delta
 			if _place_timer <= 0 && piece_manager.are_pieces_settled(delta, min_settle_time):
-				if _difficulty_stage_it.is_stage_end:
+				if not minimum_height_controller.is_minimum_height_reached(gravity_controller.is_gravity_inverted):
+					lose()
+				elif _difficulty_stage_it.is_stage_end:
 					_set_state(GameState.INVERT)
 				else:
 					_set_state(GameState.PREPARE_TURN)
@@ -107,10 +110,15 @@ func _unhandled_input(event: InputEvent) -> void:
 func _enter_state(state: GameState):
 	match state:
 		GameState.PREPARE_TURN:
-			platform_controller.resize_platform_distance(piece_manager.placed_pieces, gravity_controller.is_gravity_inverted)
+			_turn_count += 1
 			_current_difficulty_stage = _difficulty_stage_it.next()
 			GameManager.turn_incremented.emit(_turn_count, _difficulty_stage_it.remaining_stage_turns)
-			_turn_count += 1
+			platform_controller.resize_platform_distance(piece_manager.placed_pieces, gravity_controller.is_gravity_inverted)
+			if _difficulty_stage_it.is_stage_start:
+				minimum_height_controller.increase_minimum_height(_current_difficulty_stage.minimum_height_increase, gravity_controller.is_gravity_inverted)
+				await get_tree().physics_frame
+				if _turn_count > 1 and not minimum_height_controller.is_minimum_height_reached(gravity_controller.is_gravity_inverted):
+					lose()
 		GameState.PAUSE:
 			SceneManager.open_pause_menu()
 		GameState.AIM:

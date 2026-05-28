@@ -150,6 +150,9 @@ func _are_pieces_settled() -> bool:
 	return true
 
 
+func unregister_piece(piece: Piece):
+	_placed_pieces.erase(piece)
+
 @export var placement_preview_controller: PlacementPreviewController
 
 

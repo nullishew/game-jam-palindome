@@ -4,6 +4,7 @@
 [ext_resource type="Resource" uid="uid://cn5xn8va052jg" path="res://resources/difficulty/game_difficulty_config_1.tres" id="2_e1j6l"]
 [ext_resource type="Script" uid="uid://dwdql42b0t8a4" path="res://scripts/features/gravity_controller.gd" id="3_bt5mj"]
 [ext_resource type="PackedScene" uid="uid://b4g4t2trs4wr7" path="res://scenes/platform.tscn" id="3_lbhrr"]
+[ext_resource type="Script" uid="uid://7sjebcj80til" path="res://scripts/features/minimum_height/minimum_height_controller.gd" id="4_5newe"]
 [ext_resource type="PackedScene" uid="uid://bdajgv04xnnoe" path="res://scenes/death_zone.tscn" id="4_lbhrr"]
 [ext_resource type="Script" uid="uid://dxabjkkobfw1v" path="res://scripts/features/piece/piece_spawn_controller.gd" id="9_5newe"]
 [ext_resource type="Script" uid="uid://f7c8k35oislr" path="res://scripts/features/piece/piece_placement_preview/placement_preview_controller.gd" id="10_1kice"]
@@ -25,17 +26,24 @@
 shader = ExtResource("11_ir15t")
 shader_parameter/speed = -1.0
 
-[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("piece_manager", "gravity_controller", "camera_controller", "platform_controller")]
+[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("piece_manager", "gravity_controller", "camera_controller", "platform_controller", "minimum_height_controller")]
 script = ExtResource("1_yqjtg")
 piece_manager = NodePath("PieceManager")
 gravity_controller = NodePath("GravityController")
 camera_controller = NodePath("Camera2D")
 platform_controller = NodePath("PlatformController")
+minimum_height_controller = NodePath("MinimumHeightController")
 difficulty_config = ExtResource("2_e1j6l")
 
 [node name="GravityController" type="Node" parent="." unique_id=76204897]
 script = ExtResource("3_bt5mj")
 metadata/_custom_type_script = "uid://dwdql42b0t8a4"
+
+[node name="MinimumHeightController" type="Node" parent="." unique_id=1029312862 node_paths=PackedStringArray("bottom_minimum_height_area", "top_minimum_height_area")]
+script = ExtResource("4_5newe")
+bottom_minimum_height_area = NodePath("../World/Bottom Platform/Bottom Minimum Height Area")
+top_minimum_height_area = NodePath("../World/Top Platform/Top Minimum Height Area")
+metadata/_custom_type_script = "uid://7sjebcj80til"
 
 [node name="PlatformController" type="Node" parent="." unique_id=1512633353 node_paths=PackedStringArray("top_platform", "bottom_platform")]
 script = ExtResource("12_37s47")
@@ -168,6 +176,7 @@ position = Vector2(10, -217)
 scale = Vector2(50, 1)
 
 [node name="Top Minimum Height Area" parent="World/Top Platform" unique_id=618680559 instance=ExtResource("19_1kice")]
+modulate = Color(1, 0.44705883, 1, 1)
 position = Vector2(0, 50)
 
 [node name="Bottom Platform" parent="World" unique_id=868394617 instance=ExtResource("3_lbhrr")]
