@@ -55,5 +55,5 @@ func _on_queue_ui_updated(queue: Array[PieceSpawnConfig], start_index: int):
 	for i in range(next_piece_uis.size()):
 		next_piece_uis[i].texture = queue[start_index + i].ui_texture
 
-func _on_turn_incremented(turn_count: int):
-	invert_count_label.text = str(1 + wrap(-turn_count, 0, GameManager.game.invert_turn_count))
+func _on_turn_incremented(_turn_count: int, stage_turns_remaining: int):
+	invert_count_label.text = str(stage_turns_remaining)

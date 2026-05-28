@@ -15,6 +15,6 @@ metadata/_custom_type_script = "uid://cqhh5s47qk48l"
 
 [resource]
 script = ExtResource("7_imyux")
-duration_turns = 4
+duration_turns = 8
 piece_queue_config = SubResource("Resource_s8g25")
 metadata/_custom_type_script = "uid://c8dmoo7qmkc50"

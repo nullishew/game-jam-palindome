@@ -20,10 +20,7 @@ var is_stage_start: bool:
 
 ## Tracks how many turns are left until the next call to `next()` returns a new stage
 var remaining_stage_turns: int:
-	get:
-		if _config.stages.is_empty(): return 0
-		var stage := _config.stages[_stage_index]
-		return stage.duration_turns - _stage_turn_index
+	get: return _prev_turn_remaining_stage_turns
 
 
 var _config: DifficultyConfig

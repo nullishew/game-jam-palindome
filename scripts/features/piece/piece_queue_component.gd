@@ -60,6 +60,5 @@ class PieceGenerator:
 		var arr := stage.piece_queue_config.piece_spawn_configs.duplicate()
 		arr.shuffle()
 		var cycle_size = mini(arr.size(), _it.remaining_stage_turns)
-		# var cycle_size = arr.size()
 		_current_cycle = arr.slice(0, cycle_size)
 		_cycle_index = 0

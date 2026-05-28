@@ -29,6 +29,7 @@ var _prev_state: GameState
 var _turn_count: int = 0
 
 var _difficulty_stage_it: DifficultyStageIterator
+var _current_difficulty_stage: DifficultyStageConfig
 
 
 enum GameState {
@@ -79,7 +80,8 @@ func _physics_process(delta: float) -> void:
 		GameState.SETTLE:
 			_place_timer -= delta
 			if _place_timer <= 0 && piece_manager.are_pieces_settled(delta, min_settle_time):
-				if _turn_count % invert_turn_count == 0:
+				# if _turn_count % invert_turn_count == 0:
+				if _difficulty_stage_it.is_stage_end:
 					_set_state(GameState.INVERT)
 				else:
 					_set_state(GameState.AIM)
@@ -106,7 +108,8 @@ func _enter_state(state: GameState):
 		GameState.AIM:
 			platform_controller.resize_platform_distance(piece_manager.placed_pieces, gravity_controller.is_gravity_inverted)
 			_turn_count += 1
-			GameManager.turn_incremented.emit(_turn_count)
+			_current_difficulty_stage = _difficulty_stage_it.next()
+			GameManager.turn_incremented.emit(_turn_count, _difficulty_stage_it.remaining_stage_turns)
 			if not piece_manager.has_current_piece():
 				piece_manager.call_deferred("spawn_piece")
 		GameState.SETTLE:

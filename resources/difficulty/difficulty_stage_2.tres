@@ -14,6 +14,6 @@ metadata/_custom_type_script = "uid://cqhh5s47qk48l"
 
 [resource]
 script = ExtResource("6_qwxfa")
-duration_turns = 4
+duration_turns = 6
 piece_queue_config = SubResource("Resource_h25ky")
 metadata/_custom_type_script = "uid://c8dmoo7qmkc50"
