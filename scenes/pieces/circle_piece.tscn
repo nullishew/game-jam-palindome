@@ -12,7 +12,7 @@ friction = 10.0
 radius = 36.013885
 
 [node name="CirclePiece" type="RigidBody2D" unique_id=762002478 node_paths=PackedStringArray("sprite", "collision_shape")]
-mass = 20.0
+mass = 15.0
 physics_material_override = SubResource("PhysicsMaterial_2c6lj")
 linear_damp = 2.0
 angular_damp = 6.0
