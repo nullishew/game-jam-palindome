@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bxu4bfu82u3al"]
 
 [ext_resource type="Script" uid="uid://c0pg5bts2c01c" path="res://scripts/systems/game.gd" id="1_yqjtg"]
-[ext_resource type="Resource" uid="uid://cn5xn8va052jg" path="res://resources/game_difficulty_config_1.tres" id="2_e1j6l"]
+[ext_resource type="Resource" uid="uid://cn5xn8va052jg" path="res://resources/difficulty/game_difficulty_config_1.tres" id="2_e1j6l"]
 [ext_resource type="Script" uid="uid://dwdql42b0t8a4" path="res://scripts/features/gravity_controller.gd" id="3_bt5mj"]
 [ext_resource type="PackedScene" uid="uid://b4g4t2trs4wr7" path="res://scenes/platform.tscn" id="3_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://bdajgv04xnnoe" path="res://scenes/death_zone.tscn" id="4_lbhrr"]

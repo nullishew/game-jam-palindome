@@ -3,6 +3,7 @@
 ## Calling `next()` returns the current stage and advances internal iterator state by one turn.
 ##
 ## Stage flags always describe the stage returned by the most recent call to `next()`.
+## Stage flags are meaningless before `next()` is called for the first time.
 ##
 ## After all configured stages are exhausted, the iterator repeats the final stage on all
 ## subsequent calls to `next()` while continuing to track stage flags.
@@ -11,18 +12,26 @@ class_name DifficultyStageIterator
 
 ## True if the most recently returned stage was the final turn of its stage.
 var is_stage_end: bool:
-	get: return _was_last_turn_stage_end
+	get: return _was_prev_turn_stage_end
 
 ## True if the most recently returned stage was the first turn of its stage.
 var is_stage_start: bool:
-	get: return _was_last_turn_stage_start
+	get: return _was_prev_turn_stage_start
+
+## Tracks how many turns are left until the next call to `next()` returns a new stage
+var remaining_stage_turns: int:
+	get:
+		if _config.stages.is_empty(): return 0
+		var stage := _config.stages[_stage_index]
+		return stage.duration_turns - _stage_turn_index
 
 
 var _config: DifficultyConfig
 var _stage_index: int
 var _stage_turn_index: int
-var _was_last_turn_stage_end: bool = false
-var _was_last_turn_stage_start: bool = false
+var _was_prev_turn_stage_end: bool = false
+var _was_prev_turn_stage_start: bool = false
+var _prev_turn_remaining_stage_turns: int = 0
 
 
 func _init(config: DifficultyConfig, stage_index: int = 0, turn_index: int = 0) -> void:
@@ -35,8 +44,9 @@ func _init(config: DifficultyConfig, stage_index: int = 0, turn_index: int = 0) 
 func next() -> DifficultyStageConfig:
 	if _config.stages.is_empty(): return null
 	var stage = _config.stages[_stage_index]
-	_was_last_turn_stage_end = _stage_turn_index == stage.duration_turns - 1
-	_was_last_turn_stage_start = _stage_turn_index == 0
+	_was_prev_turn_stage_end = _stage_turn_index == stage.duration_turns - 1
+	_was_prev_turn_stage_start = _stage_turn_index == 0
+	_prev_turn_remaining_stage_turns = stage.duration_turns - _stage_turn_index
 	_advance()
 	return stage
 
@@ -44,17 +54,17 @@ func next() -> DifficultyStageConfig:
 ## Returns a copy of the iterator preserving both traversal state and last-returned stage metadata.
 func duplicate() -> DifficultyStageIterator:
 	var copy := DifficultyStageIterator.new(_config, _stage_index, _stage_turn_index)
-	copy._was_last_turn_stage_end = _was_last_turn_stage_end
-	copy._was_last_turn_stage_start = _was_last_turn_stage_start
+	copy._was_prev_turn_stage_end = _was_prev_turn_stage_end
+	copy._was_prev_turn_stage_start = _was_prev_turn_stage_start
 	return copy
 
 
 ## Advances the internal iterator by one turn.
 ##
 ## handles:
-## - turn progression within the current stage
-## - transitions between stages when duration is exceeded
-## - looping behavior of the final stage once all stages are exhausted
+## turn progression within the current stage,
+## transitions between stages when duration is exceeded,
+## looping behavior of the final stage once all stages are exhausted.
 func _advance():
 	_stage_turn_index += 1
 	while _stage_index < _config.stages.size():

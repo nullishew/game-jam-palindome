@@ -48,7 +48,7 @@ class PieceGenerator:
 	func next() -> PieceSpawnConfig:
 		var stage := _it.next()
 
-		if _cycle_index >= _current_cycle.size():
+		if _it.is_stage_start or _cycle_index >= _current_cycle.size():
 			_generate_new_cycle(stage)
 
 		var piece = _current_cycle[_cycle_index]
@@ -57,7 +57,9 @@ class PieceGenerator:
 
 
 	func _generate_new_cycle(stage: DifficultyStageConfig):
-		var arr := stage.piece_queue_config.piece_spawn_configs
-		_current_cycle = arr.slice(0, mini(arr.size(), stage.duration_turns))
-		_current_cycle.shuffle()
+		var arr := stage.piece_queue_config.piece_spawn_configs.duplicate()
+		arr.shuffle()
+		var cycle_size = mini(arr.size(), _it.remaining_stage_turns)
+		# var cycle_size = arr.size()
+		_current_cycle = arr.slice(0, cycle_size)
 		_cycle_index = 0
