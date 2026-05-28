@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://dwdql42b0t8a4" path="res://scripts/features/gravity_controller.gd" id="3_bt5mj"]
 [ext_resource type="PackedScene" uid="uid://b4g4t2trs4wr7" path="res://scenes/platform.tscn" id="3_lbhrr"]
 [ext_resource type="Script" uid="uid://7sjebcj80til" path="res://scripts/features/minimum_height/minimum_height_controller.gd" id="4_5newe"]
-[ext_resource type="PackedScene" uid="uid://bdajgv04xnnoe" path="res://scenes/death_zone.tscn" id="4_lbhrr"]
 [ext_resource type="Script" uid="uid://dxabjkkobfw1v" path="res://scripts/features/piece/piece_spawn_controller.gd" id="9_5newe"]
 [ext_resource type="Script" uid="uid://f7c8k35oislr" path="res://scripts/features/piece/piece_placement_preview/placement_preview_controller.gd" id="10_1kice"]
 [ext_resource type="Script" uid="uid://bravgtsr1mrig" path="res://scripts/features/camera_controller.gd" id="11_5newe"]
@@ -21,18 +20,23 @@
 [ext_resource type="Texture2D" uid="uid://dsvdkvc3mnws4" path="res://assets/pieces/square_piece/square_piece_impact.png" id="15_1kice"]
 [ext_resource type="PackedScene" uid="uid://cdjjpa8grcjnb" path="res://scenes/minimum_height_area.tscn" id="19_1kice"]
 [ext_resource type="PackedScene" uid="uid://ccy05kcl0d213" path="res://scenes/hud.tscn" id="20_1kice"]
+[ext_resource type="Script" uid="uid://bpod6la3hm212" path="res://scripts/features/playable_area.gd" id="20_5newe"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ca42v"]
 shader = ExtResource("11_ir15t")
 shader_parameter/speed = -1.0
 
-[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("piece_manager", "gravity_controller", "camera_controller", "platform_controller", "minimum_height_controller")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5newe"]
+size = Vector2(1920, 1080)
+
+[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("piece_manager", "gravity_controller", "camera_controller", "platform_controller", "minimum_height_controller", "playable_area")]
 script = ExtResource("1_yqjtg")
 piece_manager = NodePath("PieceManager")
 gravity_controller = NodePath("GravityController")
 camera_controller = NodePath("Camera2D")
 platform_controller = NodePath("PlatformController")
 minimum_height_controller = NodePath("MinimumHeightController")
+playable_area = NodePath("World/Playable Area")
 difficulty_config = ExtResource("2_e1j6l")
 
 [node name="GravityController" type="Node" parent="." unique_id=76204897]
@@ -171,10 +175,6 @@ position = Vector2(0, -250)
 [node name="Top Spawn" type="Node2D" parent="World/Top Platform" unique_id=947222863]
 position = Vector2(0, 100)
 
-[node name="DeathZone2" parent="World/Top Platform" unique_id=475342207 instance=ExtResource("4_lbhrr")]
-position = Vector2(10, -217)
-scale = Vector2(50, 1)
-
 [node name="Top Minimum Height Area" parent="World/Top Platform" unique_id=618680559 instance=ExtResource("19_1kice")]
 modulate = Color(1, 0.44705883, 1, 1)
 position = Vector2(0, 50)
@@ -185,23 +185,14 @@ position = Vector2(0, 250)
 [node name="Bottom Spawn" type="Node2D" parent="World/Bottom Platform" unique_id=476875877]
 position = Vector2(1, -100)
 
-[node name="DeathZone" parent="World/Bottom Platform" unique_id=1826319625 instance=ExtResource("4_lbhrr")]
-position = Vector2(-4, 324)
-scale = Vector2(50, 1)
-
 [node name="Bottom Minimum Height Area" parent="World/Bottom Platform" unique_id=1944673834 instance=ExtResource("19_1kice")]
 position = Vector2(0, -50)
 
-[node name="DeathZones" type="Node2D" parent="World" unique_id=378252427]
+[node name="Playable Area" type="Area2D" parent="World" unique_id=1117832960 node_paths=PackedStringArray("collision_shape")]
+script = ExtResource("20_5newe")
+collision_shape = NodePath("CollisionShape2D")
 
-[node name="DeathZone3" parent="World/DeathZones" unique_id=1126281281 instance=ExtResource("4_lbhrr")]
-position = Vector2(-558, 50)
-rotation = 1.5707964
-scale = Vector2(50, 1)
-
-[node name="DeathZone4" parent="World/DeathZones" unique_id=1252219371 instance=ExtResource("4_lbhrr")]
-position = Vector2(597, 62.999996)
-rotation = 1.5707964
-scale = Vector2(50, 1)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Playable Area" unique_id=1881653783]
+shape = SubResource("RectangleShape2D_5newe")
 
 [node name="HUD" parent="." unique_id=827572359 instance=ExtResource("20_1kice")]

@@ -7,13 +7,12 @@ extends Node2D
 @export var camera_controller: CameraController
 @export var platform_controller: PlatformController
 @export var minimum_height_controller: MinimumHeightController
+@export var playable_area: PlayableArea
 
 @export var min_place_time: float = 1
 @export var min_settle_time: float = 0.5
 
-@export var invert_turn_count: int = 4
 @export var difficulty_config: DifficultyConfig
-
 
 var is_game_over: bool:
 	get: return _state == GameState.LOSE
@@ -68,6 +67,16 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	platform_controller.update_platform_distance(delta)
 	camera_controller.call_deferred("update_camera", delta)
+
+	var top_plat_pos := platform_controller.top_platform.global_position
+	var bottom_plat_pos := platform_controller.bottom_platform.global_position
+	var plat_midpoint := 0.5 * (top_plat_pos + bottom_plat_pos)
+	var buffer_y: float = 300
+	var playable_area_size := Vector2(
+		1920,
+		2 * buffer_y + (bottom_plat_pos.y - top_plat_pos.y)
+	)
+	playable_area.update_bounds(plat_midpoint, playable_area_size)
 
 	match _state:
 		GameState.PREPARE_TURN:
