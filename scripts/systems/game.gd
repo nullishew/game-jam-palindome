@@ -92,7 +92,6 @@ func _physics_process(delta: float) -> void:
 	_is_mouse_button_input_unhandled = false
 
 
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		_mouse_moved = true
