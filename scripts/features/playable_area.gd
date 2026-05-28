@@ -18,4 +18,5 @@ func update_bounds(pos: Vector2, size: Vector2):
 
 func _on_body_exited(body: Node2D):
 	if body is Piece:
-		body.despawn()
+		if not body.is_in_hold:
+			body.despawn()

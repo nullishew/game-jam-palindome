@@ -98,17 +98,17 @@ func update_current_piece_position(delta: float, mouse_moved: bool, mouse_x: flo
 
 func swap_current_hold_piece():
 	var temp_config: PieceSpawnConfig = _hold_piece_config
+	var temp_piece: Piece = _hold_piece
 	_hold_piece_config = _curr_piece_config
-	_curr_piece_config = temp_config
+	_hold_piece = _curr_piece
 	GameManager.hold_piece_updated.emit(_hold_piece_config)
 	_curr_piece.enter_hold()
-	var temp_piece = _hold_piece
-	_hold_piece = _curr_piece
-	_curr_piece = null
-	if temp_piece:
+	if temp_config:
+		_curr_piece_config = temp_config
 		temp_piece.exit_hold(_curr_piece_pos)
 		_curr_piece = temp_piece
 	else:
+		_curr_piece = null
 		call_deferred("spawn_piece", _curr_piece_pos)
 
 

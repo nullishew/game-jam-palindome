@@ -18,10 +18,8 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D):
 	if body is Piece:
 		_registered_pieces += 1
-		print(str(self) + " registered total pieces: " + str(_registered_pieces))
 
 
 func _on_body_exited(body: Node2D):
 	if body is Piece:
 		_registered_pieces -= 1
-		print(str(self) + " registered total pieces: " + str(_registered_pieces))

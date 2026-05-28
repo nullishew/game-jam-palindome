@@ -13,7 +13,7 @@ extends RigidBody2D
 @export var possible_spawn_scale_multipliers: Array[float] = [1, 1.25, 1.5]
 
 var is_player_piece: bool = false
-
+var is_in_hold: bool = false
 
 var _was_in_contact: bool = false
 var _impact_timer: float = 0
@@ -106,6 +106,7 @@ func enter_hold():
 	_prev_collision_mask = collision_mask
 	collision_layer = 0
 	collision_mask = 0
+	is_in_hold = true
 
 func exit_hold(pos: Vector2):
 	freeze = true
@@ -114,6 +115,7 @@ func exit_hold(pos: Vector2):
 	collision_layer = _prev_collision_layer
 	collision_mask = _prev_collision_mask
 	await get_tree().physics_frame
+	is_in_hold = false
 	call_deferred("show")
 	
 
