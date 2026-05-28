@@ -8,11 +8,11 @@
 
 [sub_resource type="Resource" id="Resource_ltmrq"]
 script = ExtResource("4_7ubxo")
-piece_spawn_configs = Array[ExtResource("1_4xita")]([ExtResource("2_lgetd"), ExtResource("3_4uije"), null, null])
+piece_spawn_configs = Array[ExtResource("1_4xita")]([ExtResource("2_lgetd"), ExtResource("3_4uije")])
 metadata/_custom_type_script = "uid://cqhh5s47qk48l"
 
 [resource]
 script = ExtResource("5_yvatg")
-duration_turns = 4
+duration_turns = 2
 piece_queue_config = SubResource("Resource_ltmrq")
 metadata/_custom_type_script = "uid://c8dmoo7qmkc50"
