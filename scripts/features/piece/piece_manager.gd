@@ -71,8 +71,6 @@ func initialize(it: DifficultyStageIterator):
 
 func set_spawn_mode(mode: SpawnMode):
 	_spawn_mode = mode
-	print(_spawn_mode)
-	print(spawn_global_position)
 
 
 func release_current_piece():

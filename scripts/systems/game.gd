@@ -33,6 +33,7 @@ var _current_difficulty_stage: DifficultyStageConfig
 
 
 enum GameState {
+	PREPARE_TURN,
 	AIM,
 	SETTLE,
 	INVERT,
@@ -47,7 +48,7 @@ func _ready() -> void:
 	gravity_controller.reset()
 	_is_mouse_button_input_unhandled = false
 	set_difficulty(difficulty_config)
-	_set_state(GameState.AIM)
+	_set_state(GameState.PREPARE_TURN)
 
 
 func _process(_delta: float) -> void:
@@ -68,6 +69,9 @@ func _physics_process(delta: float) -> void:
 	camera_controller.call_deferred("update_camera", delta)
 
 	match _state:
+		GameState.PREPARE_TURN:
+			if platform_controller.is_settled(gravity_controller.is_gravity_inverted):
+				_set_state(GameState.AIM)
 		GameState.AIM:
 			if Input.is_action_just_pressed("hold_piece"):
 				piece_manager.swap_current_hold_piece()
@@ -80,15 +84,14 @@ func _physics_process(delta: float) -> void:
 		GameState.SETTLE:
 			_place_timer -= delta
 			if _place_timer <= 0 && piece_manager.are_pieces_settled(delta, min_settle_time):
-				# if _turn_count % invert_turn_count == 0:
 				if _difficulty_stage_it.is_stage_end:
 					_set_state(GameState.INVERT)
 				else:
-					_set_state(GameState.AIM)
+					_set_state(GameState.PREPARE_TURN)
 		GameState.INVERT:
 			_place_timer -= delta
 			if _place_timer <= 0 && piece_manager.are_pieces_settled(delta, min_settle_time):
-				_set_state(GameState.AIM)
+				_set_state(GameState.PREPARE_TURN)
 	
 	_mouse_moved = false
 	_is_mouse_button_input_unhandled = false
@@ -103,13 +106,14 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _enter_state(state: GameState):
 	match state:
+		GameState.PREPARE_TURN:
+			platform_controller.resize_platform_distance(piece_manager.placed_pieces, gravity_controller.is_gravity_inverted)
+			_current_difficulty_stage = _difficulty_stage_it.next()
+			GameManager.turn_incremented.emit(_turn_count, _difficulty_stage_it.remaining_stage_turns)
+			_turn_count += 1
 		GameState.PAUSE:
 			SceneManager.open_pause_menu()
 		GameState.AIM:
-			platform_controller.resize_platform_distance(piece_manager.placed_pieces, gravity_controller.is_gravity_inverted)
-			_turn_count += 1
-			_current_difficulty_stage = _difficulty_stage_it.next()
-			GameManager.turn_incremented.emit(_turn_count, _difficulty_stage_it.remaining_stage_turns)
 			if not piece_manager.has_current_piece():
 				piece_manager.call_deferred("spawn_piece")
 		GameState.SETTLE:

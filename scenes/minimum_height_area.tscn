@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cdjjpa8grcjnb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vhtum"]
+size = Vector2(1920, 50)
+
+[node name="Minimum Height Area" type="Area2D" unique_id=618680559]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=321859902]
+shape = SubResource("RectangleShape2D_vhtum")

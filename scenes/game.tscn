@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://dsk3v6a3mwkq" path="res://scripts/features/piece/piece_queue_component.gd" id="13_bt5mj"]
 [ext_resource type="Texture2D" uid="uid://bnjsk6xih14do" path="res://assets/pieces/i_piece/i_piece_moving.png" id="14_5newe"]
 [ext_resource type="Texture2D" uid="uid://dsvdkvc3mnws4" path="res://assets/pieces/square_piece/square_piece_impact.png" id="15_1kice"]
+[ext_resource type="PackedScene" uid="uid://cdjjpa8grcjnb" path="res://scenes/minimum_height_area.tscn" id="19_1kice"]
 [ext_resource type="PackedScene" uid="uid://ccy05kcl0d213" path="res://scenes/hud.tscn" id="20_1kice"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ca42v"]
@@ -166,6 +167,9 @@ position = Vector2(0, 100)
 position = Vector2(10, -217)
 scale = Vector2(50, 1)
 
+[node name="Top Minimum Height Area" parent="World/Top Platform" unique_id=618680559 instance=ExtResource("19_1kice")]
+position = Vector2(0, 50)
+
 [node name="Bottom Platform" parent="World" unique_id=868394617 instance=ExtResource("3_lbhrr")]
 position = Vector2(0, 250)
 
@@ -175,6 +179,9 @@ position = Vector2(1, -100)
 [node name="DeathZone" parent="World/Bottom Platform" unique_id=1826319625 instance=ExtResource("4_lbhrr")]
 position = Vector2(-4, 324)
 scale = Vector2(50, 1)
+
+[node name="Bottom Minimum Height Area" parent="World/Bottom Platform" unique_id=1944673834 instance=ExtResource("19_1kice")]
+position = Vector2(0, -50)
 
 [node name="DeathZones" type="Node2D" parent="World" unique_id=378252427]
 

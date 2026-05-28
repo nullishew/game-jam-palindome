@@ -21,6 +21,7 @@ bg_color = Color(1, 1, 1, 0.23529412)
 bg_color = Color(1, 1, 1, 0.11764706)
 
 [node name="Menu" type="CanvasLayer" unique_id=558575991 node_paths=PackedStringArray("start_btn")]
+layer = 99
 script = ExtResource("1_yqeox")
 start_btn = NodePath("Panel/MarginContainer/Control/Start Button")
 
