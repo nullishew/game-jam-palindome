@@ -2,14 +2,9 @@ class_name PieceQueueComponent
 extends Node
 
 
-var _difficulty_config: DifficultyConfig
-
+var _piece_generator: PieceGenerator
 var _queue: Array[PieceSpawnConfig] = []
 var _curr_piece_index: int = 0
-
-var _generated_turns: int = 0
-var _stage_index: int = 0
-var _stage_turn_remaining: int = 0
 
 
 func _ready() -> void:
@@ -17,65 +12,52 @@ func _ready() -> void:
 	_curr_piece_index = 0
 
 
-func set_difficulty(config: DifficultyConfig):
-	_difficulty_config = config
-
-	_stage_index = 0
-	_generated_turns = 0
-
-	if config.stages.size() > 0:
-		_stage_turn_remaining = config.stages[0].duration_turns
+func initialize(it: DifficultyStageIterator):
+	_piece_generator = PieceGenerator.new(it)
 
 
 func pop_front() -> PieceSpawnConfig:
-	_generate_until(_curr_piece_index + 1)
-	var config = _queue[_curr_piece_index]
+	var piece := _get_piece(_curr_piece_index)
 	_curr_piece_index += 1
-	return config
+	return piece
 
 
 func peek(n: int) -> Array[PieceSpawnConfig]:
-	_generate_until(_curr_piece_index + n + 1)
 	var arr: Array[PieceSpawnConfig] = []
 	for i in range(n):
-		var j = _curr_piece_index + i
-		arr.append(_queue[j])
+		arr.append(_get_piece(_curr_piece_index + i))
 	return arr
 
-var _current_cycle: Array[PieceSpawnConfig] = []
-var _cycle_index: int = 0
 
-func _generate_until(n: int):
+func _get_piece(i: int) -> PieceSpawnConfig:
+	while _queue.size() <= i:
+		_queue.append(_piece_generator.next())
+	return _queue[i]
 
-	while _queue.size() < n:
+
+class PieceGenerator:
+	var _it: DifficultyStageIterator
+	var _current_cycle: Array[PieceSpawnConfig] = []
+	var _cycle_index: int = 0
+
+
+	func _init(it: DifficultyStageIterator) -> void:
+		_it = it.duplicate()
+
+
+	func next() -> PieceSpawnConfig:
+		var stage := _it.next()
 
 		if _cycle_index >= _current_cycle.size():
-			_generate_new_cycle()
+			_generate_new_cycle(stage)
 
 		var piece = _current_cycle[_cycle_index]
-
-		_queue.append(piece)
-
 		_cycle_index += 1
-		_generated_turns += 1
-		_stage_turn_remaining -= 1
+		return piece
 
-		if _stage_turn_remaining <= 0:
-			_advance_stage()
-func _generate_new_cycle():
 
-	var stage = _difficulty_config.stages[_stage_index]
-
-	_current_cycle = stage.piece_queue_config.piece_spawn_configs.duplicate()
-
-	_current_cycle.shuffle()
-
-	_cycle_index = 0
-
-func _advance_stage():
-	if _stage_index + 1 >= _difficulty_config.stages.size():
-		return
-	_stage_index += 1
-	var stage = _difficulty_config.stages[_stage_index]
-	_stage_turn_remaining = stage.duration_turns
-
+	func _generate_new_cycle(stage: DifficultyStageConfig):
+		var arr := stage.piece_queue_config.piece_spawn_configs
+		_current_cycle = arr.slice(0, mini(arr.size(), stage.duration_turns))
+		_current_cycle.shuffle()
+		_cycle_index = 0

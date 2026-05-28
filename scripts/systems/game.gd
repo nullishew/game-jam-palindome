@@ -27,7 +27,8 @@ var _state: GameState
 var _prev_state: GameState
 
 var _turn_count: int = 0
-var _difficulty_stage_index: int = 0
+
+var _difficulty_stage_it: DifficultyStageIterator
 
 
 enum GameState {
@@ -147,7 +148,9 @@ func unpause():
 
 
 func set_difficulty(config: DifficultyConfig):
-	piece_manager.set_difficulty(config)
+	var it = DifficultyStageIterator.new(config)
+	_difficulty_stage_it = it
+	piece_manager.initialize(it)
 
 
 func lose():

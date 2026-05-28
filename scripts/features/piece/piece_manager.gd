@@ -65,8 +65,8 @@ func _ready() -> void:
 	_curr_piece = null
 
 
-func set_difficulty(stage: DifficultyConfig):
-	piece_queue_component.set_difficulty(stage)
+func initialize(it: DifficultyStageIterator):
+	piece_queue_component.initialize(it)
 
 
 func set_spawn_mode(mode: SpawnMode):

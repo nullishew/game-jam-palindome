@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="DifficultyConfig" format=3 uid="uid://cn5xn8va052jg"]
 
-[ext_resource type="Script" uid="uid://d1feek4va50u1" path="res://scripts/features/difficulty_config.gd" id="1_3rb7r"]
-[ext_resource type="Script" uid="uid://c8dmoo7qmkc50" path="res://scripts/features/difficulty_stage_config.gd" id="2_6t4k3"]
+[ext_resource type="Script" uid="uid://d1feek4va50u1" path="res://scripts/features/difficulty/difficulty_config.gd" id="1_3rb7r"]
+[ext_resource type="Script" uid="uid://c8dmoo7qmkc50" path="res://scripts/features/difficulty/difficulty_stage_config.gd" id="2_6t4k3"]
 [ext_resource type="Script" uid="uid://cpowjncfu48nu" path="res://scripts/features/piece/piece_spawn_config.gd" id="3_h25ky"]
 [ext_resource type="Resource" uid="uid://ddvlfs7xxkopw" path="res://resources/piece_spawn_configs/block_spawn_config.tres" id="4_hqnqd"]
 [ext_resource type="Resource" uid="uid://css1jxrjeb1ym" path="res://resources/piece_spawn_configs/i_spawn_config.tres" id="5_gqomr"]
