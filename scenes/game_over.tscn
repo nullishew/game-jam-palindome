@@ -103,6 +103,7 @@ _data = {
 }
 
 [node name="GameOver" type="CanvasLayer" unique_id=1361454001 node_paths=PackedStringArray("turn_count_label", "score_label", "menu_btn", "replay_btn")]
+layer = 5
 script = ExtResource("1_xeevv")
 turn_count_label = NodePath("Panel/Game Over Menu/VBoxContainer/HBoxContainer/Turn Count Label")
 score_label = NodePath("Panel/Game Over Menu/VBoxContainer/Score Label")

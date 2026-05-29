@@ -4,6 +4,9 @@ extends CanvasLayer
 @export var next_piece_uis: Array[TextureRect]
 @export var hold_slot_ui: TextureRect
 
+@export var score_label: Label
+@export var turn_count_label: Label
+
 @export var invert_count_label: Label
 @export var invert_arrow_container: Control
 @export var invert_arrow: Control
@@ -15,6 +18,7 @@ extends CanvasLayer
 @export var invert_arrow_border_color: Color
 
 @export var pause_button: Button
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -40,7 +44,8 @@ func _ready() -> void:
 			invert_arrow_border.self_modulate = arrow_border_color
 
 	)
-	GameManager.turn_incremented.connect(_on_turn_incremented)
+	GameManager.turn_started.connect(_on_turn_started)
+	GameManager.score_updated.connect(_on_score_updated)
 	GameManager.hold_piece_updated.connect(
 		func(piece_config: PieceSpawnConfig):
 			hold_slot_ui.texture = piece_config.ui_texture
@@ -51,9 +56,16 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	GameManager.hud = null
 
+
 func _on_queue_ui_updated(queue: Array[PieceSpawnConfig], start_index: int):
 	for i in range(next_piece_uis.size()):
 		next_piece_uis[i].texture = queue[start_index + i].ui_texture
 
-func _on_turn_incremented(_turn_count: int, stage_turns_remaining: int):
+
+func _on_turn_started(turn_count: int, stage_turns_remaining: int):
 	invert_count_label.text = str(stage_turns_remaining)
+	turn_count_label.text = str(turn_count)
+
+
+func _on_score_updated(score: int):
+	score_label.text = str(score)

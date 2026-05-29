@@ -3,7 +3,7 @@ extends Area2D
 
 
 @export var collision_shape: CollisionShape2D
-@export var padding: Vector2 = Vector2(0, 200)
+@export var padding: Vector2 = Vector2(0, 250)
 
 func _ready() -> void:
 	body_exited.connect(_on_body_exited)

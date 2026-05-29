@@ -14,10 +14,14 @@ var _score_multiplier: float = 1
 
 
 func _ready() -> void:
+	_score = 0
+	_score_multiplier = 1
 	GameManager.piece_lost.connect(_on_piece_lost)
 	GameManager.piece_placed.connect(_on_piece_placed)
 	GameManager.turn_ended.connect(_on_turn_ended)
 	GameManager.stage_ended.connect(_on_stage_ended)
+	await get_tree().process_frame
+	GameManager.score_updated.emit(_score)
 
 
 func _on_piece_lost(piece: Piece):
@@ -30,7 +34,7 @@ func _on_piece_placed(piece: Piece):
 		_add_base_score(config.piece_place_bonus[piece.piece_spawn_config])
 
 
-func _on_turn_ended():
+func _on_turn_ended(_turn: int):
 	_add_base_score(config.turn_end_bonus)
 
 
@@ -44,4 +48,5 @@ func _on_stage_ended(stage: DifficultyStageConfig, placed_pieces: Array[Piece]):
 
 func _add_base_score(base_score: int):
 	_score += int(base_score * _score_multiplier)
-	print("Score now: " + str(score))
+	GameManager.score = _score
+	GameManager.score_updated.emit(_score)

@@ -11,5 +11,5 @@ extends CanvasLayer
 func _ready() -> void:
 	menu_btn.pressed.connect(SceneManager.open_start_menu)
 	replay_btn.pressed.connect(SceneManager.start_game)
-	turn_count_label.text = str(GameManager.turns_survived)
+	turn_count_label.text = str(GameManager.turn_count)
 	score_label.text = str(GameManager.score)

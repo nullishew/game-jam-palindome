@@ -97,7 +97,7 @@ func _physics_process(delta: float) -> void:
 			if _place_timer <= 0 && piece_manager.are_pieces_settled(delta, min_settle_time):
 				if piece_manager.last_released_piece:
 					GameManager.piece_placed.emit(piece_manager.last_released_piece)
-				GameManager.turn_ended.emit()
+				GameManager.turn_ended.emit(_turn_count)
 				if _difficulty_stage_it.is_stage_end:
 					GameManager.stage_ended.emit(_current_difficulty_stage, piece_manager.placed_pieces)
 				if not minimum_height_controller.is_minimum_height_reached(gravity_controller.is_gravity_inverted):
@@ -127,8 +127,9 @@ func _enter_state(state: GameState):
 	match state:
 		GameState.PREPARE_TURN:
 			_turn_count += 1
+			GameManager.turn_count = _turn_count
 			_current_difficulty_stage = _difficulty_stage_it.next()
-			GameManager.turn_incremented.emit(_turn_count, _difficulty_stage_it.remaining_stage_turns)
+			GameManager.turn_started.emit(_turn_count, _difficulty_stage_it.remaining_stage_turns)
 			platform_controller.resize_platform_distance(piece_manager.placed_pieces, gravity_controller.is_gravity_inverted)
 			if _difficulty_stage_it.is_stage_start:
 				minimum_height_controller.increase_minimum_height(_current_difficulty_stage.minimum_height_increase, gravity_controller.is_gravity_inverted)
@@ -150,8 +151,6 @@ func _enter_state(state: GameState):
 			gravity_controller.invert_gravity()
 			GameManager.invert_state_entered.emit(gravity_controller.is_gravity_inverted)
 		GameState.LOSE:
-			GameManager.turns_survived = _turn_count
-			GameManager.score = score_manager.score
 			SceneManager.open_game_over_menu()
 			AudioManager.play_sound(AudioManager.TOWEL_DISPENSER_SOUND, AudioManager.AudioBus.SFX)
 
