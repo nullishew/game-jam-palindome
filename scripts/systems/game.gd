@@ -2,12 +2,13 @@ class_name Game
 extends Node2D
 
 
-@export var piece_manager: PieceManager
-@export var gravity_controller: GravityController
 @export var camera_controller: CameraController
-@export var platform_controller: PlatformController
+@export var gravity_controller: GravityController
 @export var minimum_height_controller: MinimumHeightController
+@export var piece_manager: PieceManager
+@export var platform_controller: PlatformController
 @export var playable_area: PlayableArea
+@export var score_manager: ScoreManager
 
 @export var min_place_time: float = 1
 @export var min_settle_time: float = 0.5
@@ -31,6 +32,7 @@ var _turn_count: int = 0
 var _difficulty_stage_it: DifficultyStageIterator
 var _current_difficulty_stage: DifficultyStageConfig
 
+var _is_checking_minimum_height: bool = false
 
 enum GameState {
 	PREPARE_TURN,
@@ -79,7 +81,7 @@ func _physics_process(delta: float) -> void:
 
 	match _state:
 		GameState.PREPARE_TURN:
-			if platform_controller.is_settled(gravity_controller.is_gravity_inverted):
+			if not _is_checking_minimum_height and platform_controller.is_settled(gravity_controller.is_gravity_inverted):
 				_set_state(GameState.AIM)
 		GameState.AIM:
 			if Input.is_action_just_pressed("hold_piece"):
@@ -121,6 +123,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _enter_state(state: GameState):
+	_state = state
 	match state:
 		GameState.PREPARE_TURN:
 			_turn_count += 1
@@ -129,7 +132,9 @@ func _enter_state(state: GameState):
 			platform_controller.resize_platform_distance(piece_manager.placed_pieces, gravity_controller.is_gravity_inverted)
 			if _difficulty_stage_it.is_stage_start:
 				minimum_height_controller.increase_minimum_height(_current_difficulty_stage.minimum_height_increase, gravity_controller.is_gravity_inverted)
+				_is_checking_minimum_height = true
 				await get_tree().physics_frame
+				_is_checking_minimum_height = false
 				if _turn_count > 1 and not minimum_height_controller.is_minimum_height_reached(gravity_controller.is_gravity_inverted):
 					lose()
 		GameState.PAUSE:
@@ -146,9 +151,9 @@ func _enter_state(state: GameState):
 			GameManager.invert_state_entered.emit(gravity_controller.is_gravity_inverted)
 		GameState.LOSE:
 			GameManager.turns_survived = _turn_count
+			GameManager.score = score_manager.score
 			SceneManager.open_game_over_menu()
 			AudioManager.play_sound(AudioManager.TOWEL_DISPENSER_SOUND, AudioManager.AudioBus.SFX)
-	_state = state
 
 
 func _exit_state(state: GameState):

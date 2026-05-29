@@ -21,3 +21,4 @@ var game: Game
 var hud: HUD
 
 var turns_survived: int
+var score: int

@@ -31,14 +31,15 @@ shader_parameter/speed = -1.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5newe"]
 size = Vector2(1920, 1080)
 
-[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("piece_manager", "gravity_controller", "camera_controller", "platform_controller", "minimum_height_controller", "playable_area")]
+[node name="Game" type="Node2D" unique_id=795297754 node_paths=PackedStringArray("camera_controller", "gravity_controller", "minimum_height_controller", "piece_manager", "platform_controller", "playable_area", "score_manager")]
 script = ExtResource("1_yqjtg")
-piece_manager = NodePath("PieceManager")
-gravity_controller = NodePath("GravityController")
 camera_controller = NodePath("Camera2D")
-platform_controller = NodePath("PlatformController")
+gravity_controller = NodePath("GravityController")
 minimum_height_controller = NodePath("MinimumHeightController")
+piece_manager = NodePath("PieceManager")
+platform_controller = NodePath("PlatformController")
 playable_area = NodePath("World/Playable Area")
+score_manager = NodePath("ScoreManager")
 difficulty_config = ExtResource("2_e1j6l")
 
 [node name="ScoreManager" type="Node" parent="." unique_id=781162015]

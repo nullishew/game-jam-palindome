@@ -87,6 +87,12 @@ func initialize(spawn_config: PieceSpawnConfig):
 	_spawn_config = spawn_config
 
 
+func is_settled(linear_velocity_threshold: float = 7, angular_velocity_threshold: float = 5) -> bool:
+	if linear_velocity.length_squared() > linear_velocity_threshold * linear_velocity_threshold: return false
+	if abs(angular_velocity) > angular_velocity_threshold: return false
+	return true
+
+
 func scale_piece(s: float):
 	if override_sprite_scale_hitbox:
 		override_sprite_scale_hitbox.scale *= s

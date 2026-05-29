@@ -154,10 +154,9 @@ func _are_pieces_settled() -> bool:
 	# 	if !piece.sleeping:
 	# 		return false
 	# return true
+	if _last_released_piece and not _last_released_piece.is_settled(): return false
 	for piece in _placed_pieces:
-		if piece.linear_velocity.length() > 5:
-			return false
-		if abs(piece.angular_velocity) > 3:
+		if not piece.is_settled():
 			return false
 	return true
 

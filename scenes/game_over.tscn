@@ -102,9 +102,10 @@ _data = {
 &"aaaaaa": SubResource("Animation_irg28")
 }
 
-[node name="GameOver" type="CanvasLayer" unique_id=1361454001 node_paths=PackedStringArray("turn_count_label", "menu_btn", "replay_btn")]
+[node name="GameOver" type="CanvasLayer" unique_id=1361454001 node_paths=PackedStringArray("turn_count_label", "score_label", "menu_btn", "replay_btn")]
 script = ExtResource("1_xeevv")
-turn_count_label = NodePath("Panel/Game Over Menu/Turn Count Label")
+turn_count_label = NodePath("Panel/Game Over Menu/VBoxContainer/HBoxContainer/Turn Count Label")
+score_label = NodePath("Panel/Game Over Menu/VBoxContainer/Score Label")
 menu_btn = NodePath("Panel/Game Over Menu/HBoxContainer/Menu Button")
 replay_btn = NodePath("Panel/Game Over Menu/HBoxContainer/Replay Button")
 
@@ -130,12 +131,19 @@ anchor_bottom = 0.5
 offset_left = -452.0
 offset_top = -436.5
 offset_right = 452.0
-offset_bottom = 436.50122
+offset_bottom = 593.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 140
+theme_override_constants/separation = 120
 
-[node name="Turn Count Label" type="Label" parent="Panel/Game Over Menu" unique_id=543115791]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Game Over Menu" unique_id=1709250659]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Game Over Menu/VBoxContainer" unique_id=1810807748]
+layout_mode = 2
+alignment = 1
+
+[node name="Turn Count Label" type="Label" parent="Panel/Game Over Menu/VBoxContainer/HBoxContainer" unique_id=543115791]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
@@ -144,7 +152,38 @@ theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
 theme_override_constants/outline_size = 25
 theme_override_constants/shadow_outline_size = 50
-theme_override_font_sizes/font_size = 200
+theme_override_font_sizes/font_size = 150
+text = "67"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Game Over Menu/VBoxContainer/HBoxContainer" unique_id=1487245516]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="Label" type="Label" parent="Panel/Game Over Menu/VBoxContainer/HBoxContainer/MarginContainer" unique_id=1640052720]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 17
+theme_override_constants/shadow_outline_size = 40
+theme_override_font_sizes/font_size = 100
+text = " turns"
+vertical_alignment = 2
+
+[node name="Score Label" type="Label" parent="Panel/Game Over Menu/VBoxContainer" unique_id=869166461]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 25
+theme_override_constants/shadow_outline_size = 50
+theme_override_font_sizes/font_size = 150
 text = "67"
 horizontal_alignment = 1
 

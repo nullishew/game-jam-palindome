@@ -10,16 +10,16 @@
 [resource]
 script = ExtResource("2_u0io8")
 piece_place_bonus = Dictionary[ExtResource("1_b61qq"), int]({
-ExtResource("2_wcgmk"): 100,
-ExtResource("3_o2ylr"): 100,
+ExtResource("2_wcgmk"): 200,
+ExtResource("3_o2ylr"): 200,
 ExtResource("4_yj5aa"): 100,
 ExtResource("5_d2y4y"): 100
 })
 piece_loss_penalty = Dictionary[ExtResource("1_b61qq"), int]({
-ExtResource("5_d2y4y"): 100,
-ExtResource("4_yj5aa"): 100,
-ExtResource("3_o2ylr"): 100,
-ExtResource("2_wcgmk"): 100
+ExtResource("5_d2y4y"): 200,
+ExtResource("4_yj5aa"): 200,
+ExtResource("3_o2ylr"): 250,
+ExtResource("2_wcgmk"): 300
 })
 stage_end_piece_bonus = Dictionary[ExtResource("1_b61qq"), int]({
 ExtResource("2_wcgmk"): 300,
