@@ -106,18 +106,20 @@ scale = Vector2(1920, 1080)
 texture = ExtResource("11_ca42v")
 
 [node name="Shape Background Parallax2D" type="Parallax2D" parent="World/Background" unique_id=1170915841]
-scale = Vector2(0.67, 0.67)
-repeat_size = Vector2(1200, 1400)
+repeat_size = Vector2(800, 940)
 autoscroll = Vector2(0, 30)
 repeat_times = 16
 
-[node name="Sprite2D2" type="Sprite2D" parent="World/Background/Shape Background Parallax2D" unique_id=1387695853]
+[node name="Node2D" type="Node2D" parent="World/Background/Shape Background Parallax2D" unique_id=2038927967]
+scale = Vector2(0.67, 0.67)
+
+[node name="Sprite2D2" type="Sprite2D" parent="World/Background/Shape Background Parallax2D/Node2D" unique_id=1387695853]
 self_modulate = Color(0, 0, 0, 0.1764706)
 position = Vector2(-31.999992, 37)
 scale = Vector2(1.7128904, 1.7128904)
 texture = ExtResource("12_264po")
 
-[node name="Sprite2D3" type="Sprite2D" parent="World/Background/Shape Background Parallax2D" unique_id=1427436529]
+[node name="Sprite2D3" type="Sprite2D" parent="World/Background/Shape Background Parallax2D/Node2D" unique_id=1427436529]
 self_modulate = Color(0, 0, 0, 0.1764706)
 position = Vector2(461.99994, 306.99997)
 rotation = -0.2617994
@@ -125,43 +127,43 @@ scale = Vector2(1.5478425, 1.5478425)
 skew = 0.5235988
 texture = ExtResource("13_1kice")
 
-[node name="Sprite2D4" type="Sprite2D" parent="World/Background/Shape Background Parallax2D" unique_id=1775984119]
+[node name="Sprite2D4" type="Sprite2D" parent="World/Background/Shape Background Parallax2D/Node2D" unique_id=1775984119]
 self_modulate = Color(0, 0, 0, 0.1764706)
 position = Vector2(455.89838, -367.41394)
 rotation = -2.6179938
-scale = Vector2(0.9327612, 1.4948679)
+scale = Vector2(0.93276125, 1.4948679)
 texture = ExtResource("14_5newe")
 
-[node name="Sprite2D5" type="Sprite2D" parent="World/Background/Shape Background Parallax2D" unique_id=1506976214]
+[node name="Sprite2D5" type="Sprite2D" parent="World/Background/Shape Background Parallax2D/Node2D" unique_id=1506976214]
 self_modulate = Color(0, 0, 0, 0.1764706)
 position = Vector2(137, -445)
-rotation = -0.2617994
+rotation = -0.26179937
 scale = Vector2(1.067672, 1.067672)
 texture = ExtResource("15_1kice")
 
-[node name="Sprite2D6" type="Sprite2D" parent="World/Background/Shape Background Parallax2D" unique_id=784664890]
+[node name="Sprite2D6" type="Sprite2D" parent="World/Background/Shape Background Parallax2D/Node2D" unique_id=784664890]
 self_modulate = Color(0, 0, 0, 0.1764706)
 position = Vector2(581.15625, 98.70746)
 rotation = 0.5235988
 scale = Vector2(1.0878849, 1.0878849)
 texture = ExtResource("15_1kice")
 
-[node name="Sprite2D7" type="Sprite2D" parent="World/Background/Shape Background Parallax2D" unique_id=1794107698]
+[node name="Sprite2D7" type="Sprite2D" parent="World/Background/Shape Background Parallax2D/Node2D" unique_id=1794107698]
 self_modulate = Color(0, 0, 0, 0.1764706)
 position = Vector2(-88.000015, 440.00003)
 rotation = -0.7853982
 scale = Vector2(0.8163642, 1.401974)
 texture = ExtResource("14_5newe")
 
-[node name="Sprite2D8" type="Sprite2D" parent="World/Background/Shape Background Parallax2D" unique_id=2134834466]
+[node name="Sprite2D8" type="Sprite2D" parent="World/Background/Shape Background Parallax2D/Node2D" unique_id=2134834466]
 self_modulate = Color(0, 0, 0, 0.1764706)
 position = Vector2(-336.00003, -170)
 rotation = 1.8325958
-scale = Vector2(1.9312063, 1.9312063)
-skew = 0.5235988
+scale = Vector2(1.9312065, 1.9312063)
+skew = 0.52359855
 texture = ExtResource("13_1kice")
 
-[node name="Sprite2D9" type="Sprite2D" parent="World/Background/Shape Background Parallax2D" unique_id=59078383]
+[node name="Sprite2D9" type="Sprite2D" parent="World/Background/Shape Background Parallax2D/Node2D" unique_id=59078383]
 self_modulate = Color(0, 0, 0, 0.1764706)
 position = Vector2(-421.99997, 502)
 scale = Vector2(1.086914, 1.086914)
