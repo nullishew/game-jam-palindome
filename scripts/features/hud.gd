@@ -6,11 +6,10 @@ extends CanvasLayer
 
 @export var score_label: Label
 @export var turn_count_label: Label
-
 @export var invert_count_label: Label
-@export var invert_arrow_container: Control
-@export var invert_arrow: Control
-@export var invert_arrow_border: Control
+
+@export var gravity_arrow_animatable_container: Control
+@export var gravity_arrow_texture: TextureRect
 
 @export var arrow_color: Color
 @export var arrow_border_color: Color
@@ -30,19 +29,20 @@ func _ready() -> void:
 
 			var target_rotation = [0, PI][int(is_gravity_inverted)]
 			var tween = create_tween()
-			tween.tween_property(invert_arrow_container, "rotation", target_rotation, 0.5)
+			tween.tween_property(gravity_arrow_animatable_container, "rotation", target_rotation, 0.5)
 
-			invert_arrow.self_modulate = invert_arrow_color
-			invert_arrow_border.self_modulate = invert_arrow_border_color
+			gravity_arrow_texture.self_modulate = invert_arrow_color
+			var shader: ShaderMaterial = gravity_arrow_texture.material
+			shader.set_shader_parameter("outline_color", invert_arrow_border_color)
 
 	)
 	GameManager.invert_state_exited.connect(
 		func():
 			invert_count_label.self_modulate = Color(1, 1, 1, 1)
 
-			invert_arrow.self_modulate = arrow_color
-			invert_arrow_border.self_modulate = arrow_border_color
-
+			gravity_arrow_texture.self_modulate = arrow_color
+			var shader: ShaderMaterial = gravity_arrow_texture.material
+			shader.set_shader_parameter("outline_color", arrow_border_color)
 	)
 	GameManager.turn_started.connect(_on_turn_started)
 	GameManager.score_updated.connect(_on_score_updated)
