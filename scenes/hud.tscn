@@ -8,19 +8,21 @@
 [ext_resource type="StyleBox" uid="uid://djikl8q0utpmy" path="res://resources/menu_button_ui/menu_button_disabled_stylebox.tres" id="6_mphia"]
 [ext_resource type="StyleBox" uid="uid://b4r18fogvaykm" path="res://resources/menu_button_ui/menu_button_focus_stylebox.tres" id="7_0m4u7"]
 
-[node name="HUD" type="CanvasLayer" unique_id=827572359 node_paths=PackedStringArray("next_piece_uis", "hold_slot_ui", "invert_count_label", "invert_arrow_container", "invert_arrow", "invert_arrow_border", "pause_button")]
+[node name="HUD" type="CanvasLayer" unique_id=827572359 node_paths=PackedStringArray("next_piece_uis", "hold_slot_ui", "score_label", "turn_count_label", "invert_count_label", "invert_arrow_container", "invert_arrow", "invert_arrow_border", "pause_button")]
 script = ExtResource("1_oo0fn")
 next_piece_uis = [NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 1/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 2/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 3/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 4/MarginContainer/TextureRect")]
-hold_slot_ui = NodePath("MarginContainer/Control/Hold VBoxContainer/Hold Slot/MarginContainer/TextureRect")
-invert_count_label = NodePath("MarginContainer/Control/Invert VBoxContainer/Invert Count Label")
-invert_arrow_container = NodePath("MarginContainer/Control/Invert VBoxContainer/Control/Invert Arrow Animatable Container")
-invert_arrow = NodePath("MarginContainer/Control/Invert VBoxContainer/Control/Invert Arrow Animatable Container/Invert Arrow Label")
-invert_arrow_border = NodePath("MarginContainer/Control/Invert VBoxContainer/Control/Invert Arrow Animatable Container/Invert Arrow Border Label")
+hold_slot_ui = NodePath("MarginContainer/Left VBoxContainer/Hold VBoxContainer/Hold Slot/MarginContainer/TextureRect")
+score_label = NodePath("MarginContainer3/Control/Data VBoxContainer/VBoxContainer/Score VBoxContainer/Score Label")
+turn_count_label = NodePath("MarginContainer3/Control/Data VBoxContainer/VBoxContainer/Turn Count VBoxContainer/Turn Label")
+invert_count_label = NodePath("MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control/Invert Count Label")
+invert_arrow_container = NodePath("MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control/Invert Arrow Animatable Container")
+invert_arrow = NodePath("MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control/Invert Arrow Animatable Container/Invert Arrow Label")
+invert_arrow_border = NodePath("MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control/Invert Arrow Animatable Container/Invert Arrow Border Label")
 arrow_color = Color(1, 0.87058824, 1, 1)
 arrow_border_color = Color(0.78039217, 0.6745098, 0.83137256, 1)
 invert_arrow_color = Color(1, 0.58431375, 0.6901961, 1)
 invert_arrow_border_color = Color(0.6862745, 0.34117648, 0.39215687, 1)
-pause_button = NodePath("MarginContainer/Control/Pause Menu Button")
+pause_button = NodePath("MarginContainer2/Control/Pause Menu Button")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1110552726]
 anchors_preset = 15
@@ -29,27 +31,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 200
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 200
-theme_override_constants/margin_bottom = 50
+theme_override_constants/margin_left = 300
+theme_override_constants/margin_top = 125
+theme_override_constants/margin_right = 300
+theme_override_constants/margin_bottom = 125
 
 [node name="Control" type="Control" parent="MarginContainer" unique_id=38956023]
 layout_mode = 2
+size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="Queue VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control" unique_id=273226338]
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = 1
 anchor_left = 1.0
-anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 0.5
 offset_left = -192.0
-offset_top = -460.0
-offset_bottom = 460.0
+offset_bottom = 920.0
 grow_horizontal = 0
-grow_vertical = 2
 scale = Vector2(0.9, 0.9)
 mouse_filter = 0
 theme_override_constants/separation = 16
@@ -150,17 +149,18 @@ theme_override_constants/margin_bottom = 32
 layout_mode = 2
 expand_mode = 3
 
-[node name="Hold VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control" unique_id=2129426233]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.042
-anchor_bottom = 0.44
-offset_right = 192.0
-offset_bottom = -106.04001
-scale = Vector2(0.9, 0.9)
+[node name="Left VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1574488294]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 300
+
+[node name="Hold VBoxContainer" type="VBoxContainer" parent="MarginContainer/Left VBoxContainer" unique_id=2129426233]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 mouse_filter = 0
 
-[node name="Label" type="Label" parent="MarginContainer/Control/Hold VBoxContainer" unique_id=1977253416]
+[node name="Label" type="Label" parent="MarginContainer/Left VBoxContainer/Hold VBoxContainer" unique_id=1977253416]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
@@ -172,12 +172,12 @@ theme_override_font_sizes/font_size = 64
 text = "Hold"
 horizontal_alignment = 1
 
-[node name="Hold Slot" type="TextureRect" parent="MarginContainer/Control/Hold VBoxContainer" unique_id=1257151179]
+[node name="Hold Slot" type="TextureRect" parent="MarginContainer/Left VBoxContainer/Hold VBoxContainer" unique_id=1257151179]
 self_modulate = Color(1.666, 1.666, 1.666, 1)
 layout_mode = 2
 texture = ExtResource("3_5ysmq")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/Hold VBoxContainer/Hold Slot" unique_id=600909603]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Left VBoxContainer/Hold VBoxContainer/Hold Slot" unique_id=600909603]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -189,48 +189,28 @@ theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Hold VBoxContainer/Hold Slot/MarginContainer" unique_id=472768435]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Left VBoxContainer/Hold VBoxContainer/Hold Slot/MarginContainer" unique_id=472768435]
 layout_mode = 2
 expand_mode = 3
 
-[node name="Invert VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control" unique_id=298324733]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -788.0
-offset_top = 370.0
-offset_right = -532.0
-offset_bottom = 855.0
-grow_horizontal = 2
-mouse_filter = 0
-
-[node name="Invert Count Label" type="Label" parent="MarginContainer/Control/Invert VBoxContainer" unique_id=681304422]
+[node name="Invert HBoxContainer" type="HBoxContainer" parent="MarginContainer/Left VBoxContainer" unique_id=2025249641]
 layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 16
-theme_override_constants/shadow_outline_size = 35
-theme_override_font_sizes/font_size = 100
-text = "4321"
-horizontal_alignment = 1
+alignment = 1
 
-[node name="Control" type="Control" parent="MarginContainer/Control/Invert VBoxContainer" unique_id=1963236552]
+[node name="Control" type="Control" parent="MarginContainer/Left VBoxContainer/Invert HBoxContainer" unique_id=1963236552]
 custom_minimum_size = Vector2(0, 220)
 layout_mode = 2
 
-[node name="Invert Arrow Animatable Container" type="Control" parent="MarginContainer/Control/Invert VBoxContainer/Control" unique_id=1319395094]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Invert Arrow Animatable Container" type="Control" parent="MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control" unique_id=1319395094]
+anchors_preset = 0
+offset_left = -4.0
+offset_right = -4.0
+offset_bottom = 220.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(128, 125)
+pivot_offset = Vector2(0, 125)
 
-[node name="Invert Arrow Border Label" type="Label" parent="MarginContainer/Control/Invert VBoxContainer/Control/Invert Arrow Animatable Container" unique_id=404238227]
+[node name="Invert Arrow Border Label" type="Label" parent="MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control/Invert Arrow Animatable Container" unique_id=404238227]
 self_modulate = Color(0.78039217, 0.6745098, 0.83137256, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -245,7 +225,7 @@ theme_override_font_sizes/font_size = 250
 text = "↓"
 horizontal_alignment = 1
 
-[node name="Invert Arrow Label" type="Label" parent="MarginContainer/Control/Invert VBoxContainer/Control/Invert Arrow Animatable Container" unique_id=1057244648]
+[node name="Invert Arrow Label" type="Label" parent="MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control/Invert Arrow Animatable Container" unique_id=1057244648]
 self_modulate = Color(1, 0.87058824, 1, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -260,14 +240,53 @@ theme_override_font_sizes/font_size = 250
 text = "↓"
 horizontal_alignment = 1
 
-[node name="Pause Menu Button" type="Button" parent="MarginContainer/Control" unique_id=1934701691]
+[node name="Invert Count Label" type="Label" parent="MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control" unique_id=372096907]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -91.5
+offset_top = -55.0
+offset_right = 91.5
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 25
+theme_override_font_sizes/font_size = 80
+text = "4321"
+horizontal_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=702036747]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 300
+theme_override_constants/margin_bottom = 0
+
+[node name="Control" type="Control" parent="MarginContainer2" unique_id=1568900437]
+layout_mode = 2
+
+[node name="Pause Menu Button" type="Button" parent="MarginContainer2/Control" unique_id=1934701691]
 custom_minimum_size = Vector2(200, 200)
-layout_mode = 0
-offset_left = 1544.0001
-offset_top = 6.999996
-offset_right = 1744.0001
-offset_bottom = 207.0
-scale = Vector2(0.7, 0.7)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 200.0
+grow_horizontal = 0
+size_flags_vertical = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 7
@@ -278,7 +297,7 @@ theme_override_styles/hover = ExtResource("5_0i1j5")
 theme_override_styles/disabled = ExtResource("6_mphia")
 theme_override_styles/focus = ExtResource("7_0m4u7")
 
-[node name="Pause Menu Label" type="Label" parent="MarginContainer/Control/Pause Menu Button" unique_id=956976119]
+[node name="Pause Menu Label" type="Label" parent="MarginContainer2/Control/Pause Menu Button" unique_id=956976119]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 0
 offset_left = 20.0
@@ -297,3 +316,95 @@ theme_override_font_sizes/font_size = 120
 text = "||"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="." unique_id=1541990024]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 420
+theme_override_constants/margin_right = 1428
+
+[node name="Control" type="Control" parent="MarginContainer3" unique_id=648861805]
+layout_mode = 2
+
+[node name="Data VBoxContainer" type="VBoxContainer" parent="MarginContainer3/Control" unique_id=100532787]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -443.0
+offset_bottom = 817.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer3/Control/Data VBoxContainer" unique_id=247934571]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Score VBoxContainer" type="VBoxContainer" parent="MarginContainer3/Control/Data VBoxContainer/VBoxContainer" unique_id=622757317]
+custom_minimum_size = Vector2(192, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = -25
+alignment = 2
+
+[node name="Label2" type="Label" parent="MarginContainer3/Control/Data VBoxContainer/VBoxContainer/Score VBoxContainer" unique_id=1221511485]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 16
+theme_override_font_sizes/font_size = 40
+text = "Score: "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score Label" type="Label" parent="MarginContainer3/Control/Data VBoxContainer/VBoxContainer/Score VBoxContainer" unique_id=588045913]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 25
+theme_override_font_sizes/font_size = 80
+text = "67"
+horizontal_alignment = 1
+
+[node name="Turn Count VBoxContainer" type="VBoxContainer" parent="MarginContainer3/Control/Data VBoxContainer/VBoxContainer" unique_id=2088037114]
+custom_minimum_size = Vector2(192, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = -25
+alignment = 2
+
+[node name="Label2" type="Label" parent="MarginContainer3/Control/Data VBoxContainer/VBoxContainer/Turn Count VBoxContainer" unique_id=1438573326]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 16
+theme_override_font_sizes/font_size = 40
+text = "Turn: "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Turn Label" type="Label" parent="MarginContainer3/Control/Data VBoxContainer/VBoxContainer/Turn Count VBoxContainer" unique_id=661144756]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 25
+theme_override_font_sizes/font_size = 80
+text = "4321"
+horizontal_alignment = 1

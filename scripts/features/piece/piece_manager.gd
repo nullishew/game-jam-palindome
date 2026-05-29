@@ -24,10 +24,11 @@ const SPAWN_MODE_BY_GRAVITY_MODE: Dictionary[GravityController.GravityMode, Spaw
 
 
 var placed_pieces: Array[Piece]:
-	get: return _placed_pieces
+	get: return _placed_pieces.duplicate()
 var spawn_global_position: Vector2:
 	get: return _spawn_points_by_mode[_spawn_mode].global_position
-
+var last_released_piece: Piece:
+	get: return _last_released_piece
 
 var _spawn_mode: SpawnMode = SpawnMode.TOP
 var _spawn_points_by_mode: Dictionary[SpawnMode, Node2D]
@@ -41,11 +42,22 @@ var _curr_piece: Piece
 var _curr_piece_pos: Vector2 = Vector2.ZERO
 var _curr_piece_config: PieceSpawnConfig = null
 
+var _last_released_piece: Piece = null
+
 var _settle_timer: float = 0.0
 
 
 func _init() -> void:
 	GameManager.gravity_mode_set.connect(_on_gravity_mode_set)
+	GameManager.piece_placed.connect(
+		func(piece): 
+			_placed_pieces.append(piece)
+	)
+	GameManager.piece_lost.connect(
+		func(piece):
+			if _last_released_piece == piece:
+				_last_released_piece = null
+	)
 
 
 func _on_gravity_mode_set(mode: GravityController.GravityMode):
@@ -65,10 +77,12 @@ func _ready() -> void:
 	_curr_piece = null
 
 
+func initialize(it: DifficultyStageIterator):
+	piece_queue_component.initialize(it)
+
+
 func set_spawn_mode(mode: SpawnMode):
 	_spawn_mode = mode
-	print(_spawn_mode)
-	print(spawn_global_position)
 
 
 func release_current_piece():
@@ -77,7 +91,7 @@ func release_current_piece():
 	_curr_piece = null
 	_curr_piece_config = null
 	piece.release()
-	_placed_pieces.append(piece)
+	_last_released_piece = piece
 
 
 func has_current_piece() -> bool:
@@ -96,17 +110,17 @@ func update_current_piece_position(delta: float, mouse_moved: bool, mouse_x: flo
 
 func swap_current_hold_piece():
 	var temp_config: PieceSpawnConfig = _hold_piece_config
+	var temp_piece: Piece = _hold_piece
 	_hold_piece_config = _curr_piece_config
-	_curr_piece_config = temp_config
+	_hold_piece = _curr_piece
 	GameManager.hold_piece_updated.emit(_hold_piece_config)
 	_curr_piece.enter_hold()
-	var temp_piece = _hold_piece
-	_hold_piece = _curr_piece
-	_curr_piece = null
-	if temp_piece:
+	if temp_config:
+		_curr_piece_config = temp_config
 		temp_piece.exit_hold(_curr_piece_pos)
 		_curr_piece = temp_piece
 	else:
+		_curr_piece = null
 		call_deferred("spawn_piece", _curr_piece_pos)
 
 
@@ -140,13 +154,15 @@ func _are_pieces_settled() -> bool:
 	# 	if !piece.sleeping:
 	# 		return false
 	# return true
+	if _last_released_piece and not _last_released_piece.is_settled(): return false
 	for piece in _placed_pieces:
-		if piece.linear_velocity.length() > 5:
-			return false
-		if abs(piece.angular_velocity) > 3:
+		if not piece.is_settled():
 			return false
 	return true
 
+
+func unregister_piece(piece: Piece):
+	_placed_pieces.erase(piece)
 
 @export var placement_preview_controller: PlacementPreviewController
 

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cdjjpa8grcjnb"]
+
+[ext_resource type="Script" uid="uid://bsi6af4onhd6p" path="res://scripts/features/minimum_height/minimum_height_area.gd" id="1_mst58"]
+[ext_resource type="Texture2D" uid="uid://bslj1tqbloavt" path="res://assets/placeholder_space_background.png" id="1_ydqta"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vhtum"]
+size = Vector2(1920, 50)
+
+[node name="Minimum Height Area" type="Area2D" unique_id=618680559]
+script = ExtResource("1_mst58")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=321859902]
+shape = SubResource("RectangleShape2D_vhtum")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1189736448]
+self_modulate = Color(1, 1, 1, 0.43137255)
+position = Vector2(-4.386902e-05, -9.1835295e-07)
+scale = Vector2(4, 0.18518518)
+texture = ExtResource("1_ydqta")

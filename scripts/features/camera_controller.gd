@@ -4,7 +4,7 @@ extends Camera2D
 
 @export var top_platform: Node2D
 @export var bottom_platform: Node2D
-
+@export var padding_y: float = 100
 
 var _target_cam_zoom: Vector2
 var _target_cam_pos: Vector2
@@ -17,8 +17,7 @@ func update_camera(delta: float):
 	var center_y = (top_y + bottom_y) / 2.0
 	_target_cam_pos = Vector2(0, center_y)
 
-	var padding = 100
-	var height = abs(top_y - bottom_y) + padding
+	var height = abs(top_y - bottom_y) + padding_y
 	var viewport_height = get_viewport_rect().size.y
 	var zoom_scale = viewport_height / height 
 	_target_cam_zoom = Vector2(zoom_scale, zoom_scale)

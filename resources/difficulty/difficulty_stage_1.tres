@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="DifficultyStageConfig" format=3 uid="uid://dy561fkdj31ls"]
+
+[ext_resource type="Script" uid="uid://cpowjncfu48nu" path="res://scripts/features/piece/piece_spawn_config.gd" id="1_4xita"]
+[ext_resource type="Resource" uid="uid://ddvlfs7xxkopw" path="res://resources/piece_spawn_configs/block_spawn_config.tres" id="2_lgetd"]
+[ext_resource type="Resource" uid="uid://css1jxrjeb1ym" path="res://resources/piece_spawn_configs/i_spawn_config.tres" id="3_4uije"]
+[ext_resource type="Script" uid="uid://cqhh5s47qk48l" path="res://scripts/features/piece/piece_queue_config.gd" id="4_7ubxo"]
+[ext_resource type="Script" uid="uid://c8dmoo7qmkc50" path="res://scripts/features/difficulty/difficulty_stage_config.gd" id="5_yvatg"]
+
+[sub_resource type="Resource" id="Resource_ltmrq"]
+script = ExtResource("4_7ubxo")
+piece_spawn_configs = Array[ExtResource("1_4xita")]([ExtResource("2_lgetd"), ExtResource("3_4uije")])
+metadata/_custom_type_script = "uid://cqhh5s47qk48l"
+
+[resource]
+script = ExtResource("5_yvatg")
+duration_turns = 4
+piece_queue_config = SubResource("Resource_ltmrq")
+metadata/_custom_type_script = "uid://c8dmoo7qmkc50"

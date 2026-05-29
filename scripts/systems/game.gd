@@ -2,21 +2,25 @@ class_name Game
 extends Node2D
 
 
-@export var piece_manager: PieceManager
-@export var gravity_controller: GravityController
 @export var camera_controller: CameraController
+@export var gravity_controller: GravityController
+@export var minimum_height_controller: MinimumHeightController
+@export var piece_manager: PieceManager
 @export var platform_controller: PlatformController
+@export var playable_area: PlayableArea
+@export var score_manager: ScoreManager
 
-@export var invert_turn_count: int = 4
 @export var min_place_time: float = 1
 @export var min_settle_time: float = 0.5
 
-
-var _is_mouse_button_input_unhandled: bool = false
+@export var difficulty_config: DifficultyConfig
 
 var is_game_over: bool:
 	get: return _state == GameState.LOSE
 
+
+var _is_mouse_button_input_unhandled: bool = false
+var _mouse_moved: bool = false
 
 var _place_timer: float = 0
 
@@ -25,10 +29,13 @@ var _prev_state: GameState
 
 var _turn_count: int = 0
 
-var _mouse_moved: bool = false
+var _difficulty_stage_it: DifficultyStageIterator
+var _current_difficulty_stage: DifficultyStageConfig
 
+var _is_checking_minimum_height: bool = false
 
 enum GameState {
+	PREPARE_TURN,
 	AIM,
 	SETTLE,
 	INVERT,
@@ -42,7 +49,8 @@ func _ready() -> void:
 	GameManager.game = self
 	gravity_controller.reset()
 	_is_mouse_button_input_unhandled = false
-	_set_state(GameState.AIM)
+	set_difficulty(difficulty_config)
+	_set_state(GameState.PREPARE_TURN)
 
 
 func _process(_delta: float) -> void:
@@ -62,7 +70,19 @@ func _physics_process(delta: float) -> void:
 	platform_controller.update_platform_distance(delta)
 	camera_controller.call_deferred("update_camera", delta)
 
+	var top_plat_pos := platform_controller.top_platform.global_position
+	var bottom_plat_pos := platform_controller.bottom_platform.global_position
+	var plat_midpoint := 0.5 * (top_plat_pos + bottom_plat_pos)
+	var playable_area_size := Vector2(
+		1920,
+		(bottom_plat_pos.y - top_plat_pos.y)
+	)
+	playable_area.update_bounds(plat_midpoint, playable_area_size)
+
 	match _state:
+		GameState.PREPARE_TURN:
+			if not _is_checking_minimum_height and platform_controller.is_settled(gravity_controller.is_gravity_inverted):
+				_set_state(GameState.AIM)
 		GameState.AIM:
 			if Input.is_action_just_pressed("hold_piece"):
 				piece_manager.swap_current_hold_piece()
@@ -75,18 +95,24 @@ func _physics_process(delta: float) -> void:
 		GameState.SETTLE:
 			_place_timer -= delta
 			if _place_timer <= 0 && piece_manager.are_pieces_settled(delta, min_settle_time):
-				if _turn_count % invert_turn_count == 0:
+				if piece_manager.last_released_piece:
+					GameManager.piece_placed.emit(piece_manager.last_released_piece)
+				GameManager.turn_ended.emit(_turn_count)
+				if _difficulty_stage_it.is_stage_end:
+					GameManager.stage_ended.emit(_current_difficulty_stage, piece_manager.placed_pieces)
+				if not minimum_height_controller.is_minimum_height_reached(gravity_controller.is_gravity_inverted):
+					lose()
+				elif _difficulty_stage_it.is_stage_end:
 					_set_state(GameState.INVERT)
 				else:
-					_set_state(GameState.AIM)
+					_set_state(GameState.PREPARE_TURN)
 		GameState.INVERT:
 			_place_timer -= delta
 			if _place_timer <= 0 && piece_manager.are_pieces_settled(delta, min_settle_time):
-				_set_state(GameState.AIM)
+				_set_state(GameState.PREPARE_TURN)
 	
 	_mouse_moved = false
 	_is_mouse_button_input_unhandled = false
-
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -97,13 +123,24 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _enter_state(state: GameState):
+	_state = state
 	match state:
+		GameState.PREPARE_TURN:
+			_turn_count += 1
+			GameManager.turn_count = _turn_count
+			_current_difficulty_stage = _difficulty_stage_it.next()
+			GameManager.turn_started.emit(_turn_count, _difficulty_stage_it.remaining_stage_turns)
+			platform_controller.resize_platform_distance(piece_manager.placed_pieces, gravity_controller.is_gravity_inverted)
+			if _difficulty_stage_it.is_stage_start:
+				minimum_height_controller.increase_minimum_height(_current_difficulty_stage.minimum_height_increase, gravity_controller.is_gravity_inverted)
+				_is_checking_minimum_height = true
+				await get_tree().physics_frame
+				_is_checking_minimum_height = false
+				if _turn_count > 1 and not minimum_height_controller.is_minimum_height_reached(gravity_controller.is_gravity_inverted):
+					lose()
 		GameState.PAUSE:
 			SceneManager.open_pause_menu()
 		GameState.AIM:
-			platform_controller.resize_platform_distance(piece_manager.placed_pieces, gravity_controller.is_gravity_inverted)
-			_turn_count += 1
-			GameManager.turn_incremented.emit(_turn_count)
 			if not piece_manager.has_current_piece():
 				piece_manager.call_deferred("spawn_piece")
 		GameState.SETTLE:
@@ -114,10 +151,8 @@ func _enter_state(state: GameState):
 			gravity_controller.invert_gravity()
 			GameManager.invert_state_entered.emit(gravity_controller.is_gravity_inverted)
 		GameState.LOSE:
-			GameManager.turns_survived = _turn_count
 			SceneManager.open_game_over_menu()
 			AudioManager.play_sound(AudioManager.TOWEL_DISPENSER_SOUND, AudioManager.AudioBus.SFX)
-	_state = state
 
 
 func _exit_state(state: GameState):
@@ -141,6 +176,12 @@ func pause():
 
 func unpause():
 	_set_state(_prev_state)
+
+
+func set_difficulty(config: DifficultyConfig):
+	var it = DifficultyStageIterator.new(config)
+	_difficulty_stage_it = it
+	piece_manager.initialize(it)
 
 
 func lose():

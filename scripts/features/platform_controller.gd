@@ -23,6 +23,20 @@ func get_active_platform(is_gravity_inverted: bool) -> Node2D:
 	)
 
 
+func is_settled(is_gravity_inverted: bool):
+	var platform_y := (
+		bottom_platform
+		if is_gravity_inverted
+		else top_platform
+	).global_position.y
+	var target_y := (
+		_bottom_platform_target_pos_y
+		if is_gravity_inverted
+		else _top_platform_target_pos_y
+	)
+	return abs(platform_y - target_y) < 5
+
+
 func update_platform_distance(delta: float):
 	var t := 1.0 - exp(-delta * 4.0)
 	bottom_platform.global_position.y = lerp(bottom_platform.global_position.y, _bottom_platform_target_pos_y, t)

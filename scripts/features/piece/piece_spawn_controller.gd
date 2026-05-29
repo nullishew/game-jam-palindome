@@ -8,6 +8,7 @@ extends Node
 func spawn_piece(config: PieceSpawnConfig, spawn_point: Vector2) -> Piece:
 	var piece_scene: PackedScene = config.packed_scene
 	var piece: Piece = piece_scene.instantiate()
+	piece.initialize(config)
 	piece.is_player_piece = true
 	piece.freeze = true
 	var offset: Vector2 = Vector2(randf_range(-0.5, 0.5), 0)

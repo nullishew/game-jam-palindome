@@ -2,9 +2,7 @@ class_name PieceQueueComponent
 extends Node
 
 
-@export var piece_configs: Array[PieceSpawnConfig]
-
-
+var _piece_generator: PieceGenerator
 var _queue: Array[PieceSpawnConfig] = []
 var _curr_piece_index: int = 0
 
@@ -14,25 +12,53 @@ func _ready() -> void:
 	_curr_piece_index = 0
 
 
+func initialize(it: DifficultyStageIterator):
+	_piece_generator = PieceGenerator.new(it)
+
+
 func pop_front() -> PieceSpawnConfig:
-	_generate_until(_curr_piece_index + 1)
-	var config = _queue[_curr_piece_index]
+	var piece := _get_piece(_curr_piece_index)
 	_curr_piece_index += 1
-	return config
+	return piece
 
 
 func peek(n: int) -> Array[PieceSpawnConfig]:
-	_generate_until(_curr_piece_index + n + 1)
 	var arr: Array[PieceSpawnConfig] = []
 	for i in range(n):
-		var j = _curr_piece_index + i
-		arr.append(_queue[j])
+		arr.append(_get_piece(_curr_piece_index + i))
 	return arr
 
 
-func _generate_until(n: int):
-	while _queue.size() < n:
-		var next_cycle: Array[PieceSpawnConfig] = piece_configs.duplicate()
-		next_cycle.shuffle()
-		_queue.append_array(next_cycle)
-	print("size: " + str(_queue.size()) + " to meet demand: " + str(n))
+func _get_piece(i: int) -> PieceSpawnConfig:
+	while _queue.size() <= i:
+		_queue.append(_piece_generator.next())
+	return _queue[i]
+
+
+class PieceGenerator:
+	var _it: DifficultyStageIterator
+	var _current_cycle: Array[PieceSpawnConfig] = []
+	var _cycle_index: int = 0
+
+
+	func _init(it: DifficultyStageIterator) -> void:
+		_it = it.duplicate()
+
+
+	func next() -> PieceSpawnConfig:
+		var stage := _it.next()
+
+		if _it.is_stage_start or _cycle_index >= _current_cycle.size():
+			_generate_new_cycle(stage)
+
+		var piece = _current_cycle[_cycle_index]
+		_cycle_index += 1
+		return piece
+
+
+	func _generate_new_cycle(stage: DifficultyStageConfig):
+		var arr := stage.piece_queue_config.piece_spawn_configs.duplicate()
+		arr.shuffle()
+		var cycle_size = mini(arr.size(), _it.remaining_stage_turns)
+		_current_cycle = arr.slice(0, cycle_size)
+		_cycle_index = 0
