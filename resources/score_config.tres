@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="ScoreConfig" format=3 uid="uid://cwt6ysuwmxbel"]
+
+[ext_resource type="Script" uid="uid://cpowjncfu48nu" path="res://scripts/features/piece/piece_spawn_config.gd" id="1_b61qq"]
+[ext_resource type="Script" uid="uid://bdi00g183576a" path="res://scripts/features/score/score_config.gd" id="2_u0io8"]
+[ext_resource type="Resource" uid="uid://ej4doo37u15r" path="res://resources/piece_spawn_configs/circle_spawn_config.tres" id="2_wcgmk"]
+[ext_resource type="Resource" uid="uid://mcl75rxngymv" path="res://resources/piece_spawn_configs/triangle_spawn_config.tres" id="3_o2ylr"]
+[ext_resource type="Resource" uid="uid://ddvlfs7xxkopw" path="res://resources/piece_spawn_configs/block_spawn_config.tres" id="4_yj5aa"]
+[ext_resource type="Resource" uid="uid://css1jxrjeb1ym" path="res://resources/piece_spawn_configs/i_spawn_config.tres" id="5_d2y4y"]
+
+[resource]
+script = ExtResource("2_u0io8")
+piece_place_bonus = Dictionary[ExtResource("1_b61qq"), int]({
+ExtResource("2_wcgmk"): 100,
+ExtResource("3_o2ylr"): 100,
+ExtResource("4_yj5aa"): 100,
+ExtResource("5_d2y4y"): 100
+})
+piece_loss_penalty = Dictionary[ExtResource("1_b61qq"), int]({
+ExtResource("5_d2y4y"): 100,
+ExtResource("4_yj5aa"): 100,
+ExtResource("3_o2ylr"): 100,
+ExtResource("2_wcgmk"): 100
+})
+stage_end_piece_bonus = Dictionary[ExtResource("1_b61qq"), int]({
+ExtResource("2_wcgmk"): 300,
+ExtResource("3_o2ylr"): 200,
+ExtResource("5_d2y4y"): 100,
+ExtResource("4_yj5aa"): 100
+})
+metadata/_custom_type_script = "uid://bdi00g183576a"

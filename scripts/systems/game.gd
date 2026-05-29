@@ -94,6 +94,11 @@ func _physics_process(delta: float) -> void:
 		GameState.SETTLE:
 			_place_timer -= delta
 			if _place_timer <= 0 && piece_manager.are_pieces_settled(delta, min_settle_time):
+				if piece_manager.last_released_piece:
+					GameManager.piece_placed.emit(piece_manager.last_released_piece)
+				GameManager.turn_ended.emit()
+				if _difficulty_stage_it.is_stage_end:
+					GameManager.stage_ended.emit(_current_difficulty_stage, piece_manager.placed_pieces)
 				if not minimum_height_controller.is_minimum_height_reached(gravity_controller.is_gravity_inverted):
 					lose()
 				elif _difficulty_stage_it.is_stage_end:

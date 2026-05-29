@@ -24,10 +24,11 @@ const SPAWN_MODE_BY_GRAVITY_MODE: Dictionary[GravityController.GravityMode, Spaw
 
 
 var placed_pieces: Array[Piece]:
-	get: return _placed_pieces
+	get: return _placed_pieces.duplicate()
 var spawn_global_position: Vector2:
 	get: return _spawn_points_by_mode[_spawn_mode].global_position
-
+var last_released_piece: Piece:
+	get: return _last_released_piece
 
 var _spawn_mode: SpawnMode = SpawnMode.TOP
 var _spawn_points_by_mode: Dictionary[SpawnMode, Node2D]
@@ -41,11 +42,22 @@ var _curr_piece: Piece
 var _curr_piece_pos: Vector2 = Vector2.ZERO
 var _curr_piece_config: PieceSpawnConfig = null
 
+var _last_released_piece: Piece = null
+
 var _settle_timer: float = 0.0
 
 
 func _init() -> void:
 	GameManager.gravity_mode_set.connect(_on_gravity_mode_set)
+	GameManager.piece_placed.connect(
+		func(piece): 
+			_placed_pieces.append(piece)
+	)
+	GameManager.piece_lost.connect(
+		func(piece):
+			if _last_released_piece == piece:
+				_last_released_piece = null
+	)
 
 
 func _on_gravity_mode_set(mode: GravityController.GravityMode):
@@ -79,7 +91,7 @@ func release_current_piece():
 	_curr_piece = null
 	_curr_piece_config = null
 	piece.release()
-	_placed_pieces.append(piece)
+	_last_released_piece = piece
 
 
 func has_current_piece() -> bool:

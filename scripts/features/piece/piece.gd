@@ -2,6 +2,9 @@ class_name Piece
 extends RigidBody2D
 
 
+var piece_spawn_config: PieceSpawnConfig:
+	get: return _spawn_config
+
 @export var impact_sprite_time: float = 0.5
 @export var sprite: Sprite2D
 @export var override_sprite_scale_hitbox: Node2D
@@ -20,6 +23,8 @@ var _impact_timer: float = 0
 var _prev_vel_y: float = 0
 var _was_impact: bool = false
 
+var _spawn_config: PieceSpawnConfig
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if is_player_piece:
@@ -28,15 +33,6 @@ func _ready() -> void:
 		contact_monitor = true
 		max_contacts_reported = 1
 	scale_piece(possible_spawn_scale_multipliers.pick_random())
-
-
-func scale_piece(s: float):
-	if override_sprite_scale_hitbox:
-		override_sprite_scale_hitbox.scale *= s
-	else:
-		sprite.scale *= s
-	collision_shape.scale *= s
-	mass *= s * s
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -87,6 +83,19 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 	_was_in_contact = in_contact
 
 
+func initialize(spawn_config: PieceSpawnConfig):
+	_spawn_config = spawn_config
+
+
+func scale_piece(s: float):
+	if override_sprite_scale_hitbox:
+		override_sprite_scale_hitbox.scale *= s
+	else:
+		sprite.scale *= s
+	collision_shape.scale *= s
+	mass *= s * s
+
+
 func select_piece():
 	freeze = true
 
@@ -121,4 +130,6 @@ func exit_hold(pos: Vector2):
 
 func despawn():
 	GameManager.game.piece_manager.unregister_piece(self)
+	GameManager.piece_lost.emit(self)
 	call_deferred("queue_free")
+	
