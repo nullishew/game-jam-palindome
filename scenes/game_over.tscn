@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b238bf1mnrb3"]
 
 [ext_resource type="Script" uid="uid://bq3w7qf1oq40d" path="res://scripts/features/menu/game_over.gd" id="1_xeevv"]
+[ext_resource type="SystemFont" uid="uid://dgvq134k5dld7" path="res://resources/system_font_with_japanese_fallback.tres" id="2_irg28"]
 [ext_resource type="StyleBox" uid="uid://cwdodvie5dijm" path="res://resources/menu_button_ui/menu_button_normal_stylebox.tres" id="2_wqhvx"]
 [ext_resource type="StyleBox" uid="uid://bhn1p5jywhewd" path="res://resources/menu_button_ui/menu_button_pressed_stylebox.tres" id="3_tbwuq"]
 [ext_resource type="StyleBox" uid="uid://7d3xxgifanaf" path="res://resources/menu_button_ui/menu_button_hover_stylebox.tres" id="4_7m3ot"]
@@ -205,8 +206,9 @@ theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.305882
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 5
-theme_override_constants/shadow_outline_size = 25
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 40
+theme_override_fonts/font = ExtResource("2_irg28")
 theme_override_font_sizes/font_size = 100
 text = "┻━┻ ︵"
 horizontal_alignment = 1
@@ -218,21 +220,23 @@ theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.305882
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 5
-theme_override_constants/shadow_outline_size = 25
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 40
+theme_override_fonts/font = ExtResource("2_irg28")
 theme_override_font_sizes/font_size = 100
 text = "ヽ(`Д´)ﾉ"
 horizontal_alignment = 1
 
 [node name="Aaaa" type="Label" parent="Panel/Game Over Menu/Emote Container/HBoxContainer/Label2" unique_id=1928815903]
 layout_mode = 0
-pivot_offset = Vector2(156, 0)
+pivot_offset = Vector2(175, 0)
 theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 5
-theme_override_constants/shadow_outline_size = 25
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 40
+theme_override_fonts/font = ExtResource("2_irg28")
 theme_override_font_sizes/font_size = 100
 text = "ヽ(`Д´)ﾉ"
 horizontal_alignment = 1
@@ -243,8 +247,9 @@ theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.305882
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 5
-theme_override_constants/shadow_outline_size = 25
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 40
+theme_override_fonts/font = ExtResource("2_irg28")
 theme_override_font_sizes/font_size = 100
 text = "︵ ┻━┻"
 horizontal_alignment = 1
