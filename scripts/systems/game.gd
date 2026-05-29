@@ -71,10 +71,9 @@ func _physics_process(delta: float) -> void:
 	var top_plat_pos := platform_controller.top_platform.global_position
 	var bottom_plat_pos := platform_controller.bottom_platform.global_position
 	var plat_midpoint := 0.5 * (top_plat_pos + bottom_plat_pos)
-	var buffer_y: float = 300
 	var playable_area_size := Vector2(
 		1920,
-		2 * buffer_y + (bottom_plat_pos.y - top_plat_pos.y)
+		(bottom_plat_pos.y - top_plat_pos.y)
 	)
 	playable_area.update_bounds(plat_midpoint, playable_area_size)
 

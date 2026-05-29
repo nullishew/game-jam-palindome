@@ -3,7 +3,7 @@ extends Area2D
 
 
 @export var collision_shape: CollisionShape2D
-
+@export var padding: Vector2 = Vector2(0, 200)
 
 func _ready() -> void:
 	body_exited.connect(_on_body_exited)
@@ -11,7 +11,7 @@ func _ready() -> void:
 
 func update_bounds(pos: Vector2, size: Vector2):
 	var rect_shape = RectangleShape2D.new()
-	rect_shape.size = size
+	rect_shape.size = size + padding
 	collision_shape.shape = rect_shape
 	global_position = pos
 
