@@ -19,7 +19,7 @@ var is_game_over: bool:
 	get: return _state == GameState.LOSE
 
 
-var _is_mouse_button_input_unhandled: bool = false
+var _is_release_piece_input_unhandled: bool = false
 var _mouse_moved: bool = false
 
 var _place_timer: float = 0
@@ -48,7 +48,7 @@ func _ready() -> void:
 	camera_controller.make_current() # just to not break physics from the one frame delay breh
 	GameManager.game = self
 	gravity_controller.reset()
-	_is_mouse_button_input_unhandled = false
+	_is_release_piece_input_unhandled = false
 	set_difficulty(difficulty_config)
 	_set_state(GameState.PREPARE_TURN)
 
@@ -89,7 +89,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				if piece_manager.has_current_piece():
 					piece_manager.update_current_piece_position(delta, _mouse_moved, get_global_mouse_position().x)
-					if _is_mouse_button_input_unhandled and Input.is_action_just_pressed("drop_piece"):
+					if _is_release_piece_input_unhandled and Input.is_action_just_pressed("release_piece"):
 						piece_manager.release_current_piece()
 						_set_state(GameState.SETTLE)
 		GameState.SETTLE:
@@ -112,14 +112,14 @@ func _physics_process(delta: float) -> void:
 				_set_state(GameState.PREPARE_TURN)
 	
 	_mouse_moved = false
-	_is_mouse_button_input_unhandled = false
+	_is_release_piece_input_unhandled = false
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		_mouse_moved = true
-	if event is InputEventMouseButton:
-		_is_mouse_button_input_unhandled = true
+	if event.is_action("release_piece"):
+		_is_release_piece_input_unhandled = true
 
 
 func _enter_state(state: GameState):
