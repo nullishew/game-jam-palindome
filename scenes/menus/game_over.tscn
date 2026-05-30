@@ -36,7 +36,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_wqhvx"]
-resource_name = "game_over"
+resource_name = "in"
 length = 2.0
 tracks/0/type = "bezier"
 tracks/0/imported = false
@@ -64,7 +64,7 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wqhvx"]
 _data = {
 &"RESET": SubResource("Animation_xeevv"),
-&"game_over": SubResource("Animation_wqhvx")
+&"in": SubResource("Animation_wqhvx")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xeevv"]
@@ -187,17 +187,17 @@ shader_parameter/outline_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
 shader_parameter/outline_size = 5.0
 shader_parameter/edge_softness = 1.5
 
-[node name="GameOver" type="CanvasLayer" unique_id=1361454001 node_paths=PackedStringArray("turn_count_label", "score_label", "menu_btn", "replay_btn")]
+[node name="GameOver" type="CanvasLayer" unique_id=1361454001 node_paths=PackedStringArray("turn_count_label", "score_label", "menu_btn", "replay_btn", "animation_player")]
 layer = 5
 script = ExtResource("1_xeevv")
 turn_count_label = NodePath("Panel/Game Over Menu/VBoxContainer/HBoxContainer/Turn Count Label")
 score_label = NodePath("Panel/Game Over Menu/VBoxContainer/Score Label")
 menu_btn = NodePath("Panel/Game Over Menu/HBoxContainer/Menu Button")
 replay_btn = NodePath("Panel/Game Over Menu/HBoxContainer/Replay Button")
+animation_player = NodePath("TransitionAnimationPlayer")
 
 [node name="TransitionAnimationPlayer" type="AnimationPlayer" parent="." unique_id=610277042]
 libraries/ = SubResource("AnimationLibrary_wqhvx")
-autoplay = &"game_over"
 
 [node name="Panel" type="Panel" parent="." unique_id=140789070]
 anchors_preset = 15

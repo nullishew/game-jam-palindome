@@ -131,11 +131,11 @@ func exit_hold(pos: Vector2):
 	collision_mask = _prev_collision_mask
 	await get_tree().physics_frame
 	is_in_hold = false
-	call_deferred("show")
+	show.call_deferred()
 	
 
 func despawn():
 	GameManager.game.piece_manager.unregister_piece(self)
 	GameManager.piece_lost.emit(self)
-	call_deferred("queue_free")
+	queue_free.call_deferred()
 	

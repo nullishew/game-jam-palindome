@@ -90,6 +90,7 @@ shader_parameter/outline_size = 8.0
 shader_parameter/edge_softness = 1.5
 
 [node name="HUD" type="CanvasLayer" unique_id=827572359 node_paths=PackedStringArray("next_piece_uis", "hold_slot_ui", "score_label", "turn_count_label", "invert_count_label", "gravity_arrow_animatable_container", "gravity_arrow_texture", "pause_button")]
+layer = 0
 script = ExtResource("1_oo0fn")
 next_piece_uis = [NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 1/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 2/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 3/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 4/MarginContainer/TextureRect")]
 hold_slot_ui = NodePath("MarginContainer/Left VBoxContainer/Hold VBoxContainer/Hold Slot/MarginContainer/TextureRect")

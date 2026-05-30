@@ -1,45 +1,44 @@
 extends Node
 
-var game_scene = preload("res://scenes/game.tscn")
-var transition_scene = preload("res://scenes/transition.tscn")
+const GAME_SCENE = preload("res://scenes/game.tscn")
+const TRANSITION_SCENE = preload("res://scenes/transition.tscn")
 
-var menu_scene = preload("res://scenes/menus/menu.tscn")
-var game_over_scene = preload("res://scenes/menus/game_over.tscn")
-var pause_menu_scene = preload("res://scenes/menus/pause_menu.tscn")
-var settings_menu_scene = preload("res://scenes/menus/settings_menu.tscn")
-var controls_menu_scene = preload("res://scenes/menus/controls_menu.tscn")
+const START_MENU_SCENE = preload("res://scenes/menus/menu.tscn")
+const GAME_OVER_MENU_SCENE = preload("res://scenes/menus/game_over.tscn")
+const PAUSE_MENU_SCENE = preload("res://scenes/menus/pause_menu.tscn")
+const SETTINGS_MENU_SCENE = preload("res://scenes/menus/settings_menu.tscn")
+const CONTROLS_MENU_SCENE = preload("res://scenes/menus/controls_menu.tscn")
 
-var _game_over_overlay: CanvasLayer
-var _pause_menu_overlay: PauseMenu
-var _settings_menu_overlay: CanvasLayer
-var _controls_menu_overlay: CanvasLayer
+var _game_over_overlay: OverlayMenu
+var _pause_menu_overlay: OverlayMenu
+var _settings_menu_overlay: OverlayMenu
+var _controls_menu_overlay: OverlayMenu
 var _transition: Transition
 
 var _is_changing: bool = false
 
 func _ready() -> void:
-	_transition = transition_scene.instantiate()
-	get_tree().root.call_deferred("add_child", _transition)
+	_transition = _cache_scene(TRANSITION_SCENE)
+	_pause_menu_overlay = _cache_scene(PAUSE_MENU_SCENE)
+	_settings_menu_overlay = _cache_scene(SETTINGS_MENU_SCENE)
+	_controls_menu_overlay = _cache_scene(CONTROLS_MENU_SCENE)
+	_game_over_overlay = _cache_scene(GAME_OVER_MENU_SCENE)
+	_warmup_packed_scene(GAME_SCENE)
 
-	_pause_menu_overlay = pause_menu_scene.instantiate()
-	_pause_menu_overlay.visible = false
-	get_tree().root.call_deferred("add_child", _pause_menu_overlay)
 
-	_settings_menu_overlay = settings_menu_scene.instantiate()
-	_settings_menu_overlay.visible = false
-	get_tree().root.call_deferred("add_child", _settings_menu_overlay)
+func _cache_scene(packed_scene: PackedScene) -> Node:
+	var instance := packed_scene.instantiate()
+	get_tree().root.add_child.call_deferred(instance)
+	return instance
 
-	_controls_menu_overlay = controls_menu_scene.instantiate()
-	_controls_menu_overlay.visible = false
-	get_tree().root.call_deferred("add_child", _controls_menu_overlay)
 
-	# force cache / preload game scene runtime assets to remove stutter on first game start
+# warm up scene to remove stutter when first loading heavy scenes like the game scene
+func _warmup_packed_scene(packed_scene: PackedScene):
+	var instance = packed_scene.instantiate()
+	instance.hide()
+	get_tree().root.add_child.call_deferred(instance)
 	await get_tree().process_frame
-	var inst = game_scene.instantiate()
-	inst.visible = false
-	get_tree().root.add_child(inst)
-	await get_tree().process_frame
-	inst.queue_free()
+	instance.queue_free()
 
 
 func change_scene(packed_scene: PackedScene):
@@ -48,27 +47,26 @@ func change_scene(packed_scene: PackedScene):
 	await get_tree().process_frame
 	_transition.transition()
 	await _transition.in_finished
-	if _game_over_overlay:
-		_game_over_overlay.queue_free()
-		_game_over_overlay = null
-	_pause_menu_overlay.visible = false
-	_pause_menu_overlay.close()
+	_game_over_overlay.hide()
+	_pause_menu_overlay.hide()
+	_settings_menu_overlay.hide()
+	_controls_menu_overlay.hide()
 	await get_tree().process_frame
 	_transition.resume()
-	get_tree().call_deferred("change_scene_to_packed", packed_scene)
+	get_tree().change_scene_to_packed.call_deferred(packed_scene)
 	_is_changing = false
 	
 
 func start_game():
-	change_scene(game_scene)
+	change_scene(GAME_SCENE)
+
 
 func open_start_menu():
-	change_scene(menu_scene)
+	change_scene(START_MENU_SCENE)
+
 
 func open_game_over_menu():
-	if _game_over_overlay: return
-	_game_over_overlay = game_over_scene.instantiate()
-	get_tree().root.add_child(_game_over_overlay)
+	_game_over_overlay.open()
 
 
 func open_pause_menu():

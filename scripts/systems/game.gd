@@ -68,7 +68,7 @@ func _process(_delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	platform_controller.update_platform_distance(delta)
-	camera_controller.call_deferred("update_camera", delta)
+	camera_controller.update_camera.call_deferred(delta)
 
 	var top_plat_pos := platform_controller.top_platform.global_position
 	var bottom_plat_pos := platform_controller.bottom_platform.global_position
@@ -127,7 +127,6 @@ func _enter_state(state: GameState):
 	match state:
 		GameState.PREPARE_TURN:
 			_turn_count += 1
-			GameManager.turn_count = _turn_count
 			_current_difficulty_stage = _difficulty_stage_it.next()
 			GameManager.turn_started.emit(_turn_count, _difficulty_stage_it.remaining_stage_turns)
 			platform_controller.resize_platform_distance(piece_manager.placed_pieces, gravity_controller.is_gravity_inverted)
@@ -142,7 +141,7 @@ func _enter_state(state: GameState):
 			SceneManager.open_pause_menu()
 		GameState.AIM:
 			if not piece_manager.has_current_piece():
-				piece_manager.call_deferred("spawn_piece")
+				piece_manager.spawn_piece.call_deferred()
 		GameState.SETTLE:
 			_place_timer = min_place_time
 			piece_manager.reset_settle_timer()
@@ -151,6 +150,8 @@ func _enter_state(state: GameState):
 			gravity_controller.invert_gravity()
 			GameManager.invert_state_entered.emit(gravity_controller.is_gravity_inverted)
 		GameState.LOSE:
+			var result := GameResult.new(_turn_count, score_manager.score)
+			GameManager.game_ended.emit(result)
 			SceneManager.open_game_over_menu()
 			AudioManager.play_sound(AudioManager.TOWEL_DISPENSER_SOUND, AudioManager.AudioBus.SFX)
 

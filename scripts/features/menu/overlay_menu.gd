@@ -7,6 +7,7 @@ extends CanvasLayer
 
 
 func _ready() -> void:
+	hide()
 	if close_button:
 		close_button.pressed.connect(func(): close())
 
@@ -14,7 +15,7 @@ func _ready() -> void:
 func open():
 	if visible: return
 	get_viewport().gui_release_focus()
-	visible = true
+	show()
 	animation_player.play("in")
 
 
@@ -23,4 +24,4 @@ func close():
 	get_viewport().gui_release_focus()
 	animation_player.play("out")
 	await animation_player.animation_finished
-	visible = false
+	hide()

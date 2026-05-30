@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends OverlayMenu
 
 
 @export var turn_count_label: Label
@@ -7,9 +7,12 @@ extends CanvasLayer
 @export var replay_btn: Button
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	super._ready()
 	menu_btn.pressed.connect(SceneManager.open_start_menu)
 	replay_btn.pressed.connect(SceneManager.start_game)
-	turn_count_label.text = str(GameManager.turn_count)
-	score_label.text = str(GameManager.score)
+	GameManager.game_ended.connect(
+		func(game_result: GameResult):
+			turn_count_label.text = str(game_result.turn_count)
+			score_label.text = str(game_result.score)
+	)
