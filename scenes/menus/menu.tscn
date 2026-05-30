@@ -7,25 +7,24 @@
 [ext_resource type="Texture2D" uid="uid://co2wawj7rvqr1" path="res://assets/pieces/square_piece/square_piece_idle.png" id="5_g3eks"]
 [ext_resource type="Texture2D" uid="uid://c63qiv4kfv0bd" path="res://assets/pieces/triangle_piece/triangle_piece_idle.png" id="6_v86rl"]
 [ext_resource type="Texture2D" uid="uid://c6vh36ksddhx" path="res://assets/platform.png" id="7_v86rl"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g3eks"]
-bg_color = Color(0, 0, 0, 0.25882354)
+[ext_resource type="Texture2D" uid="uid://bnjsk6xih14do" path="res://assets/pieces/i_piece/i_piece_moving.png" id="8_7yii3"]
+[ext_resource type="Texture2D" uid="uid://dyxou6jo0avjv" path="res://assets/pieces/i_piece/i_piece_impact.png" id="9_rdq0w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v86rl"]
 bg_color = Color(1, 1, 0.9647059, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13sgg"]
-bg_color = Color(1, 1, 1, 0.23529412)
+bg_color = Color(18.892157, 18.892157, 18.892157, 0.05882353)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i6lef"]
-bg_color = Color(1, 1, 1, 0.11764706)
+bg_color = Color(0, 0, 0, 0.078431375)
 
 [node name="Menu" type="CanvasLayer" unique_id=558575991 node_paths=PackedStringArray("controls_menu_button", "settings_menu_button", "start_game_button")]
 layer = 0
 script = ExtResource("1_yqeox")
-controls_menu_button = NodePath("Panel/MarginContainer/Control/VBoxContainer/Controls Button")
-settings_menu_button = NodePath("Panel/MarginContainer/Control/VBoxContainer/Settings Button")
-start_game_button = NodePath("Panel/MarginContainer/Control/VBoxContainer/Start Button")
+controls_menu_button = NodePath("Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Control/Controls Button")
+settings_menu_button = NodePath("Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Control/Settings Button")
+start_game_button = NodePath("Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control/Start Button")
 
 [node name="Background" type="TextureRect" parent="." unique_id=165843203]
 self_modulate = Color(0.84313726, 0.84705883, 1, 1)
@@ -474,174 +473,235 @@ texture = ExtResource("7_v86rl")
 [node name="VBoxContainer" type="VBoxContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer" unique_id=880445689]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 16
 alignment = 2
 
-[node name="TextureRect5" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer" unique_id=1061167186]
-custom_minimum_size = Vector2(128, 512)
+[node name="HBoxContainer" type="HBoxContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer" unique_id=1985994512]
 layout_mode = 2
+alignment = 1
+
+[node name="Control" type="Control" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1378452396]
+custom_minimum_size = Vector2(576, 128)
+layout_mode = 2
+
+[node name="TextureRect5" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control" unique_id=1061167186]
+custom_minimum_size = Vector2(128, 576)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -288.0
+offset_right = 72.0
+offset_bottom = 288.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5707964
+pivot_offset = Vector2(72, 288)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("4_mhnvy")
 expand_mode = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer" unique_id=1985994512]
+[node name="Start Button" type="Button" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control" unique_id=1305181468]
+custom_minimum_size = Vector2(576, 128)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 113
+theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_13sgg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_i6lef")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control/Start Button" unique_id=1975448690]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+
+[node name="Label" type="Label" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control/Start Button/MarginContainer" unique_id=1067924298]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 18
+theme_override_constants/shadow_outline_size = 50
+theme_override_font_sizes/font_size = 100
+theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
+text = "START"
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer" unique_id=294218935]
+layout_mode = 2
+alignment = 1
+
+[node name="Control" type="Control" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer2" unique_id=688095580]
+custom_minimum_size = Vector2(512, 128)
+layout_mode = 2
+
+[node name="TextureRect5" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Control" unique_id=198657235]
+custom_minimum_size = Vector2(128, 512)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -288.0
+offset_right = 72.0
+offset_bottom = 288.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5707964
+pivot_offset = Vector2(72, 288)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("8_7yii3")
+expand_mode = 1
+
+[node name="Controls Button" type="Button" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Control" unique_id=846782143]
+custom_minimum_size = Vector2(576, 128)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = -64.0
+offset_right = 288.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 113
+theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_13sgg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_i6lef")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Control/Controls Button" unique_id=1629031883]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+
+[node name="Label" type="Label" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Control/Controls Button/MarginContainer" unique_id=189668420]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 15
+theme_override_constants/shadow_outline_size = 40
+theme_override_font_sizes/font_size = 65
+theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
+text = "CONTROLS"
+vertical_alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer" unique_id=154968794]
+layout_mode = 2
+alignment = 1
+
+[node name="Control" type="Control" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer3" unique_id=1172391701]
+custom_minimum_size = Vector2(512, 128)
+layout_mode = 2
+
+[node name="TextureRect5" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Control" unique_id=854599534]
+custom_minimum_size = Vector2(128, 512)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -288.0
+offset_right = 72.0
+offset_bottom = 288.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5707964
+pivot_offset = Vector2(72, 288)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("9_rdq0w")
+expand_mode = 1
+
+[node name="Settings Button" type="Button" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Control" unique_id=1326379299]
+custom_minimum_size = Vector2(576, 128)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = -64.0
+offset_right = 288.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 113
+theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_13sgg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_i6lef")
+
+[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Control/Settings Button" unique_id=1555581683]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+
+[node name="Label" type="Label" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Control/Settings Button/MarginContainer" unique_id=41746007]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 15
+theme_override_constants/shadow_outline_size = 40
+theme_override_font_sizes/font_size = 65
+theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
+text = "SETTINGS"
+vertical_alignment = 1
 
 [node name="TextureRect2" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer" unique_id=1138136170]
 custom_minimum_size = Vector2(880, 120)
 layout_mode = 2
 texture = ExtResource("7_v86rl")
-
-[node name="Panel" type="Panel" parent="." unique_id=1141629413]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_g3eks")
-
-[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=2144717107]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 107
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 107
-theme_override_constants/margin_bottom = 87
-metadata/_edit_lock_ = true
-
-[node name="Control" type="Control" parent="Panel/MarginContainer" unique_id=1474930338]
-layout_mode = 2
-
-[node name="Title Label" type="Label" parent="Panel/MarginContainer/Control" unique_id=685550178]
-visible = false
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -1119.0
-offset_top = 37.0
-offset_right = 169.0
-offset_bottom = 379.0
-grow_horizontal = 2
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/outline_size = 25
-theme_override_constants/shadow_outline_size = 70
-theme_override_font_sizes/font_size = 175
-text = "Palindome"
-horizontal_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/Control" unique_id=465028629]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Start Button" type="Button" parent="Panel/MarginContainer/Control/VBoxContainer" unique_id=1305181468]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 20
-theme_override_font_sizes/font_size = 113
-theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_13sgg")
-theme_override_styles/hover = SubResource("StyleBoxFlat_i6lef")
-text = "Start"
-
-[node name="Start Button Text" type="Label" parent="Panel/MarginContainer/Control/VBoxContainer/Start Button" unique_id=1067924298]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -161.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 20
-theme_override_constants/shadow_outline_size = 50
-theme_override_font_sizes/font_size = 113
-theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
-text = "Start"
-horizontal_alignment = 1
-
-[node name="Controls Button" type="Button" parent="Panel/MarginContainer/Control/VBoxContainer" unique_id=1284933868]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 20
-theme_override_font_sizes/font_size = 113
-theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_13sgg")
-theme_override_styles/hover = SubResource("StyleBoxFlat_i6lef")
-text = "Start"
-
-[node name="Label" type="Label" parent="Panel/MarginContainer/Control/VBoxContainer/Controls Button" unique_id=1281598392]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -161.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 20
-theme_override_constants/shadow_outline_size = 50
-theme_override_font_sizes/font_size = 113
-theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
-text = "Controls"
-horizontal_alignment = 1
-
-[node name="Settings Button" type="Button" parent="Panel/MarginContainer/Control/VBoxContainer" unique_id=728749603]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 20
-theme_override_font_sizes/font_size = 113
-theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_13sgg")
-theme_override_styles/hover = SubResource("StyleBoxFlat_i6lef")
-text = "Start"
-
-[node name="Label" type="Label" parent="Panel/MarginContainer/Control/VBoxContainer/Settings Button" unique_id=1149960752]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -161.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 20
-theme_override_constants/shadow_outline_size = 50
-theme_override_font_sizes/font_size = 113
-theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
-text = "Settings"
-horizontal_alignment = 1
