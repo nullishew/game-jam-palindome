@@ -6,6 +6,8 @@
 [ext_resource type="StyleBox" uid="uid://7d3xxgifanaf" path="res://resources/menu_button_ui/menu_button_hover_stylebox.tres" id="3_1s2dm"]
 [ext_resource type="StyleBox" uid="uid://djikl8q0utpmy" path="res://resources/menu_button_ui/menu_button_disabled_stylebox.tres" id="4_88e76"]
 [ext_resource type="StyleBox" uid="uid://b4r18fogvaykm" path="res://resources/menu_button_ui/menu_button_focus_stylebox.tres" id="5_knqa7"]
+[ext_resource type="Texture2D" uid="uid://bwh8uqj645y8r" path="res://assets/ui/menu_btn_icon.png" id="7_1s2dm"]
+[ext_resource type="Texture2D" uid="uid://ch2gv65l36q7o" path="res://assets/ui/resume_btn_icon.png" id="8_88e76"]
 
 [sub_resource type="Animation" id="Animation_1s2dm"]
 length = 0.001
@@ -57,6 +59,88 @@ _data = {
 &"in": SubResource("Animation_88e76"),
 &"out": SubResource("Animation_v4r4p")
 }
+
+[sub_resource type="Shader" id="Shader_8bugq"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+uniform vec4 outline_color : source_color =
+	vec4(0.0, 0.0, 0.0, 1.0);
+
+uniform float outline_size = 8.0;
+uniform float edge_softness = 1.5;
+
+varying vec4 modulate_color;
+
+void vertex() {
+	modulate_color = COLOR;
+}
+
+void fragment() {
+
+	vec4 tex = texture(TEXTURE, UV);
+
+	vec4 icon = tex * modulate_color;
+
+	float center_alpha = tex.a;
+
+	// Find nearest edge distance (brute-force SDF approximation)
+	float min_dist = outline_size + 1.0;
+
+	int radius = int(ceil(outline_size));
+
+	for (int x = -radius; x <= radius; x++) {
+		for (int y = -radius; y <= radius; y++) {
+
+			vec2 offset = vec2(float(x), float(y));
+			float dist = length(offset);
+
+			if (dist > outline_size)
+				continue;
+
+			vec2 sample_uv = UV + offset * TEXTURE_PIXEL_SIZE;
+
+			float sample_alpha = texture(TEXTURE, sample_uv).a;
+
+			if (sample_alpha > 0.001) {
+				min_dist = min(min_dist, dist - sample_alpha);
+			}
+		}
+	}
+
+	// Soft falloff at outer edge
+	float outer = 1.0 - smoothstep(
+		outline_size - edge_softness,
+		outline_size,
+		min_dist
+	);
+
+	outer *= (1.0 - center_alpha);
+
+	vec4 border = outline_color * modulate_color;
+
+	// --- Proper alpha compositing (NO max()) ---
+
+	float outline_a = outer * border.a;
+
+	float final_a =
+		outline_a + icon.a * (1.0 - outline_a);
+
+	vec3 final_rgb =
+		(border.rgb * outline_a * (1.0 - icon.a)) +
+		(icon.rgb * icon.a);
+
+	final_rgb /= max(final_a, 0.0001);
+
+	COLOR = vec4(final_rgb, final_a);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wawo4"]
+resource_local_to_scene = true
+shader = SubResource("Shader_8bugq")
+shader_parameter/outline_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+shader_parameter/outline_size = 5.0
+shader_parameter/edge_softness = 1.5
 
 [node name="PauseMenu" type="CanvasLayer" unique_id=2132143122 node_paths=PackedStringArray("resume_button", "menu_button", "animation_player", "sfx_slider", "soundtrack_slider")]
 layer = 2
@@ -144,7 +228,7 @@ layout_mode = 2
 theme_override_constants/separation = 50
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1073775186]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
@@ -168,8 +252,8 @@ value = 50.0
 layout_mode = 2
 theme_override_constants/separation = 50
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=861507609]
-custom_minimum_size = Vector2(150, 0)
+[node name="Label" type="Label" parent="Panel/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=522705354]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
@@ -178,8 +262,8 @@ theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
 theme_override_constants/outline_size = 15
 theme_override_constants/shadow_outline_size = 40
-theme_override_font_sizes/font_size = 100
-text = "♪"
+theme_override_font_sizes/font_size = 75
+text = "BGM"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -207,22 +291,22 @@ theme_override_styles/hover = ExtResource("3_1s2dm")
 theme_override_styles/disabled = ExtResource("4_88e76")
 theme_override_styles/focus = ExtResource("5_knqa7")
 
-[node name="Menu Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer2/Menu Button" unique_id=1746904924]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 200.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 25
-theme_override_constants/shadow_outline_size = 40
-theme_override_font_sizes/font_size = 120
-text = "☰"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer2/Menu Button" unique_id=1195817687]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer2/Menu Button/MarginContainer" unique_id=577604715]
+material = SubResource("ShaderMaterial_wawo4")
+layout_mode = 2
+texture = ExtResource("7_1s2dm")
 
 [node name="Resume Button" type="Button" parent="Panel/VBoxContainer/HBoxContainer2" unique_id=2030451838]
 custom_minimum_size = Vector2(200, 200)
@@ -233,22 +317,19 @@ theme_override_styles/hover = ExtResource("3_1s2dm")
 theme_override_styles/disabled = ExtResource("4_88e76")
 theme_override_styles/focus = ExtResource("5_knqa7")
 
-[node name="Menu Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer2/Resume Button" unique_id=47750898]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 0
-offset_left = 20.0
-offset_top = 5.0
-offset_right = 220.0
-offset_bottom = 205.0
-scale = Vector2(0.9, 0.9)
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 25
-theme_override_constants/shadow_outline_size = 40
-theme_override_font_sizes/font_size = 120
-text = "▶"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer2/Resume Button" unique_id=1118175230]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer2/Resume Button/MarginContainer" unique_id=521902728]
+material = SubResource("ShaderMaterial_wawo4")
+layout_mode = 2
+texture = ExtResource("8_88e76")
