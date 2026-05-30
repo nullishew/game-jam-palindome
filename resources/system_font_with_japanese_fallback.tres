@@ -1,0 +1,6 @@
+[gd_resource type="SystemFont" format=3 uid="uid://dgvq134k5dld7"]
+
+[ext_resource type="FontFile" uid="uid://hvn5arnk17bo" path="res://assets/Noto_Sans_JP/static/NotoSansJP-Regular.ttf" id="1_e2yj8"]
+
+[resource]
+fallbacks = Array[Font]([ExtResource("1_e2yj8")])

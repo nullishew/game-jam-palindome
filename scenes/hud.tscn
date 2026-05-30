@@ -4,25 +4,105 @@
 [ext_resource type="StyleBox" uid="uid://cwdodvie5dijm" path="res://resources/menu_button_ui/menu_button_normal_stylebox.tres" id="3_5pdws"]
 [ext_resource type="Texture2D" uid="uid://bdprmv1mlcai2" path="res://assets/ui/slot_ui.png" id="3_5ysmq"]
 [ext_resource type="StyleBox" uid="uid://bhn1p5jywhewd" path="res://resources/menu_button_ui/menu_button_pressed_stylebox.tres" id="4_hd3ao"]
+[ext_resource type="Texture2D" uid="uid://q1cfjd6yvfcl" path="res://assets/ui/arrow_icon.png" id="4_mphia"]
 [ext_resource type="StyleBox" uid="uid://7d3xxgifanaf" path="res://resources/menu_button_ui/menu_button_hover_stylebox.tres" id="5_0i1j5"]
 [ext_resource type="StyleBox" uid="uid://djikl8q0utpmy" path="res://resources/menu_button_ui/menu_button_disabled_stylebox.tres" id="6_mphia"]
 [ext_resource type="StyleBox" uid="uid://b4r18fogvaykm" path="res://resources/menu_button_ui/menu_button_focus_stylebox.tres" id="7_0m4u7"]
 
-[node name="HUD" type="CanvasLayer" unique_id=827572359 node_paths=PackedStringArray("next_piece_uis", "hold_slot_ui", "score_label", "turn_count_label", "invert_count_label", "invert_arrow_container", "invert_arrow", "invert_arrow_border", "pause_button")]
+[sub_resource type="Shader" id="Shader_hd3ao"]
+code = "shader_type canvas_item;
+
+uniform vec4 outline_color : source_color =
+	vec4(0.0, 0.0, 0.0, 1.0);
+
+uniform float outline_size = 8.0;
+uniform float edge_softness = 1.5;
+
+varying vec4 modulate_color;
+
+void vertex() {
+	modulate_color = COLOR;
+}
+
+void fragment() {
+
+	vec4 tex = texture(TEXTURE, UV);
+
+	vec4 icon = tex * modulate_color;
+
+	float center_alpha = tex.a;
+
+	// Find nearest edge distance (brute-force SDF approximation)
+	float min_dist = outline_size + 1.0;
+
+	int radius = int(ceil(outline_size));
+
+	for (int x = -radius; x <= radius; x++) {
+		for (int y = -radius; y <= radius; y++) {
+
+			vec2 offset = vec2(float(x), float(y));
+			float dist = length(offset);
+
+			if (dist > outline_size)
+				continue;
+
+			vec2 sample_uv = UV + offset * TEXTURE_PIXEL_SIZE;
+
+			float sample_alpha = texture(TEXTURE, sample_uv).a;
+
+			if (sample_alpha > 0.001) {
+				min_dist = min(min_dist, dist - sample_alpha);
+			}
+		}
+	}
+
+	// Soft falloff at outer edge
+	float outer = 1.0 - smoothstep(
+		outline_size - edge_softness,
+		outline_size,
+		min_dist
+	);
+
+	outer *= (1.0 - center_alpha);
+
+	vec4 border = outline_color * modulate_color;
+
+	// --- Proper alpha compositing (NO max()) ---
+
+	float outline_a = outer * border.a;
+
+	float final_a =
+		outline_a + icon.a * (1.0 - outline_a);
+
+	vec3 final_rgb =
+		(border.rgb * outline_a * (1.0 - icon.a)) +
+		(icon.rgb * icon.a);
+
+	final_rgb /= max(final_a, 0.0001);
+
+	COLOR = vec4(final_rgb, final_a);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0i1j5"]
+shader = SubResource("Shader_hd3ao")
+shader_parameter/outline_color = Color(0.78039217, 0.6745098, 0.83137256, 1)
+shader_parameter/outline_size = 8.0
+shader_parameter/edge_softness = 1.5
+
+[node name="HUD" type="CanvasLayer" unique_id=827572359 node_paths=PackedStringArray("next_piece_uis", "hold_slot_ui", "score_label", "turn_count_label", "invert_count_label", "gravity_arrow_animatable_container", "gravity_arrow_texture", "pause_button")]
 script = ExtResource("1_oo0fn")
 next_piece_uis = [NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 1/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 2/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 3/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 4/MarginContainer/TextureRect")]
 hold_slot_ui = NodePath("MarginContainer/Left VBoxContainer/Hold VBoxContainer/Hold Slot/MarginContainer/TextureRect")
-score_label = NodePath("MarginContainer3/Control/Data VBoxContainer/VBoxContainer/Score VBoxContainer/Score Label")
-turn_count_label = NodePath("MarginContainer3/Control/Data VBoxContainer/VBoxContainer/Turn Count VBoxContainer/Turn Label")
-invert_count_label = NodePath("MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control/Invert Count Label")
-invert_arrow_container = NodePath("MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control/Invert Arrow Animatable Container")
-invert_arrow = NodePath("MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control/Invert Arrow Animatable Container/Invert Arrow Label")
-invert_arrow_border = NodePath("MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control/Invert Arrow Animatable Container/Invert Arrow Border Label")
+score_label = NodePath("MarginContainer2/Control/Data VBoxContainer/VBoxContainer/Score HBoxContainer/Score Label")
+turn_count_label = NodePath("MarginContainer2/Control/Data VBoxContainer/VBoxContainer/Turn Count HBoxContainer/Turn Label")
+invert_count_label = NodePath("MarginContainer/Left VBoxContainer/Gravity Arrow HBoxContainer/Control/Invert Count Label")
+gravity_arrow_animatable_container = NodePath("MarginContainer/Left VBoxContainer/Gravity Arrow HBoxContainer/Control/Gravity Arrow Animatable Container")
+gravity_arrow_texture = NodePath("MarginContainer/Left VBoxContainer/Gravity Arrow HBoxContainer/Control/Gravity Arrow Animatable Container/Gravity Arrow TextureRect")
 arrow_color = Color(1, 0.87058824, 1, 1)
 arrow_border_color = Color(0.78039217, 0.6745098, 0.83137256, 1)
 invert_arrow_color = Color(1, 0.58431375, 0.6901961, 1)
 invert_arrow_border_color = Color(0.6862745, 0.34117648, 0.39215687, 1)
-pause_button = NodePath("MarginContainer2/Control/Pause Menu Button")
+pause_button = NodePath("MarginContainer3/Pause Menu Button")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1110552726]
 anchors_preset = 15
@@ -32,9 +112,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 300
-theme_override_constants/margin_top = 125
+theme_override_constants/margin_top = 100
 theme_override_constants/margin_right = 300
-theme_override_constants/margin_bottom = 125
+theme_override_constants/margin_bottom = 100
 
 [node name="Control" type="Control" parent="MarginContainer" unique_id=38956023]
 layout_mode = 2
@@ -152,7 +232,7 @@ expand_mode = 3
 [node name="Left VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1574488294]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_constants/separation = 300
+theme_override_constants/separation = 275
 
 [node name="Hold VBoxContainer" type="VBoxContainer" parent="MarginContainer/Left VBoxContainer" unique_id=2129426233]
 layout_mode = 2
@@ -193,58 +273,45 @@ theme_override_constants/margin_bottom = 32
 layout_mode = 2
 expand_mode = 3
 
-[node name="Invert HBoxContainer" type="HBoxContainer" parent="MarginContainer/Left VBoxContainer" unique_id=2025249641]
+[node name="Gravity Arrow HBoxContainer" type="HBoxContainer" parent="MarginContainer/Left VBoxContainer" unique_id=2025249641]
 layout_mode = 2
 alignment = 1
 
-[node name="Control" type="Control" parent="MarginContainer/Left VBoxContainer/Invert HBoxContainer" unique_id=1963236552]
+[node name="Control" type="Control" parent="MarginContainer/Left VBoxContainer/Gravity Arrow HBoxContainer" unique_id=1963236552]
 custom_minimum_size = Vector2(0, 220)
 layout_mode = 2
 
-[node name="Invert Arrow Animatable Container" type="Control" parent="MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control" unique_id=1319395094]
-anchors_preset = 0
-offset_left = -4.0
-offset_right = -4.0
-offset_bottom = 220.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(0, 125)
-
-[node name="Invert Arrow Border Label" type="Label" parent="MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control/Invert Arrow Animatable Container" unique_id=404238227]
-self_modulate = Color(0.78039217, 0.6745098, 0.83137256, 1)
+[node name="Gravity Arrow Animatable Container" type="Control" parent="MarginContainer/Left VBoxContainer/Gravity Arrow HBoxContainer/Control" unique_id=1319395094]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(128, 185)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 138
-theme_override_font_sizes/font_size = 250
-text = "↓"
-horizontal_alignment = 1
+pivot_offset = Vector2(0, 110)
 
-[node name="Invert Arrow Label" type="Label" parent="MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control/Invert Arrow Animatable Container" unique_id=1057244648]
+[node name="Gravity Arrow TextureRect" type="TextureRect" parent="MarginContainer/Left VBoxContainer/Gravity Arrow HBoxContainer/Control/Gravity Arrow Animatable Container" unique_id=244345474]
 self_modulate = Color(1, 0.87058824, 1, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(128, 185)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 90
-theme_override_font_sizes/font_size = 250
-text = "↓"
-horizontal_alignment = 1
-
-[node name="Invert Count Label" type="Label" parent="MarginContainer/Left VBoxContainer/Invert HBoxContainer/Control" unique_id=372096907]
+material = SubResource("ShaderMaterial_0i1j5")
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_mphia")
+
+[node name="Invert Count Label" type="Label" parent="MarginContainer/Left VBoxContainer/Gravity Arrow HBoxContainer/Control" unique_id=372096907]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.4
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -91.5
@@ -260,32 +327,123 @@ theme_override_constants/shadow_offset_y = 0
 theme_override_constants/outline_size = 12
 theme_override_constants/shadow_outline_size = 25
 theme_override_font_sizes/font_size = 80
-text = "4321"
+text = "679"
 horizontal_alignment = 1
 
-[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=702036747]
+[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1541990024]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 300
-theme_override_constants/margin_bottom = 0
+theme_override_constants/margin_top = 400
+theme_override_constants/margin_right = 1428
 
-[node name="Control" type="Control" parent="MarginContainer2" unique_id=1568900437]
+[node name="Control" type="Control" parent="MarginContainer2" unique_id=648861805]
 layout_mode = 2
 
-[node name="Pause Menu Button" type="Button" parent="MarginContainer2/Control" unique_id=1934701691]
-custom_minimum_size = Vector2(200, 200)
+[node name="Data VBoxContainer" type="VBoxContainer" parent="MarginContainer2/Control" unique_id=100532787]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -200.0
-offset_bottom = 200.0
+offset_left = -443.0
+offset_bottom = 817.0
 grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/Control/Data VBoxContainer" unique_id=247934571]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Score HBoxContainer" type="HBoxContainer" parent="MarginContainer2/Control/Data VBoxContainer/VBoxContainer" unique_id=2061609964]
+custom_minimum_size = Vector2(192, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 16
+alignment = 2
+
+[node name="Score Label" type="Label" parent="MarginContainer2/Control/Data VBoxContainer/VBoxContainer/Score HBoxContainer" unique_id=588045913]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 25
+theme_override_font_sizes/font_size = 80
+text = "67"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/Control/Data VBoxContainer/VBoxContainer/Score HBoxContainer" unique_id=1281101710]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="Label" type="Label" parent="MarginContainer2/Control/Data VBoxContainer/VBoxContainer/Score HBoxContainer/MarginContainer" unique_id=1221511485]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 16
+theme_override_font_sizes/font_size = 40
+text = "SCORE"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Turn Count HBoxContainer" type="HBoxContainer" parent="MarginContainer2/Control/Data VBoxContainer/VBoxContainer" unique_id=1814557030]
+custom_minimum_size = Vector2(192, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 16
+alignment = 2
+
+[node name="Turn Label" type="Label" parent="MarginContainer2/Control/Data VBoxContainer/VBoxContainer/Turn Count HBoxContainer" unique_id=661144756]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 25
+theme_override_font_sizes/font_size = 80
+text = "4321"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/Control/Data VBoxContainer/VBoxContainer/Turn Count HBoxContainer" unique_id=795371832]
+layout_mode = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="Label" type="Label" parent="MarginContainer2/Control/Data VBoxContainer/VBoxContainer/Turn Count HBoxContainer/MarginContainer" unique_id=1438573326]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 16
+theme_override_font_sizes/font_size = 40
+text = "TURNS"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="." unique_id=1259338254]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 0
+
+[node name="Pause Menu Button" type="Button" parent="MarginContainer3" unique_id=1934701691]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 8
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
@@ -297,7 +455,7 @@ theme_override_styles/hover = ExtResource("5_0i1j5")
 theme_override_styles/disabled = ExtResource("6_mphia")
 theme_override_styles/focus = ExtResource("7_0m4u7")
 
-[node name="Pause Menu Label" type="Label" parent="MarginContainer2/Control/Pause Menu Button" unique_id=956976119]
+[node name="Pause Menu Label" type="Label" parent="MarginContainer3/Pause Menu Button" unique_id=956976119]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 0
 offset_left = 20.0
@@ -316,95 +474,3 @@ theme_override_font_sizes/font_size = 120
 text = "||"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="MarginContainer3" type="MarginContainer" parent="." unique_id=1541990024]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 420
-theme_override_constants/margin_right = 1428
-
-[node name="Control" type="Control" parent="MarginContainer3" unique_id=648861805]
-layout_mode = 2
-
-[node name="Data VBoxContainer" type="VBoxContainer" parent="MarginContainer3/Control" unique_id=100532787]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -443.0
-offset_bottom = 817.0
-grow_horizontal = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer3/Control/Data VBoxContainer" unique_id=247934571]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Score VBoxContainer" type="VBoxContainer" parent="MarginContainer3/Control/Data VBoxContainer/VBoxContainer" unique_id=622757317]
-custom_minimum_size = Vector2(192, 0)
-layout_mode = 2
-size_flags_horizontal = 8
-theme_override_constants/separation = -25
-alignment = 2
-
-[node name="Label2" type="Label" parent="MarginContainer3/Control/Data VBoxContainer/VBoxContainer/Score VBoxContainer" unique_id=1221511485]
-layout_mode = 2
-size_flags_vertical = 1
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 8
-theme_override_constants/shadow_outline_size = 16
-theme_override_font_sizes/font_size = 40
-text = "Score: "
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Score Label" type="Label" parent="MarginContainer3/Control/Data VBoxContainer/VBoxContainer/Score VBoxContainer" unique_id=588045913]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 12
-theme_override_constants/shadow_outline_size = 25
-theme_override_font_sizes/font_size = 80
-text = "67"
-horizontal_alignment = 1
-
-[node name="Turn Count VBoxContainer" type="VBoxContainer" parent="MarginContainer3/Control/Data VBoxContainer/VBoxContainer" unique_id=2088037114]
-custom_minimum_size = Vector2(192, 0)
-layout_mode = 2
-size_flags_horizontal = 8
-theme_override_constants/separation = -25
-alignment = 2
-
-[node name="Label2" type="Label" parent="MarginContainer3/Control/Data VBoxContainer/VBoxContainer/Turn Count VBoxContainer" unique_id=1438573326]
-layout_mode = 2
-size_flags_vertical = 1
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 8
-theme_override_constants/shadow_outline_size = 16
-theme_override_font_sizes/font_size = 40
-text = "Turn: "
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Turn Label" type="Label" parent="MarginContainer3/Control/Data VBoxContainer/VBoxContainer/Turn Count VBoxContainer" unique_id=661144756]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 12
-theme_override_constants/shadow_outline_size = 25
-theme_override_font_sizes/font_size = 80
-text = "4321"
-horizontal_alignment = 1
