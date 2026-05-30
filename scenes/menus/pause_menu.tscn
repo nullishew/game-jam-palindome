@@ -175,6 +175,7 @@ offset_bottom = 505.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 25
+alignment = 1
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer" unique_id=1270958077]
 layout_mode = 2
