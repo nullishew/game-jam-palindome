@@ -142,14 +142,14 @@ shader_parameter/outline_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
 shader_parameter/outline_size = 5.0
 shader_parameter/edge_softness = 1.5
 
-[node name="PauseMenu" type="CanvasLayer" unique_id=2132143122 node_paths=PackedStringArray("resume_button", "menu_button", "animation_player", "sfx_slider", "soundtrack_slider")]
+[node name="PauseMenu" type="CanvasLayer" unique_id=2132143122 node_paths=PackedStringArray("controls_menu_button", "menu_button", "resume_button", "settings_menu_button", "animation_player")]
 layer = 2
 script = ExtResource("1_v4r4p")
-resume_button = NodePath("Panel/VBoxContainer/HBoxContainer2/Resume Button")
+controls_menu_button = NodePath("Panel/VBoxContainer/HBoxContainer3/Controls Button")
 menu_button = NodePath("Panel/VBoxContainer/HBoxContainer2/Menu Button")
+resume_button = NodePath("Panel/VBoxContainer/HBoxContainer2/Resume Button")
+settings_menu_button = NodePath("Panel/VBoxContainer/HBoxContainer4/Settings Button")
 animation_player = NodePath("AnimationPlayer")
-sfx_slider = NodePath("Panel/VBoxContainer/VBoxContainer/HBoxContainer2/SFX slider")
-soundtrack_slider = NodePath("Panel/VBoxContainer/VBoxContainer/HBoxContainer/Soundtrack slider")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1808810997]
 libraries/ = SubResource("AnimationLibrary_knqa7")
@@ -189,89 +189,83 @@ theme_override_font_sizes/font_size = 150
 text = "MENU"
 horizontal_alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/VBoxContainer" unique_id=973022070]
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=296583979]
 layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer/VBoxContainer2" unique_id=137807200]
+[node name="Controls Button" type="Button" parent="Panel/VBoxContainer/HBoxContainer3" unique_id=1320647233]
+custom_minimum_size = Vector2(650, 200)
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = ExtResource("1_7l7mv")
+theme_override_styles/pressed = ExtResource("2_v4r4p")
+theme_override_styles/hover = ExtResource("3_1s2dm")
+theme_override_styles/disabled = ExtResource("4_88e76")
+theme_override_styles/focus = ExtResource("5_knqa7")
+
+[node name="Pause Menu Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer3/Controls Button" unique_id=991962456]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 15
-theme_override_constants/shadow_outline_size = 40
-theme_override_font_sizes/font_size = 75
+theme_override_constants/outline_size = 25
+theme_override_constants/shadow_outline_size = 60
+theme_override_font_sizes/font_size = 100
 text = "CONTROLS"
 horizontal_alignment = 1
-
-[node name="Label2" type="Label" parent="Panel/VBoxContainer/VBoxContainer2" unique_id=2061206742]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 8
-theme_override_constants/shadow_outline_size = 30
-theme_override_font_sizes/font_size = 50
-text = "Move Piece: Arrow keys / WD / Move Mouse
-Hold Piece: RMB / Shift / C
-Drop Piece: LMB / Space / Enter"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer" unique_id=274090651]
-layout_mode = 2
-theme_override_constants/separation = -30
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer/VBoxContainer" unique_id=1898321284]
-layout_mode = 2
-theme_override_constants/separation = 50
-
-[node name="Label" type="Label" parent="Panel/VBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1073775186]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 15
-theme_override_constants/shadow_outline_size = 40
-theme_override_font_sizes/font_size = 75
-text = "SFX"
-horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="SFX slider" type="HSlider" parent="Panel/VBoxContainer/VBoxContainer/HBoxContainer2" unique_id=344831869]
+[node name="HBoxContainer4" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1014851007]
 layout_mode = 2
-size_flags_horizontal = 3
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="Settings Button" type="Button" parent="Panel/VBoxContainer/HBoxContainer4" unique_id=1122744595]
+custom_minimum_size = Vector2(650, 200)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = ExtResource("1_7l7mv")
+theme_override_styles/pressed = ExtResource("2_v4r4p")
+theme_override_styles/hover = ExtResource("3_1s2dm")
+theme_override_styles/disabled = ExtResource("4_88e76")
+theme_override_styles/focus = ExtResource("5_knqa7")
+
+[node name="Pause Menu Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer4/Settings Button" unique_id=572962041]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 1
-value = 50.0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer/VBoxContainer" unique_id=1428691305]
-layout_mode = 2
-theme_override_constants/separation = 50
-
-[node name="Label" type="Label" parent="Panel/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=522705354]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 15
-theme_override_constants/shadow_outline_size = 40
-theme_override_font_sizes/font_size = 75
-text = "BGM"
-horizontal_alignment = 2
+theme_override_constants/outline_size = 25
+theme_override_constants/shadow_outline_size = 60
+theme_override_font_sizes/font_size = 100
+text = "SETTINGS"
+horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Soundtrack slider" type="HSlider" parent="Panel/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=983149220]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-value = 50.0
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=604594377]
 layout_mode = 2

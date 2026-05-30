@@ -1,7 +1,12 @@
 extends CanvasLayer
 
-@export var start_btn: Button
 
-# Called when the node enters the scene tree for the first time.
+@export var controls_menu_button: Button
+@export var settings_menu_button: Button
+@export var start_game_button: Button
+
+
 func _ready() -> void:
-	start_btn.pressed.connect(SceneManager.start_game)
+	controls_menu_button.pressed.connect(SceneManager.open_controls_menu)
+	settings_menu_button.pressed.connect(SceneManager.open_settings_menu)
+	start_game_button.pressed.connect(SceneManager.start_game)

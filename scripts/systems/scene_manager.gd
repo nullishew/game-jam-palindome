@@ -1,13 +1,18 @@
 extends Node
 
 var game_scene = preload("res://scenes/game.tscn")
-var menu_scene = preload("res://scenes/menu.tscn")
-var game_over_scene = preload("res://scenes/game_over.tscn")
 var transition_scene = preload("res://scenes/transition.tscn")
-var pause_menu_scene = preload("res://scenes/pause_menu.tscn")
+
+var menu_scene = preload("res://scenes/menus/menu.tscn")
+var game_over_scene = preload("res://scenes/menus/game_over.tscn")
+var pause_menu_scene = preload("res://scenes/menus/pause_menu.tscn")
+var settings_menu_scene = preload("res://scenes/menus/settings_menu.tscn")
+var controls_menu_scene = preload("res://scenes/menus/controls_menu.tscn")
 
 var _game_over_overlay: CanvasLayer
 var _pause_menu_overlay: PauseMenu
+var _settings_menu_overlay: CanvasLayer
+var _controls_menu_overlay: CanvasLayer
 var _transition: Transition
 
 var _is_changing: bool = false
@@ -19,7 +24,14 @@ func _ready() -> void:
 	_pause_menu_overlay = pause_menu_scene.instantiate()
 	_pause_menu_overlay.visible = false
 	get_tree().root.call_deferred("add_child", _pause_menu_overlay)
-	
+
+	_settings_menu_overlay = settings_menu_scene.instantiate()
+	_settings_menu_overlay.visible = false
+	get_tree().root.call_deferred("add_child", _settings_menu_overlay)
+
+	_controls_menu_overlay = controls_menu_scene.instantiate()
+	_controls_menu_overlay.visible = false
+	get_tree().root.call_deferred("add_child", _controls_menu_overlay)
 
 	# force cache / preload game scene runtime assets to remove stutter on first game start
 	await get_tree().process_frame
@@ -58,8 +70,18 @@ func open_game_over_menu():
 	_game_over_overlay = game_over_scene.instantiate()
 	get_tree().root.add_child(_game_over_overlay)
 
+
 func open_pause_menu():
 	_pause_menu_overlay.open()
 
+
 func close_pause_menu():
 	_pause_menu_overlay.close()
+
+
+func open_settings_menu():
+	_settings_menu_overlay.open()
+
+
+func open_controls_menu():
+	_controls_menu_overlay.open()
