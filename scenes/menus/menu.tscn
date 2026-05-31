@@ -189,10 +189,10 @@ layout_mode = 2
 
 [node name="P TextureRect" type="TextureRect" parent="Background/MarginContainer/Control" unique_id=285833837]
 layout_mode = 0
-offset_left = -91.0
-offset_top = -16.000015
-offset_right = 101.0
-offset_bottom = 175.99998
+offset_left = -91.00001
+offset_top = -16.000004
+offset_right = 100.99999
+offset_bottom = 176.0
 rotation = -0.04363323
 scale = Vector2(0.75, 0.75)
 pivot_offset = Vector2(96, 96)
