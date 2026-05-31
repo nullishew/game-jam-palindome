@@ -1,7 +1,7 @@
 [gd_resource type="AudioBusLayout" format=3 uid="uid://cwj45mo6c7rts"]
 
 [resource]
-bus/1/name = &"Soundtrack"
+bus/1/name = &"BGM"
 bus/1/solo = false
 bus/1/mute = false
 bus/1/bypass_fx = false
