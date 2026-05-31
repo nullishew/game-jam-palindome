@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://d0tuu7rrbork"]
+
+[ext_resource type="Texture2D" uid="uid://b62iney10pkam" path="res://assets/Noto_Sans_JP/fluid_surface.png" id="1_1fux3"]
+[ext_resource type="Shader" uid="uid://c42oq0mc30tjd" path="res://scripts/features/fluid_visual/fluid_visual.gdshader" id="1_tew6k"]
+[ext_resource type="Texture2D" uid="uid://mvvvdyey15b0" path="res://assets/Noto_Sans_JP/fluid_body.png" id="2_6due5"]
+[ext_resource type="Script" uid="uid://dkh06urxvryg6" path="res://scripts/features/fluid_visual/fluid_visual.gd" id="3_vdvrr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uk6lk"]
+shader = ExtResource("1_tew6k")
+shader_parameter/direction = Vector2(1, 0)
+shader_parameter/speed = 0.1
+
+[node name="Fluid Visual" type="Sprite2D" unique_id=665426512 node_paths=PackedStringArray("fluid_body_sprite")]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_uk6lk")
+texture = ExtResource("1_1fux3")
+offset = Vector2(0, 256)
+region_enabled = true
+region_rect = Rect2(0, 0, 3840, 512)
+script = ExtResource("3_vdvrr")
+fluid_body_sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=85158211]
+position = Vector2(0, 512)
+texture = ExtResource("2_6due5")
+offset = Vector2(0, 256)
+region_enabled = true
+region_rect = Rect2(0, 0, 3840, 512)
