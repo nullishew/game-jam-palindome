@@ -13,6 +13,7 @@ script = ExtResource("1_mst58")
 shape = SubResource("RectangleShape2D_vhtum")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1189736448]
+visible = false
 self_modulate = Color(1, 1, 1, 0.43137255)
 position = Vector2(-4.386902e-05, -9.1835295e-07)
 scale = Vector2(4, 0.18518518)

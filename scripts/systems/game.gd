@@ -3,6 +3,7 @@ extends Node2D
 
 
 @export var camera_controller: CameraController
+@export var fluid_visual_controller: FluidVisualController
 @export var gravity_controller: GravityController
 @export var minimum_height_controller: MinimumHeightController
 @export var piece_manager: PieceManager
@@ -69,6 +70,7 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	platform_controller.update_platform_distance(delta)
 	camera_controller.call_deferred("update_camera", delta)
+	fluid_visual_controller.update_minimum_height(delta)
 
 	var top_plat_pos := platform_controller.top_platform.global_position
 	var bottom_plat_pos := platform_controller.bottom_platform.global_position
@@ -133,8 +135,11 @@ func _enter_state(state: GameState):
 			platform_controller.resize_platform_distance(piece_manager.placed_pieces, gravity_controller.is_gravity_inverted)
 			if _difficulty_stage_it.is_stage_start:
 				minimum_height_controller.increase_minimum_height(_current_difficulty_stage.minimum_height_increase, gravity_controller.is_gravity_inverted)
+				fluid_visual_controller.set_target_minimum_height(minimum_height_controller.minimum_height, gravity_controller.is_gravity_inverted)
 				_is_checking_minimum_height = true
 				await get_tree().physics_frame
+				while not fluid_visual_controller.is_settled(gravity_controller.is_gravity_inverted):
+					await get_tree().physics_frame
 				_is_checking_minimum_height = false
 				if _turn_count > 1 and not minimum_height_controller.is_minimum_height_reached(gravity_controller.is_gravity_inverted):
 					lose()
