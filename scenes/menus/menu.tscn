@@ -22,9 +22,9 @@ bg_color = Color(0, 0, 0, 0.078431375)
 [node name="Menu" type="CanvasLayer" unique_id=558575991 node_paths=PackedStringArray("controls_menu_button", "settings_menu_button", "start_game_button")]
 layer = 0
 script = ExtResource("1_yqeox")
-controls_menu_button = NodePath("Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Control/Controls Button")
-settings_menu_button = NodePath("Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Control/Settings Button")
-start_game_button = NodePath("Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control/Start Button")
+controls_menu_button = NodePath("Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Controls/Controls Button")
+settings_menu_button = NodePath("Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Settings/Settings Button")
+start_game_button = NodePath("Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Start/Start Button")
 
 [node name="Background" type="TextureRect" parent="." unique_id=165843203]
 self_modulate = Color(0.84313726, 0.84705883, 1, 1)
@@ -179,9 +179,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 50
+theme_override_constants/margin_left = 200
 theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 50
+theme_override_constants/margin_right = 200
 theme_override_constants/margin_bottom = 25
 
 [node name="Control" type="Control" parent="Background/MarginContainer" unique_id=1697054021]
@@ -189,10 +189,13 @@ layout_mode = 2
 
 [node name="P TextureRect" type="TextureRect" parent="Background/MarginContainer/Control" unique_id=285833837]
 layout_mode = 0
-offset_left = 131.0
-offset_top = 115.0
-offset_right = 323.0
-offset_bottom = 307.0
+offset_left = -91.0
+offset_top = -16.000015
+offset_right = 101.0
+offset_bottom = 175.99998
+rotation = -0.04363323
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(96, 96)
 texture = ExtResource("5_g3eks")
 expand_mode = 1
 
@@ -219,10 +222,13 @@ vertical_alignment = 1
 
 [node name="A TextureRect" type="TextureRect" parent="Background/MarginContainer/Control" unique_id=1841136956]
 layout_mode = 0
-offset_left = 165.0
-offset_top = 337.0
-offset_right = 357.0
-offset_bottom = 529.0
+offset_left = -112.00001
+offset_top = 208.00003
+offset_right = 79.99999
+offset_bottom = 400.00003
+rotation = 0.04712389
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(96, 96)
 texture = ExtResource("5_g3eks")
 expand_mode = 1
 
@@ -249,10 +255,13 @@ vertical_alignment = 1
 
 [node name="L TextureRect" type="TextureRect" parent="Background/MarginContainer/Control" unique_id=1759074137]
 layout_mode = 0
-offset_left = 107.0
-offset_top = 533.0
-offset_right = 299.0
-offset_bottom = 725.0
+offset_left = -152.99998
+offset_top = 419.0
+offset_right = 39.000015
+offset_bottom = 611.0
+rotation = -0.008726646
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(96, 96)
 texture = ExtResource("5_g3eks")
 expand_mode = 1
 
@@ -279,10 +288,13 @@ vertical_alignment = 1
 
 [node name="I TextureRect" type="TextureRect" parent="Background/MarginContainer/Control" unique_id=1132845710]
 layout_mode = 0
-offset_left = 158.0
-offset_top = 741.0
-offset_right = 350.0
-offset_bottom = 933.0
+offset_left = -153.00003
+offset_top = 625.0
+offset_right = 38.99997
+offset_bottom = 817.0
+rotation = -0.15707964
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(96, 96)
 texture = ExtResource("5_g3eks")
 expand_mode = 1
 
@@ -309,10 +321,13 @@ vertical_alignment = 1
 
 [node name="N TextureRect" type="TextureRect" parent="Background/MarginContainer/Control" unique_id=225043135]
 layout_mode = 0
-offset_left = -7.0
-offset_top = 884.0
-offset_right = 185.0
-offset_bottom = 1076.0
+offset_left = -130.99995
+offset_top = 829.0
+offset_right = 61.000046
+offset_bottom = 1021.0
+rotation = -0.2268928
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(96, 96)
 texture = ExtResource("5_g3eks")
 expand_mode = 1
 
@@ -339,10 +354,13 @@ vertical_alignment = 1
 
 [node name="D TextureRect" type="TextureRect" parent="Background/MarginContainer/Control" unique_id=1850552952]
 layout_mode = 0
-offset_left = 1384.0
-offset_top = 180.0
-offset_right = 1576.0
-offset_bottom = 372.0
+offset_left = 159.0
+offset_top = -5.000019
+offset_right = 351.0
+offset_bottom = 186.99998
+rotation = 0.40666172
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(96, 96)
 texture = ExtResource("5_g3eks")
 expand_mode = 1
 
@@ -369,10 +387,13 @@ vertical_alignment = 1
 
 [node name="O TextureRect" type="TextureRect" parent="Background/MarginContainer/Control" unique_id=930117468]
 layout_mode = 0
-offset_left = 1444.0
-offset_top = 479.0
-offset_right = 1636.0
-offset_bottom = 671.0
+offset_left = 118.999985
+offset_top = 212.0
+offset_right = 311.0
+offset_bottom = 404.00003
+rotation = -5.9917154
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(96, 96)
 texture = ExtResource("5_g3eks")
 expand_mode = 1
 
@@ -399,10 +420,13 @@ vertical_alignment = 1
 
 [node name="M TextureRect" type="TextureRect" parent="Background/MarginContainer/Control" unique_id=1648015564]
 layout_mode = 0
-offset_left = 1510.0
-offset_top = 764.0
-offset_right = 1702.0
-offset_bottom = 956.0
+offset_left = 81.0
+offset_top = 424.0
+offset_right = 273.0
+offset_bottom = 616.0
+rotation = 0.45029494
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(96, 96)
 texture = ExtResource("5_g3eks")
 expand_mode = 1
 
@@ -429,10 +453,13 @@ vertical_alignment = 1
 
 [node name="E TextureRect" type="TextureRect" parent="Background/MarginContainer/Control" unique_id=1397392212]
 layout_mode = 0
-offset_left = 1670.0
-offset_top = 901.0
-offset_right = 1862.0
-offset_bottom = 1093.0
+offset_left = 40.0
+offset_top = 616.0
+offset_right = 232.0
+offset_bottom = 808.0
+rotation = 0.090757124
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(96, 96)
 texture = ExtResource("5_g3eks")
 expand_mode = 1
 
@@ -466,25 +493,26 @@ layout_mode = 2
 theme_override_constants/separation = 0
 
 [node name="TextureRect3" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer" unique_id=1539140870]
-custom_minimum_size = Vector2(880, 120)
+visible = false
+custom_minimum_size = Vector2(704, 96)
 layout_mode = 2
 texture = ExtResource("7_v86rl")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer" unique_id=880445689]
+[node name="Control" type="Control" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer" unique_id=1936773829]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 16
-alignment = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer" unique_id=1985994512]
-layout_mode = 2
-alignment = 1
-
-[node name="Control" type="Control" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1378452396]
+[node name="Start" type="Control" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control" unique_id=1378452396]
 custom_minimum_size = Vector2(576, 128)
-layout_mode = 2
+anchors_preset = 0
+offset_left = 137.99997
+offset_top = 532.0
+offset_right = 714.0
+offset_bottom = 660.0
+rotation = 0.30194196
+pivot_offset = Vector2(288, 64)
 
-[node name="TextureRect5" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control" unique_id=1061167186]
+[node name="TextureRect5" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Start" unique_id=1061167186]
 custom_minimum_size = Vector2(128, 576)
 layout_mode = 1
 anchors_preset = 8
@@ -505,7 +533,7 @@ size_flags_vertical = 4
 texture = ExtResource("4_mhnvy")
 expand_mode = 1
 
-[node name="Start Button" type="Button" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control" unique_id=1305181468]
+[node name="Start Button" type="Button" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Start" unique_id=1305181468]
 custom_minimum_size = Vector2(576, 128)
 layout_mode = 1
 anchors_preset = 15
@@ -524,7 +552,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_13sgg")
 theme_override_styles/hover = SubResource("StyleBoxFlat_i6lef")
 
-[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control/Start Button" unique_id=1975448690]
+[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Start/Start Button" unique_id=1975448690]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -533,7 +561,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 30
 
-[node name="Label" type="Label" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control/Start Button/MarginContainer" unique_id=1067924298]
+[node name="Label" type="Label" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Start/Start Button/MarginContainer" unique_id=1067924298]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
@@ -547,15 +575,17 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
 text = "START"
 vertical_alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer" unique_id=294218935]
-layout_mode = 2
-alignment = 1
-
-[node name="Control" type="Control" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer2" unique_id=688095580]
+[node name="Controls" type="Control" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control" unique_id=688095580]
 custom_minimum_size = Vector2(512, 128)
-layout_mode = 2
+anchors_preset = 0
+offset_left = -114.22595
+offset_top = 622.0
+offset_right = 397.77405
+offset_bottom = 750.0
+rotation = 0.22514747
+pivot_offset = Vector2(288, 64)
 
-[node name="TextureRect5" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Control" unique_id=198657235]
+[node name="TextureRect5" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Controls" unique_id=198657235]
 custom_minimum_size = Vector2(128, 512)
 layout_mode = 1
 anchors_preset = 8
@@ -569,14 +599,14 @@ offset_right = 72.0
 offset_bottom = 288.0
 grow_horizontal = 2
 grow_vertical = 2
-rotation = 1.5707964
+rotation = -1.5707964
 pivot_offset = Vector2(72, 288)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("8_7yii3")
 expand_mode = 1
 
-[node name="Controls Button" type="Button" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Control" unique_id=846782143]
+[node name="Controls Button" type="Button" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Controls" unique_id=846782143]
 custom_minimum_size = Vector2(576, 128)
 layout_mode = 1
 anchors_preset = 8
@@ -601,16 +631,16 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_13sgg")
 theme_override_styles/hover = SubResource("StyleBoxFlat_i6lef")
 
-[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Control/Controls Button" unique_id=1629031883]
+[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Controls/Controls Button" unique_id=1629031883]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 30
 
-[node name="Label" type="Label" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Control/Controls Button/MarginContainer" unique_id=189668420]
+[node name="Label" type="Label" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Controls/Controls Button/MarginContainer" unique_id=189668420]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
@@ -622,17 +652,20 @@ theme_override_constants/shadow_outline_size = 40
 theme_override_font_sizes/font_size = 65
 theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
 text = "CONTROLS"
+horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer" unique_id=154968794]
-layout_mode = 2
-alignment = 1
-
-[node name="Control" type="Control" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer3" unique_id=1172391701]
+[node name="Settings" type="Control" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control" unique_id=1172391701]
 custom_minimum_size = Vector2(512, 128)
-layout_mode = 2
+anchors_preset = 0
+offset_left = 74.99994
+offset_top = 815.99994
+offset_right = 586.99994
+offset_bottom = 943.99994
+rotation = 0.13439035
+pivot_offset = Vector2(288, 64)
 
-[node name="TextureRect5" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Control" unique_id=854599534]
+[node name="TextureRect5" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Settings" unique_id=854599534]
 custom_minimum_size = Vector2(128, 512)
 layout_mode = 1
 anchors_preset = 8
@@ -653,7 +686,7 @@ size_flags_vertical = 4
 texture = ExtResource("9_rdq0w")
 expand_mode = 1
 
-[node name="Settings Button" type="Button" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Control" unique_id=1326379299]
+[node name="Settings Button" type="Button" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Settings" unique_id=1326379299]
 custom_minimum_size = Vector2(576, 128)
 layout_mode = 1
 anchors_preset = 8
@@ -678,7 +711,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_13sgg")
 theme_override_styles/hover = SubResource("StyleBoxFlat_i6lef")
 
-[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Control/Settings Button" unique_id=1555581683]
+[node name="MarginContainer" type="MarginContainer" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Settings/Settings Button" unique_id=1555581683]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -687,7 +720,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 30
 
-[node name="Label" type="Label" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Control/Settings Button/MarginContainer" unique_id=41746007]
+[node name="Label" type="Label" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control/Settings/Settings Button/MarginContainer" unique_id=41746007]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
@@ -701,7 +734,40 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_v86rl")
 text = "SETTINGS"
 vertical_alignment = 1
 
+[node name="TextureRect" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control" unique_id=117142886]
+layout_mode = 0
+offset_left = 544.0
+offset_top = 203.0
+offset_right = 800.0
+offset_bottom = 459.0
+rotation = 2.7925267
+scale = Vector2(2, 2)
+pivot_offset = Vector2(128, 128)
+texture = ExtResource("3_con2f")
+
+[node name="TextureRect8" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control" unique_id=1486050472]
+layout_mode = 0
+offset_left = -313.00006
+offset_top = 671.00006
+offset_right = -57.00006
+offset_bottom = 927.00006
+rotation = -0.015707964
+scale = Vector2(1.25, 1.25)
+pivot_offset = Vector2(128, 128)
+texture = ExtResource("6_v86rl")
+
+[node name="TextureRect5" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer/Control" unique_id=301942438]
+layout_mode = 0
+offset_left = -424.99994
+offset_top = 291.0
+offset_right = -296.99994
+offset_bottom = 803.0
+rotation = -2.549926
+pivot_offset = Vector2(64, 256)
+texture = ExtResource("4_mhnvy")
+
 [node name="TextureRect2" type="TextureRect" parent="Background/MarginContainer/Menu HBoxContainer/VBoxContainer" unique_id=1138136170]
-custom_minimum_size = Vector2(880, 120)
+visible = false
+custom_minimum_size = Vector2(704, 96)
 layout_mode = 2
 texture = ExtResource("7_v86rl")
