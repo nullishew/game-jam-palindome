@@ -121,7 +121,7 @@ func swap_current_hold_piece():
 		_curr_piece = temp_piece
 	else:
 		_curr_piece = null
-		call_deferred("spawn_piece", _curr_piece_pos)
+		spawn_piece.call_deferred(_curr_piece_pos)
 
 
 func wake_all_pieces():

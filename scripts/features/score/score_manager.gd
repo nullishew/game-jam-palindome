@@ -48,5 +48,4 @@ func _on_stage_ended(stage: DifficultyStageConfig, placed_pieces: Array[Piece]):
 
 func _add_base_score(base_score: int):
 	_score += int(base_score * _score_multiplier)
-	GameManager.score = _score
 	GameManager.score_updated.emit(_score)
