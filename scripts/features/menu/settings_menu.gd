@@ -15,4 +15,4 @@ func _ready() -> void:
 
 func set_vol(bus: AudioManager.AudioBus, val: float):
 	var idx = AudioServer.get_bus_index(AudioManager.AUDIO_BUS_STRINGS[bus])
-	AudioServer.set_bus_volume_db(idx, linear_to_db(val) + 20)
+	AudioServer.set_bus_volume_db(idx, linear_to_db(val) + 10)
