@@ -17,7 +17,9 @@ func _ready() -> void:
 	visual_area.body_entered.connect(
 		func(body: Node2D):
 			if body is Piece:
-				AudioManager.play_sound(AudioManager.SPLASH_AUDIO, AudioManager.AudioBus.SFX)
+				var speed = body.linear_velocity.length()
+				var volume_db = clamp(remap(speed, 0, 100, -20, 0), -20, 0)
+				AudioManager.play_sound(AudioManager.SPLASH_AUDIO, AudioManager.AudioBus.SFX, volume_db)
 	)
 
 
