@@ -17,6 +17,8 @@ func update_bounds(pos: Vector2, size: Vector2):
 
 
 func _on_body_exited(body: Node2D):
+	if SceneManager.is_changing_scene: return
+	if not SceneManager.is_game_scene_active: return
 	if body is Piece:
 		if not body.is_in_hold:
 			body.despawn()

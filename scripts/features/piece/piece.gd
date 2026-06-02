@@ -137,5 +137,6 @@ func exit_hold(pos: Vector2):
 func despawn():
 	GameManager.game.piece_manager.unregister_piece(self)
 	GameManager.piece_lost.emit(self)
+	AudioManager.play_sound(AudioManager.TOWEL_DISPENSER_SOUND, AudioManager.AudioBus.SFX)
 	queue_free.call_deferred()
 	
