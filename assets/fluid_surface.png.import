@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b62iney10pkam"
-path="res://.godot/imported/fluid_surface.png-c67a64a704bb5d3575c0a817cc6f5daf.ctex"
+path="res://.godot/imported/fluid_surface.png-b8d427324bf215c595417dc42f61e671.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Noto_Sans_JP/fluid_surface.png"
-dest_files=["res://.godot/imported/fluid_surface.png-c67a64a704bb5d3575c0a817cc6f5daf.ctex"]
+source_file="res://assets/fluid_surface.png"
+dest_files=["res://.godot/imported/fluid_surface.png-b8d427324bf215c595417dc42f61e671.ctex"]
 
 [params]
 

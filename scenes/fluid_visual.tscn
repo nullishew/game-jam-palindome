@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://d0tuu7rrbork"]
 
-[ext_resource type="Texture2D" uid="uid://b62iney10pkam" path="res://assets/Noto_Sans_JP/fluid_surface.png" id="1_1fux3"]
+[ext_resource type="Texture2D" uid="uid://b62iney10pkam" path="res://assets/fluid_surface.png" id="1_1fux3"]
 [ext_resource type="Shader" uid="uid://c42oq0mc30tjd" path="res://scripts/features/fluid_visual/fluid_visual.gdshader" id="1_tew6k"]
-[ext_resource type="Texture2D" uid="uid://mvvvdyey15b0" path="res://assets/Noto_Sans_JP/fluid_body.png" id="2_6due5"]
+[ext_resource type="Texture2D" uid="uid://mvvvdyey15b0" path="res://assets/fluid_body.png" id="2_6due5"]
 [ext_resource type="Script" uid="uid://dkh06urxvryg6" path="res://scripts/features/fluid_visual/fluid_visual.gd" id="3_vdvrr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uk6lk"]
