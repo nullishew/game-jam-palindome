@@ -3,6 +3,8 @@ extends Sprite2D
 
 
 @export var fluid_body_sprite: Sprite2D
+@export var visual_area: Area2D
+@export var visual_area_collision_shape: CollisionShape2D
 
 @export var is_inverted: bool = false
 
@@ -23,6 +25,11 @@ func set_target_minimum_height(y: float):
 	var body_height: float = max(y, 0)
 	fluid_body_sprite.region_rect.size.y = max(y, body_height)
 	fluid_body_sprite.offset.y = 0.5 * max(y, body_height)
+	var area_height = fluid_body_sprite.region_rect.size.y + 512
+	var rect_shape = RectangleShape2D.new()
+	rect_shape.size = Vector2(3840, area_height)
+	visual_area_collision_shape.shape = rect_shape
+	visual_area.position.y = 0.5 * area_height
 
 
 func update_minimum_height(delta: float):

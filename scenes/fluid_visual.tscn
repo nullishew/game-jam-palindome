@@ -10,7 +10,10 @@ shader = ExtResource("1_tew6k")
 shader_parameter/direction = Vector2(1, 0)
 shader_parameter/speed = 0.1
 
-[node name="Fluid Visual" type="Sprite2D" unique_id=665426512 node_paths=PackedStringArray("fluid_body_sprite")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tew6k"]
+size = Vector2(3840, 1024)
+
+[node name="Fluid Visual" type="Sprite2D" unique_id=665426512 node_paths=PackedStringArray("fluid_body_sprite", "visual_area", "visual_area_collision_shape")]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_uk6lk")
 texture = ExtResource("1_1fux3")
@@ -19,6 +22,8 @@ region_enabled = true
 region_rect = Rect2(0, 0, 3840, 512)
 script = ExtResource("3_vdvrr")
 fluid_body_sprite = NodePath("Sprite2D")
+visual_area = NodePath("Area2D")
+visual_area_collision_shape = NodePath("Area2D/CollisionShape2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=85158211]
 position = Vector2(0, 512)
@@ -26,3 +31,9 @@ texture = ExtResource("2_6due5")
 offset = Vector2(0, 256)
 region_enabled = true
 region_rect = Rect2(0, 0, 3840, 512)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=575928218]
+position = Vector2(0, 512)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1714388054]
+shape = SubResource("RectangleShape2D_tew6k")
