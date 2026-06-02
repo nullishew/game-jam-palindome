@@ -16,7 +16,7 @@ enum AudioBus {
 
 
 const AUDIO_BUS_STRINGS: Dictionary[AudioBus, String] = {
-	AudioBus.BGM: "BGM_AUDIO",
+	AudioBus.BGM: "BGM",
 	AudioBus.SFX: "SFX",
 }
 
