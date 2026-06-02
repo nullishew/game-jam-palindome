@@ -8,8 +8,6 @@ extends Sprite2D
 
 @export var is_inverted: bool = false
 
-var is_active: bool = true
-
 
 var _target_y: float
 
@@ -18,7 +16,6 @@ func _ready() -> void:
 	_target_y = position.y
 	visual_area.body_entered.connect(
 		func(body: Node2D):
-			if not is_active: return
 			if body is Piece:
 				AudioManager.play_sound(AudioManager.SPLASH_AUDIO, AudioManager.AudioBus.SFX)
 	)

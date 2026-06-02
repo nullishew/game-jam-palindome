@@ -2,9 +2,6 @@ class_name Piece
 extends RigidBody2D
 
 
-var piece_spawn_config: PieceSpawnConfig:
-	get: return _spawn_config
-
 @export var impact_sprite_time: float = 0.5
 @export var sprite: Sprite2D
 @export var override_sprite_scale_hitbox: Node2D
@@ -15,13 +12,16 @@ var piece_spawn_config: PieceSpawnConfig:
 
 @export var possible_spawn_scale_multipliers: Array[float] = [1, 1.25, 1.5]
 
+
+var piece_spawn_config: PieceSpawnConfig:
+	get: return _spawn_config
+
 var is_player_piece: bool = false
 var is_in_hold: bool = false
 
-var _was_in_contact: bool = false
+
 var _impact_timer: float = 0
-var _prev_vel_y: float = 0
-var _was_impact: bool = false
+var _prev_velocity: Vector2
 
 var _spawn_config: PieceSpawnConfig
 
@@ -35,17 +35,12 @@ func _ready() -> void:
 	scale_piece(possible_spawn_scale_multipliers.pick_random())
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if _impact_timer > 0:
-		if not _was_impact:
-			AudioManager.play_sound(AudioManager.THUD_AUDIO, AudioManager.AudioBus.SFX)
-		_was_impact = true
 		_impact_timer -= delta
 		if impact_texture:
 			sprite.texture = impact_texture
 	else:
-		_was_impact = false
 		if linear_velocity.length() > 5 or abs(angular_velocity) > 5:
 			if moving_texture:
 				sprite.texture = moving_texture
@@ -53,35 +48,21 @@ func _process(delta: float) -> void:
 			if idle_texture:
 				sprite.texture = idle_texture
 
-func _integrate_forces(state: PhysicsDirectBodyState2D):
-	# detect things falling onto it but not random things elsewhere propagating impulses
-	var max_y_impulse := 0.0
-	for i in range(state.get_contact_count()):
-		var collider = state.get_contact_collider_object(i)
-		if collider is Piece:
-			var impulse: Vector2 = state.get_contact_impulse(i)
-			max_y_impulse = max(max_y_impulse, abs(impulse.y))
-			# check that the other body is above this body
-			# for direct falling from above edge case where impulse isnt enough
-			if GameManager.game.gravity_controller.is_gravity_inverted:
-				if collider.global_position.y > global_position.y:
-					_impact_timer = impact_sprite_time
-			else:
-				if collider.global_position.y < global_position.y:
-					_impact_timer = impact_sprite_time
-	if max_y_impulse > 10:
-			_impact_timer = impact_sprite_time
 
-	# detect falling onto things
-	var vel_along_g: float = abs(linear_velocity.y)
-	if _prev_vel_y > 20 and vel_along_g < 2:
+func _physics_process(_delta: float) -> void:
+	var speed_before := _prev_velocity.length()
+	var speed_after := linear_velocity.length()
+	var impact_strength := speed_before - speed_after
+	if impact_strength > 50:
+		var volume_db := remap(impact_strength, 50.0, 100.0, -20.0, 0.0)
+		AudioManager.play_sound(
+			AudioManager.THUD_AUDIO,
+			AudioManager.AudioBus.SFX,
+			clamp(volume_db, -20.0, 0.0)
+		)
 		_impact_timer = impact_sprite_time
-	_prev_vel_y = vel_along_g
-	var in_contact := state.get_contact_count() > 0
-	if not _was_in_contact and in_contact and _prev_vel_y > 30:
-		_impact_timer = impact_sprite_time
-	_was_in_contact = in_contact
-
+	_prev_velocity = linear_velocity
+	
 
 func initialize(spawn_config: PieceSpawnConfig):
 	_spawn_config = spawn_config
