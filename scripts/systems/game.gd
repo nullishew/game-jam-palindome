@@ -158,7 +158,7 @@ func _enter_state(state: GameState):
 			var result := GameResult.new(_turn_count, score_manager.score)
 			GameManager.game_ended.emit(result)
 			SceneManager.open_game_over_menu()
-			AudioManager.play_sound(AudioManager.TOWEL_DISPENSER_SOUND, AudioManager.AudioBus.SFX)
+			AudioManager.play_sound(AudioManager.BUBBLE_AUDIO, AudioManager.AudioBus.SFX)
 
 
 func _exit_state(state: GameState):
