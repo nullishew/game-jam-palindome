@@ -1,5 +1,8 @@
 [gd_resource type="AudioBusLayout" format=3 uid="uid://cwj45mo6c7rts"]
 
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_y3dgf"]
+resource_name = "Compressor"
+
 [resource]
 bus/1/name = &"BGM"
 bus/1/solo = false
@@ -13,3 +16,5 @@ bus/2/mute = false
 bus/2/bypass_fx = false
 bus/2/volume_db = 0.0
 bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectCompressor_y3dgf")
+bus/2/effect/0/enabled = true

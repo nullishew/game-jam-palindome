@@ -9,15 +9,24 @@ const PAUSE_MENU_SCENE = preload("res://scenes/menus/pause_menu.tscn")
 const SETTINGS_MENU_SCENE = preload("res://scenes/menus/settings_menu.tscn")
 const CONTROLS_MENU_SCENE = preload("res://scenes/menus/controls_menu.tscn")
 
+
+var is_game_scene_active: bool:
+	get: return _is_game_scene_active
+var is_changing_scene: bool:
+	get: return _is_changing_scene
+
 var _game_over_overlay: OverlayMenu
 var _pause_menu_overlay: OverlayMenu
 var _settings_menu_overlay: OverlayMenu
 var _controls_menu_overlay: OverlayMenu
 var _transition: Transition
 
-var _is_changing: bool = false
+var _is_changing_scene: bool = false
+var _is_game_scene_active: bool = false
 
 func _ready() -> void:
+	_is_changing_scene = false
+	_is_game_scene_active = false
 	_transition = _cache_scene(TRANSITION_SCENE)
 	_pause_menu_overlay = _cache_scene(PAUSE_MENU_SCENE)
 	_settings_menu_overlay = _cache_scene(SETTINGS_MENU_SCENE)
@@ -42,8 +51,8 @@ func _warmup_packed_scene(packed_scene: PackedScene):
 
 
 func change_scene(packed_scene: PackedScene):
-	if _is_changing: return
-	_is_changing = true
+	if _is_changing_scene: return
+	_is_changing_scene = true
 	await get_tree().process_frame
 	_transition.transition()
 	await _transition.in_finished
@@ -53,8 +62,10 @@ func change_scene(packed_scene: PackedScene):
 	_controls_menu_overlay.hide()
 	await get_tree().process_frame
 	_transition.resume()
+	_is_game_scene_active = packed_scene == GAME_SCENE
 	get_tree().change_scene_to_packed.call_deferred(packed_scene)
-	_is_changing = false
+	await get_tree().process_frame
+	_is_changing_scene = false
 	
 
 func start_game():
