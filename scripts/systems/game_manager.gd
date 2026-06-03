@@ -14,7 +14,7 @@ signal piece_lost(piece: Piece)
 signal turn_ended(turn: int)
 signal turn_started(turn_count: int, stage_turns_remaining: int)
 signal stage_ended(stage: DifficultyStageConfig, placed_pieces: Array[Piece])
-# signal stage_started(stage: DifficultyStageConfig)
+signal stage_started(stage: DifficultyStageConfig, placed_pieces: Array[Piece])
 
 signal game_ended(game_result: GameResult)
 

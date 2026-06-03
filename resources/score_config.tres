@@ -27,4 +27,10 @@ ExtResource("3_o2ylr"): 200,
 ExtResource("5_d2y4y"): 100,
 ExtResource("4_yj5aa"): 100
 })
+stage_start_piece_bonus = Dictionary[ExtResource("1_b61qq"), int]({
+ExtResource("2_wcgmk"): 300,
+ExtResource("3_o2ylr"): 200,
+ExtResource("5_d2y4y"): 100,
+ExtResource("4_yj5aa"): 100
+})
 metadata/_custom_type_script = "uid://bdi00g183576a"
