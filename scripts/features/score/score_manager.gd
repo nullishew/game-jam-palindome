@@ -20,32 +20,36 @@ func _ready() -> void:
 	GameManager.piece_placed.connect(_on_piece_placed)
 	GameManager.turn_ended.connect(_on_turn_ended)
 	GameManager.stage_ended.connect(_on_stage_ended)
+	GameManager.stage_started.connect(_on_stage_started)
 	await get_tree().process_frame
 	GameManager.score_updated.emit(_score)
 
 
 func _on_piece_lost(piece: Piece):
 	if piece.piece_spawn_config in config.piece_loss_penalty:
-		_add_base_score(-config.piece_loss_penalty[piece.piece_spawn_config])
+		_add_score(-config.piece_loss_penalty[piece.piece_spawn_config])
 
 
 func _on_piece_placed(piece: Piece):
 	if piece.piece_spawn_config in config.piece_place_bonus:
-		_add_base_score(config.piece_place_bonus[piece.piece_spawn_config])
+		_add_score(config.piece_place_bonus[piece.piece_spawn_config])
 
 
 func _on_turn_ended(_turn: int):
-	_add_base_score(config.turn_end_bonus)
+	_add_score(config.turn_end_bonus)
 
 
-func _on_stage_ended(stage: DifficultyStageConfig, placed_pieces: Array[Piece]):
-	_add_base_score(config.stage_end_turn_bonus * stage.duration_turns)
-	for piece in placed_pieces:
-		if piece.piece_spawn_config in config.stage_end_piece_bonus:
-			_add_base_score(config.stage_end_piece_bonus[piece.piece_spawn_config])
+func _on_stage_ended(stage: DifficultyStageConfig, _placed_pieces: Array[Piece]):
+	_add_score(config.stage_end_turn_bonus * stage.duration_turns)
 	_score_multiplier += config.stage_end_score_multiplier_increase
 
 
-func _add_base_score(base_score: int):
+func _on_stage_started(stage: DifficultyStageConfig, placed_pieces: Array[Piece]):
+	for piece in placed_pieces:
+		if piece.piece_spawn_config in config.stage_start_piece_bonus:
+			_add_score(config.stage_start_piece_bonus[piece.piece_spawn_config])
+
+
+func _add_score(base_score: int):
 	_score += int(base_score * _score_multiplier)
 	GameManager.score_updated.emit(_score)

@@ -145,6 +145,8 @@ func _enter_state(state: GameState):
 		GameState.PAUSE:
 			SceneManager.open_pause_menu()
 		GameState.AIM:
+			if _difficulty_stage_it.is_stage_start:
+				GameManager.stage_started.emit(_current_difficulty_stage, piece_manager.placed_pieces)
 			if not piece_manager.has_current_piece():
 				piece_manager.spawn_piece.call_deferred()
 		GameState.SETTLE:
