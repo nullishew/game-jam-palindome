@@ -50,6 +50,8 @@ var _current_difficulty_stage: DifficultyStageConfig
 
 var _is_checking_minimum_height: bool = false
 
+var _is_hold_swap_requested: bool = false
+
 
 func _ready() -> void:
 	camera_controller.make_current() # just to not break physics from the one frame delay breh
@@ -58,6 +60,7 @@ func _ready() -> void:
 	_is_release_piece_input_unhandled = false
 	set_difficulty(difficulty_config)
 	_set_state(GameState.PREPARE_TURN)
+	GameManager.swap_hold_piece_requested.connect(func(): _is_hold_swap_requested = true)
 
 
 func _process(_delta: float) -> void:
@@ -102,13 +105,17 @@ func _physics_process(delta: float) -> void:
 	)
 	playable_area.update_bounds(plat_midpoint, playable_area_size)
 
+	if Input.is_action_just_pressed("hold_piece"):
+		_is_hold_swap_requested = true
+
 	match _state:
 		GameState.PREPARE_TURN:
 			if not _is_checking_minimum_height and platform_controller.is_settled(gravity_controller.is_gravity_inverted):
 				_set_state(GameState.AIM)
 		GameState.AIM:
-			if Input.is_action_just_pressed("hold_piece"):
+			if _is_hold_swap_requested:
 				piece_manager.swap_current_hold_piece()
+				_is_hold_swap_requested = false
 			else:
 				if piece_manager.has_current_piece():
 					piece_manager.update_current_piece_position(delta, _is_mouse_move_unhandled, get_global_mouse_position().x)
@@ -142,6 +149,8 @@ func _physics_process(delta: float) -> void:
 	_is_mouse_move_unhandled = false
 	_is_release_piece_input_unhandled = false
 	_is_mouse_press_unhandled = false
+	_is_hold_swap_requested = false
+
 
 
 func _unhandled_input(event: InputEvent) -> void:
