@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bslj1tqbloavt" path="res://assets/placeholder_space_background.png" id="1_ydqta"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhtum"]
-size = Vector2(1920, 50)
+size = Vector2(1920, 30)
 
 [node name="Minimum Height Area" type="Area2D" unique_id=618680559]
 script = ExtResource("1_mst58")
