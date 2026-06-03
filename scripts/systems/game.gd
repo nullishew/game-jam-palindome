@@ -2,6 +2,16 @@ class_name Game
 extends Node2D
 
 
+enum GameState {
+	PREPARE_TURN,
+	AIM,
+	SETTLE,
+	INVERT,
+	LOSE,
+	PAUSE,
+}
+
+
 @export var camera_controller: CameraController
 @export var fluid_visual_controller: FluidVisualController
 @export var gravity_controller: GravityController
@@ -21,7 +31,12 @@ var is_game_over: bool:
 
 
 var _is_release_piece_input_unhandled: bool = false
-var _mouse_moved: bool = false
+var _is_mouse_move_unhandled: bool = false
+var _is_mouse_press_unhandled: bool = false
+var _is_swiping: bool = false
+var _is_just_swiped_down: bool = false
+var _last_swipe_start_time: float
+var _start_mouse_swipe_pos: Vector2
 
 var _place_timer: float = 0
 
@@ -34,15 +49,6 @@ var _difficulty_stage_it: DifficultyStageIterator
 var _current_difficulty_stage: DifficultyStageConfig
 
 var _is_checking_minimum_height: bool = false
-
-enum GameState {
-	PREPARE_TURN,
-	AIM,
-	SETTLE,
-	INVERT,
-	LOSE,
-	PAUSE,
-}
 
 
 func _ready() -> void:
@@ -60,6 +66,21 @@ func _process(_delta: float) -> void:
 			unpause()
 		else:
 			pause()
+	_is_just_swiped_down = false
+	if _is_swiping and Input.is_action_pressed("swipe"):
+		if Time.get_ticks_msec() - _last_swipe_start_time > 1000:
+			_is_swiping = false
+		else:
+			var is_swipe = (
+				get_global_mouse_position().y - _start_mouse_swipe_pos.y < -150
+				if gravity_controller.is_gravity_inverted
+				else get_global_mouse_position().y - _start_mouse_swipe_pos.y > 150
+			)
+			if is_swipe and abs(get_global_mouse_position().x - _start_mouse_swipe_pos.x) < 100:
+				_is_just_swiped_down = true
+				_is_swiping = false
+	else:
+		_is_swiping = false
 	piece_manager.update_piece_placement_preview(
 		_state == GameState.AIM,
 		get_world_2d(),
@@ -90,8 +111,13 @@ func _physics_process(delta: float) -> void:
 				piece_manager.swap_current_hold_piece()
 			else:
 				if piece_manager.has_current_piece():
-					piece_manager.update_current_piece_position(delta, _mouse_moved, get_global_mouse_position().x)
-					if _is_release_piece_input_unhandled and Input.is_action_just_pressed("release_piece"):
+					piece_manager.update_current_piece_position(delta, _is_mouse_move_unhandled, get_global_mouse_position().x)
+					var is_release_input_triggered: bool = (
+						_is_just_swiped_down
+						if OS.has_feature("web_android") or OS.has_feature("web_ios")
+						else _is_release_piece_input_unhandled and Input.is_action_just_pressed("release_piece")
+					)
+					if is_release_input_triggered:
 						piece_manager.release_current_piece()
 						_set_state(GameState.SETTLE)
 		GameState.SETTLE:
@@ -113,15 +139,21 @@ func _physics_process(delta: float) -> void:
 			if _place_timer <= 0 && piece_manager.are_pieces_settled(delta, min_settle_time):
 				_set_state(GameState.PREPARE_TURN)
 	
-	_mouse_moved = false
+	_is_mouse_move_unhandled = false
 	_is_release_piece_input_unhandled = false
+	_is_mouse_press_unhandled = false
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		_mouse_moved = true
+		_is_mouse_move_unhandled = true
 	if event.is_action("release_piece"):
 		_is_release_piece_input_unhandled = true
+	if event is InputEventMouseButton and event.is_action_pressed("swipe"):
+		_last_swipe_start_time = Time.get_ticks_msec()
+		_is_mouse_press_unhandled = true
+		_is_swiping = true
+		_start_mouse_swipe_pos = get_global_mouse_position()
 
 
 func _enter_state(state: GameState):
