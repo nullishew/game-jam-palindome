@@ -3,6 +3,7 @@ extends CanvasLayer
 
 @export var next_piece_uis: Array[TextureRect]
 @export var hold_slot_ui: TextureRect
+@export var hold_slot_button: Button
 
 @export var score_label: Label
 @export var turn_count_label: Label
@@ -51,6 +52,7 @@ func _ready() -> void:
 			hold_slot_ui.texture = piece_config.ui_texture
 	)
 	pause_button.pressed.connect(func(): GameManager.game.pause())
+	hold_slot_button.pressed.connect(func(): GameManager.swap_hold_piece_requested.emit())
 
 
 func _exit_tree() -> void:

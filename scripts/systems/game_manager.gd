@@ -7,6 +7,7 @@ signal invert_state_entered(is_gravity_inverted: bool)
 signal invert_state_exited()
 signal hold_piece_updated(piece_config: PieceSpawnConfig)
 signal gravity_mode_set(mode: GravityController.GravityMode)
+signal swap_hold_piece_requested()
 
 
 signal piece_placed(piece: Piece)

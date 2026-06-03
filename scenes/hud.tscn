@@ -9,6 +9,15 @@
 [ext_resource type="StyleBox" uid="uid://djikl8q0utpmy" path="res://resources/menu_button_ui/menu_button_disabled_stylebox.tres" id="6_mphia"]
 [ext_resource type="StyleBox" uid="uid://b4r18fogvaykm" path="res://resources/menu_button_ui/menu_button_focus_stylebox.tres" id="7_0m4u7"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hd3ao"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0i1j5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mphia"]
+bg_color = Color(0, 0, 0, 0.039215688)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0m4u7"]
+
 [sub_resource type="Shader" id="Shader_hd3ao"]
 code = "shader_type canvas_item;
 
@@ -89,16 +98,17 @@ shader_parameter/outline_color = Color(0.78039217, 0.6745098, 0.83137256, 1)
 shader_parameter/outline_size = 8.0
 shader_parameter/edge_softness = 1.5
 
-[node name="HUD" type="CanvasLayer" unique_id=827572359 node_paths=PackedStringArray("next_piece_uis", "hold_slot_ui", "score_label", "turn_count_label", "invert_count_label", "gravity_arrow_animatable_container", "gravity_arrow_texture", "pause_button")]
+[node name="HUD" type="CanvasLayer" unique_id=827572359 node_paths=PackedStringArray("next_piece_uis", "hold_slot_ui", "hold_slot_button", "score_label", "turn_count_label", "invert_count_label", "gravity_arrow_animatable_container", "gravity_arrow_texture", "pause_button")]
 layer = 0
 script = ExtResource("1_oo0fn")
 next_piece_uis = [NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 1/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 2/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 3/MarginContainer/TextureRect"), NodePath("MarginContainer/Control/Queue VBoxContainer/Queue Slot 4/MarginContainer/TextureRect")]
-hold_slot_ui = NodePath("MarginContainer/Left VBoxContainer/Hold VBoxContainer/Hold Slot/MarginContainer/TextureRect")
+hold_slot_ui = NodePath("Left VBoxContainer/Hold VBoxContainer/Hold Slot/MarginContainer/TextureRect")
+hold_slot_button = NodePath("Left VBoxContainer/Hold VBoxContainer/Hold Slot/MarginContainer2/Hold Button")
 score_label = NodePath("MarginContainer2/Control/Data VBoxContainer/VBoxContainer/Score HBoxContainer/Score Label")
 turn_count_label = NodePath("MarginContainer2/Control/Data VBoxContainer/VBoxContainer/Turn Count HBoxContainer/Turn Label")
-invert_count_label = NodePath("MarginContainer/Left VBoxContainer/Gravity Arrow HBoxContainer/Control/Invert Count Label")
-gravity_arrow_animatable_container = NodePath("MarginContainer/Left VBoxContainer/Gravity Arrow HBoxContainer/Control/Gravity Arrow Animatable Container")
-gravity_arrow_texture = NodePath("MarginContainer/Left VBoxContainer/Gravity Arrow HBoxContainer/Control/Gravity Arrow Animatable Container/Gravity Arrow TextureRect")
+invert_count_label = NodePath("Left VBoxContainer/Gravity Arrow HBoxContainer/Control/Invert Count Label")
+gravity_arrow_animatable_container = NodePath("Left VBoxContainer/Gravity Arrow HBoxContainer/Control/Gravity Arrow Animatable Container")
+gravity_arrow_texture = NodePath("Left VBoxContainer/Gravity Arrow HBoxContainer/Control/Gravity Arrow Animatable Container/Gravity Arrow TextureRect")
 arrow_color = Color(1, 0.87058824, 1, 1)
 arrow_border_color = Color(0.78039217, 0.6745098, 0.83137256, 1)
 invert_arrow_color = Color(1, 0.58431375, 0.6901961, 1)
@@ -230,107 +240,6 @@ theme_override_constants/margin_bottom = 32
 layout_mode = 2
 expand_mode = 3
 
-[node name="Left VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1574488294]
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_constants/separation = 275
-
-[node name="Hold VBoxContainer" type="VBoxContainer" parent="MarginContainer/Left VBoxContainer" unique_id=2129426233]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_filter = 0
-
-[node name="Label" type="Label" parent="MarginContainer/Left VBoxContainer/Hold VBoxContainer" unique_id=1977253416]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 10
-theme_override_constants/shadow_outline_size = 30
-theme_override_font_sizes/font_size = 64
-text = "Hold"
-horizontal_alignment = 1
-
-[node name="Hold Slot" type="TextureRect" parent="MarginContainer/Left VBoxContainer/Hold VBoxContainer" unique_id=1257151179]
-self_modulate = Color(1.666, 1.666, 1.666, 1)
-layout_mode = 2
-texture = ExtResource("3_5ysmq")
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Left VBoxContainer/Hold VBoxContainer/Hold Slot" unique_id=600909603]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/Left VBoxContainer/Hold VBoxContainer/Hold Slot/MarginContainer" unique_id=472768435]
-layout_mode = 2
-expand_mode = 3
-
-[node name="Gravity Arrow HBoxContainer" type="HBoxContainer" parent="MarginContainer/Left VBoxContainer" unique_id=2025249641]
-layout_mode = 2
-alignment = 1
-
-[node name="Control" type="Control" parent="MarginContainer/Left VBoxContainer/Gravity Arrow HBoxContainer" unique_id=1963236552]
-custom_minimum_size = Vector2(0, 220)
-layout_mode = 2
-
-[node name="Gravity Arrow Animatable Container" type="Control" parent="MarginContainer/Left VBoxContainer/Gravity Arrow HBoxContainer/Control" unique_id=1319395094]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(0, 110)
-
-[node name="Gravity Arrow TextureRect" type="TextureRect" parent="MarginContainer/Left VBoxContainer/Gravity Arrow HBoxContainer/Control/Gravity Arrow Animatable Container" unique_id=244345474]
-self_modulate = Color(1, 0.87058824, 1, 1)
-material = SubResource("ShaderMaterial_0i1j5")
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = -128.0
-offset_right = 128.0
-offset_bottom = 128.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_mphia")
-
-[node name="Invert Count Label" type="Label" parent="MarginContainer/Left VBoxContainer/Gravity Arrow HBoxContainer/Control" unique_id=372096907]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.4
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -91.5
-offset_top = -55.0
-offset_right = 91.5
-offset_bottom = 55.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 12
-theme_override_constants/shadow_outline_size = 25
-theme_override_font_sizes/font_size = 80
-text = "679"
-horizontal_alignment = 1
-
 [node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1541990024]
 anchors_preset = 15
 anchor_right = 1.0
@@ -437,6 +346,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 0
@@ -473,3 +383,126 @@ theme_override_font_sizes/font_size = 100
 text = "l l"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Left VBoxContainer" type="VBoxContainer" parent="." unique_id=1574488294]
+offset_left = 300.0
+offset_top = 100.0
+offset_right = 492.0
+offset_bottom = 980.0
+size_flags_horizontal = 0
+theme_override_constants/separation = 275
+
+[node name="Hold VBoxContainer" type="VBoxContainer" parent="Left VBoxContainer" unique_id=2129426233]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 0
+
+[node name="Label" type="Label" parent="Left VBoxContainer/Hold VBoxContainer" unique_id=1977253416]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 10
+theme_override_constants/shadow_outline_size = 30
+theme_override_font_sizes/font_size = 64
+text = "Hold"
+horizontal_alignment = 1
+
+[node name="Hold Slot" type="TextureRect" parent="Left VBoxContainer/Hold VBoxContainer" unique_id=1257151179]
+self_modulate = Color(1.666, 1.666, 1.666, 1)
+layout_mode = 2
+texture = ExtResource("3_5ysmq")
+
+[node name="MarginContainer" type="MarginContainer" parent="Left VBoxContainer/Hold VBoxContainer/Hold Slot" unique_id=600909603]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="TextureRect" type="TextureRect" parent="Left VBoxContainer/Hold VBoxContainer/Hold Slot/MarginContainer" unique_id=472768435]
+layout_mode = 2
+expand_mode = 3
+
+[node name="MarginContainer2" type="MarginContainer" parent="Left VBoxContainer/Hold VBoxContainer/Hold Slot" unique_id=2113512043]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Hold Button" type="Button" parent="Left VBoxContainer/Hold VBoxContainer/Hold Slot/MarginContainer2" unique_id=920249623]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hd3ao")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_0i1j5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mphia")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0m4u7")
+
+[node name="Gravity Arrow HBoxContainer" type="HBoxContainer" parent="Left VBoxContainer" unique_id=2025249641]
+layout_mode = 2
+alignment = 1
+
+[node name="Control" type="Control" parent="Left VBoxContainer/Gravity Arrow HBoxContainer" unique_id=1963236552]
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+
+[node name="Gravity Arrow Animatable Container" type="Control" parent="Left VBoxContainer/Gravity Arrow HBoxContainer/Control" unique_id=1319395094]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0, 110)
+
+[node name="Gravity Arrow TextureRect" type="TextureRect" parent="Left VBoxContainer/Gravity Arrow HBoxContainer/Control/Gravity Arrow Animatable Container" unique_id=244345474]
+self_modulate = Color(1, 0.87058824, 1, 1)
+material = SubResource("ShaderMaterial_0i1j5")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_mphia")
+
+[node name="Invert Count Label" type="Label" parent="Left VBoxContainer/Gravity Arrow HBoxContainer/Control" unique_id=372096907]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.4
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -91.5
+offset_top = -55.0
+offset_right = 91.5
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0.30588236, 0.30588236, 0.30588236, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 25
+theme_override_font_sizes/font_size = 80
+text = "679"
+horizontal_alignment = 1
