@@ -111,9 +111,9 @@ theme_override_constants/shadow_offset_y = 0
 theme_override_constants/outline_size = 15
 theme_override_constants/shadow_outline_size = 40
 theme_override_font_sizes/font_size = 75
-text = "Move Piece: Arrow keys / WD / Move Mouse
-Hold Piece: RMB / Shift / C
-Drop Piece: LMB / Space / Enter"
+text = "Aim Piece: Drag / Mouse / Arrow keys / WD
+Hold Piece: Click Hold Slot / RMB / Shift / C
+Drop Piece: Swipe / LMB / Space / Enter"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=289481914]
 layout_mode = 2
